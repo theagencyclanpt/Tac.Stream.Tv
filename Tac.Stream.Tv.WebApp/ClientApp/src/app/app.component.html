@@ -8,31 +8,45 @@
 
 <div class="layout layout-streaming">
   <div class="current-scene-preview">
-    <img [src]="currentSceneImage" alt="preview" [hidden]="!canShowPreview()">
-    <h3 [hidden]="canShowPreview()">OBS IS CLOSED</h3>
+    <img [src]="currentSceneImage" alt="preview" [hidden]="!canShowPreview() || !hasConnectionToRemoteServer">
+    <h3 [hidden]="canShowPreview() && hasConnectionToRemoteServer">OBS IS CLOSED</h3>
   </div>
   <div class="form">
     <div class="button-col">
-      <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted()" (click)="openObs()">Open Obs</button>
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted()" (click)="closeObs()">Close
+      <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted() || !hasConnectionToRemoteServer"
+        (click)="openObs()">Open Obs</button>
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer"
+        (click)="closeObs()">Close
         Obs</button>
     </div>
 
     <div class="button-col">
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() " (click)="openPreviewModal()">Open
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer"
+        (click)="openPreviewModal()">Open
         Preview</button>
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrStreaming()" (click)="startStream()">Start
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrStreaming() || !hasConnectionToRemoteServer"
+        (click)="startStream()">Start
         Stream</button>
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || obsIsNotClosedOrNotStreaming()"
+      <button mat-flat-button color="primary"
+        [disabled]="obsIsClosedOrAborted() || obsIsNotClosedOrNotStreaming() || !hasConnectionToRemoteServer"
         (click)="stopStream()">Stop
         Stream</button>
     </div>
 
     <div class="button-col">
-      <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted()" (click)="startCsGo()">Start Cs
+      <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted() || !hasConnectionToRemoteServer"
+        (click)="startCsGo()">Start Cs
         Go</button>
-      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted()" (click)="closeCsGo()">Close Cs
+      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer"
+        (click)="closeCsGo()">Close Cs
         Go</button>
+
+      <button mat-flat-button [ngClass]="{
+        'turn-on': !hasConnectionToRemoteServer,
+        'turn-off': hasConnectionToRemoteServer
+      }" (click)="turnOnOrOffRemoteServer()">Turn
+        {{hasConnectionToRemoteServer?
+        "Off" : "On"}} Remote Server</button>
     </div>
   </div>
 

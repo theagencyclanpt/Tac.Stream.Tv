@@ -63,6 +63,7 @@ interface IGlobalState {
 export class AppComponent implements OnInit {
   public currentSceneImage: string = "";
   public previewSceneImage: string = "";
+  public hasConnectionToRemoteServer: boolean = false;
 
   @ViewChild('streamingAnimation', { static: true })
   streamingAnimation?: ElementRef<HTMLDivElement>;
@@ -90,6 +91,7 @@ export class AppComponent implements OnInit {
 
     state.subscribe(
       msg => {
+        this.hasConnectionToRemoteServer = true;
         if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
           this.handlerObsState(msg.ObsState);
         }
@@ -101,6 +103,7 @@ export class AppComponent implements OnInit {
         this.previewsState = msg;
       },
       err => {
+        this.hasConnectionToRemoteServer = false;
         console.log(err);
         this._snackBar.open("Something its wrong, we cant connect to the server.");
       }
@@ -282,5 +285,15 @@ export class AppComponent implements OnInit {
   closeCsGo() {
     this.http.get(environment.apiUrl + "/counter-strike/close")
       .subscribe(() => EMPTY);
+  }
+
+  turnOnOrOffRemoteServer() {
+    if (this.hasConnectionToRemoteServer) {
+      this.http.get(environment.apiUrl + "/machine-manager/shutdown")
+        .subscribe(() => EMPTY);
+    } else {
+      this.http.get("/machine-manager/turnOn")
+        .subscribe(() => EMPTY);
+    }
   }
 }
