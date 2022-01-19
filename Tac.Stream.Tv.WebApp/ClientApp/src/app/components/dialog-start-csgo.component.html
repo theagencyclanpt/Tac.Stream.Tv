@@ -1,0 +1,12 @@
+<div mat-dialog-content>
+  <div class="content">
+    <mat-form-field appearance="fill">
+      <mat-label>Server Ip</mat-label>
+      <input [required]="true" matInput placeholder="Server Ip" [(ngModel)]='ip'>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="onClickOk()">Start & Connect</button>
+</div>

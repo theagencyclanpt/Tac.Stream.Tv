@@ -1,0 +1,40 @@
+<div class="loader-container" *ngIf="loaders.length > 0">
+  <div class="loader">
+  </div>
+  <div [hidden]="loadingMessage != null" class="message">
+    <h1>{{loadingMessage}}</h1>
+  </div>
+</div>
+
+<div class="layout layout-streaming">
+  <div class="current-scene-preview">
+    <img [src]="currentSceneImage" alt="preview" [hidden]="!canShowPreview()">
+    <h3 [hidden]="canShowPreview()">OBS IS CLOSED</h3>
+  </div>
+  <div class="form">
+    <div class="button-col">
+      <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted()" (click)="openObs()">Open Obs</button>
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted()" (click)="closeObs()">Close
+        Obs</button>
+    </div>
+
+    <div class="button-col">
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() " (click)="openPreviewModal()">Open
+        Preview</button>
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrStreaming()" (click)="startStream()">Start
+        Stream</button>
+      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || obsIsNotClosedOrNotStreaming()"
+        (click)="stopStream()">Stop
+        Stream</button>
+    </div>
+
+    <div class="button-col">
+      <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted()" (click)="startCsGo()">Start Cs
+        Go</button>
+      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted()" (click)="closeCsGo()">Close Cs
+        Go</button>
+    </div>
+  </div>
+
+  <div #streamingAnimation class="animate-flicker"></div>
+</div>
