@@ -9,7 +9,7 @@ import { delayWhen, EMPTY, retry, retryWhen, tap, timer } from 'rxjs';
 import { environment } from "../environments/environment";
 
 const stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
-const preview = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+const previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
 
 interface INotificationPreview {
   PreviewScene: string;
@@ -85,19 +85,17 @@ export class AppComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
-    preview
+    previewSocket$
       .pipe(
-        retry()
-      )
-      .subscribe(
-        msg => {
+        tap((msg: INotificationPreview) => {
           this.currentSceneImage = msg.CurrentScene;
           this.previewSceneImage = msg.PreviewScene;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+        }),
+        retryWhen((errors: any) => {
+          return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
+        })
+      )
+      .subscribe();
 
     stateSocket$
       .pipe(
@@ -116,8 +114,6 @@ export class AppComponent implements OnInit {
           this.previewsState = msg;
         }),
         retryWhen((errors: any) => {
-          console.log("ENTROI NO RETRY");
-
           return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
         })
       ).subscribe();
