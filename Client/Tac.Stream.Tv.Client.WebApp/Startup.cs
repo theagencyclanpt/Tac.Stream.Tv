@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using Tac.Stream.Tv.Shared.Notifications;
 
 namespace Tac.Stream.Tv.Client.WebApp
@@ -20,9 +21,10 @@ namespace Tac.Stream.Tv.Client.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.Configure<MachineConfiguration>(Configuration.GetSection("MachineConfiguration"));
+            services.Configure<RemoteServerConfiguration>(Configuration.GetSection("MachineConfiguration"));
             
             services.AddSingleton<NotificationHandler>();
+            services.AddSingleton<GlobalStateManager>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -49,6 +51,13 @@ namespace Tac.Stream.Tv.Client.WebApp
             {
                 app.UseSpaStaticFiles();
             }
+
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(300),
+            };
+
+            app.UseWebSockets(webSocketOptions);
 
             app.UseRouting();
 

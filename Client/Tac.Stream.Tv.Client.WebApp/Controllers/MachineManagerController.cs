@@ -16,9 +16,9 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
     {
         private readonly Socket _sock;
         private readonly ILogger<MachineManagerController> _logger;
-        private readonly MachineConfiguration _machineConfiguration;
+        private readonly RemoteServerConfiguration _machineConfiguration;
 
-        public MachineManagerController(ILogger<MachineManagerController> logger, IOptions<MachineConfiguration> machineOptions)
+        public MachineManagerController(ILogger<MachineManagerController> logger, IOptions<RemoteServerConfiguration> machineOptions)
         {
             _logger = logger;
             _machineConfiguration = machineOptions.Value;

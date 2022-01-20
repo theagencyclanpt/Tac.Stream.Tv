@@ -1,8 +1,10 @@
 ﻿namespace Tac.Stream.Tv.Client.WebApp
 {
-    public class MachineConfiguration
+    public class RemoteServerConfiguration
     {
         public string MacAddress { get; set; }
+
+        public string CheckStateAddress { get; set; }
 
         public string Address { get; set; }
 

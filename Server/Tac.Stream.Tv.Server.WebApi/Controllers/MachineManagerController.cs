@@ -11,5 +11,11 @@ namespace Tac.Stream.Tv.Server.WebApi.Controllers
         {
             Process.Start("shutdown", "/s /f /t 00");
         }
+
+        [HttpGet("isOn")]
+        public bool CheckIfIsOn()
+        {
+            return true;
+        }
     }
 }
