@@ -9,7 +9,7 @@ namespace Tac.Stream.Tv.WebApi.Controllers
         [HttpGet("shutdown")]
         public void ShutdonwMachineAsync()
         {
-            Process.Start("shutdown", "/s /t 0");
+            Process.Start("shutdown", "/s /f /t 00");
         }
     }
 }

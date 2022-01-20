@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tac.Stream.Tv.WebApp.Controllers
 {
@@ -37,11 +38,12 @@ namespace Tac.Stream.Tv.WebApp.Controllers
 
                 for (int i = 0; i < _machineConfiguration.NumberOfPackages; i++)
                 {
-                    _sock.SendTo(magicPacket, IPEndPoint.Parse(_machineConfiguration.Address));
+                    _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse(_machineConfiguration.Address), 9));
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError("Some error on turn on machine.");
             }
         }
 

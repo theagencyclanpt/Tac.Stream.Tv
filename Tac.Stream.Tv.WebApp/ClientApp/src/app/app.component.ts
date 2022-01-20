@@ -5,15 +5,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { DialogChangeSceneComponent } from "./components/dialog-change-scene.component";
 import { DialogStartCsGoComponent } from "./components/dialog-start-csgo.component";
-import { EMPTY } from 'rxjs';
+import { delayWhen, EMPTY, retry, retryWhen, tap, timer } from 'rxjs';
 import { environment } from "../environments/environment";
 
-const state = webSocket<IGlobalState>(environment.notificationWebSocket.state);
+const stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
 const preview = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
 
 interface INotificationPreview {
   PreviewScene: string;
   CurrentScene: string;
+}
+
+enum MachineState {
+  Off = 0,
+  On = 1,
+  TurningOn = 2,
+  TurningOff = 3
 }
 
 enum ObsStateType {
@@ -63,7 +70,7 @@ interface IGlobalState {
 export class AppComponent implements OnInit {
   public currentSceneImage: string = "";
   public previewSceneImage: string = "";
-  public hasConnectionToRemoteServer: boolean = false;
+  public machineState: MachineState = MachineState.Off;
 
   @ViewChild('streamingAnimation', { static: true })
   streamingAnimation?: ElementRef<HTMLDivElement>;
@@ -78,36 +85,42 @@ export class AppComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
-    preview.subscribe(
-      msg => {
-        this.currentSceneImage = msg.CurrentScene;
-        this.previewSceneImage = msg.PreviewScene;
-      },
-      err => {
-        console.log(err);
-        this._snackBar.open("Something its wrong, we cant connect to the server.");
-      }
-    );
-
-    state.subscribe(
-      msg => {
-        this.hasConnectionToRemoteServer = true;
-        if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
-          this.handlerObsState(msg.ObsState);
+    preview
+      .pipe(
+        retry()
+      )
+      .subscribe(
+        msg => {
+          this.currentSceneImage = msg.CurrentScene;
+          this.previewSceneImage = msg.PreviewScene;
+        },
+        err => {
+          console.log(err);
         }
+      );
 
-        if (this.previewsState?.CounterStikeGameState.State !== msg.CounterStikeGameState.State) {
-          this.handlerCsGoState(msg.CounterStikeGameState);
-        }
+    stateSocket$
+      .pipe(
+        tap((msg: IGlobalState) => {
+          this.machineState = MachineState.On;
+          this.loaders.pop();
 
-        this.previewsState = msg;
-      },
-      err => {
-        this.hasConnectionToRemoteServer = false;
-        console.log(err);
-        this._snackBar.open("Something its wrong, we cant connect to the server.");
-      }
-    );
+          if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
+            this.handlerObsState(msg.ObsState);
+          }
+
+          if (this.previewsState?.CounterStikeGameState.State !== msg.CounterStikeGameState.State) {
+            this.handlerCsGoState(msg.CounterStikeGameState);
+          }
+
+          this.previewsState = msg;
+        }),
+        retryWhen((errors: any) => {
+          console.log("ENTROI NO RETRY");
+
+          return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
+        })
+      ).subscribe();
   }
 
   canShowPreview(): boolean {
@@ -120,7 +133,9 @@ export class AppComponent implements OnInit {
     this.loaders.push("CSGO" + CounterStikeGameStateType[state.State]);
     this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
     this._snackBar.open(CounterStikeGameStateType[state.State] + "  -  Counter-Strike GO", "", {
-      duration: 1000
+      duration: 1000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
     });
   }
 
@@ -129,7 +144,9 @@ export class AppComponent implements OnInit {
     this.loadingMessage = null;
     if (withMessage)
       this._snackBar.open(CounterStikeGameStateType[state.State] + "  -  Counter-Strike GO", "", {
-        duration: 1000
+        duration: 1000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
       });
   }
 
@@ -147,7 +164,10 @@ export class AppComponent implements OnInit {
         break;
 
       case CounterStikeGameStateType.Aborted:
-        this._snackBar.open(state.ErrorMessages[0], "");
+        this._snackBar.open(state.ErrorMessages[0], "", {
+          verticalPosition: 'top',
+          horizontalPosition: 'center'
+        });
         this.stopProccessLoadingCsgo(state, false);
         break
       case CounterStikeGameStateType.Closed:
@@ -164,7 +184,9 @@ export class AppComponent implements OnInit {
     this.loaders.push("OBS" + ObsStateType[state.State]);
     this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
     this._snackBar.open(ObsStateType[state.State] + "- OBS", "", {
-      duration: 1000
+      duration: 1000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
     });
   }
 
@@ -173,7 +195,9 @@ export class AppComponent implements OnInit {
     this.loadingMessage = null;
     if (withMessage)
       this._snackBar.open(ObsStateType[state.State] + "- OBS", "", {
-        duration: 1000
+        duration: 1000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
       });
   }
 
@@ -288,12 +312,41 @@ export class AppComponent implements OnInit {
   }
 
   turnOnOrOffRemoteServer() {
-    if (this.hasConnectionToRemoteServer) {
+    if (this.machineState == MachineState.On) {
+      this.machineState = MachineState.TurningOff;
+      this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
+      this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
+
+      this._snackBar.open("Turning off remote server.", "", {
+        duration: 10000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
+      });
+
       this.http.get(environment.apiUrl + "/machine-manager/shutdown")
         .subscribe(() => EMPTY);
-    } else {
+
+      setTimeout(() => {
+        this.machineState = MachineState.Off;
+        this.loaders.pop();
+      }, 10000);
+    } else if (this.machineState == MachineState.Off) {
+      this.machineState = MachineState.TurningOn;
+      this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
+
+      this._snackBar.open("Turning on remote server.", "", {
+        duration: 15000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center'
+      });
+
       this.http.get("/machine-manager/turnOn")
         .subscribe(() => EMPTY);
     }
+  }
+
+  hasConnectionToRemoteServer() {
+    console.log(this.machineState);
+    return this.machineState == MachineState.On;
   }
 }
