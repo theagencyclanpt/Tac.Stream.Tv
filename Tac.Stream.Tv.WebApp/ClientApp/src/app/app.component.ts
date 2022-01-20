@@ -103,7 +103,7 @@ export class AppComponent implements OnInit {
       .pipe(
         tap((msg: IGlobalState) => {
           this.machineState = MachineState.On;
-          this.loaders.pop();
+          this.loaders = this.loaders.filter(x => x !== MachineState[MachineState.TurningOn]);
 
           if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
             this.handlerObsState(msg.ObsState);
