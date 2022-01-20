@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSGSI-Core" Version="1.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="obs-websocket-dotnet" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Tac.Stream.Tv.Shared\Tac.Stream.Tv.Shared.csproj" />
+    <ProjectReference Include="..\Tac.Stream.Tv.Server.Manager.Entities\Tac.Stream.Tv.Server.Manager.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
