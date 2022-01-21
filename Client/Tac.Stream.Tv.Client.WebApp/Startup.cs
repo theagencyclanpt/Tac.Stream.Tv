@@ -21,7 +21,8 @@ namespace Tac.Stream.Tv.Client.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            
+
+            services.AddSingleton<BackgroundCheckRemoteServerService>();
             services.Configure<RemoteServerConfiguration>(Configuration.GetSection("MachineConfiguration"));
             
             services.AddSingleton<NotificationHandler>();

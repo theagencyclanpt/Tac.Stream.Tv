@@ -18,16 +18,19 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
     {
         private readonly Socket _sock;
         private readonly ILogger<MachineManagerController> _logger;
+        private readonly BackgroundCheckRemoteServerService _backgroundCheckRemoteServerService;
         private readonly RemoteServerConfiguration _machineConfiguration;
         private readonly GlobalStateManager _globalStateManager;
         private static readonly HttpClient client = new HttpClient();
 
         public MachineManagerController(
+            BackgroundCheckRemoteServerService backgroundCheckRemoteServerService,
             GlobalStateManager globalStateManager,
             ILogger<MachineManagerController> logger, 
             IOptions<RemoteServerConfiguration> machineOptions)
         {
             _logger = logger;
+            _backgroundCheckRemoteServerService = backgroundCheckRemoteServerService;
             _globalStateManager = globalStateManager;
             _machineConfiguration = machineOptions.Value;
             _sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp)
@@ -39,6 +42,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         [HttpGet("turnOn")]
         public async Task TurnOnMachine()
         {
+            await _backgroundCheckRemoteServerService.StopAsync(new CancellationToken());
             var state = _globalStateManager.GlobalState;
             state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
             await _globalStateManager.UpdateState(state);
@@ -57,16 +61,28 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
             {
                 _logger.LogError("Some error on turn on machine.");
             }
+
+            await Task.Run(async () => {
+                await Task.Delay(10000);
+                await _backgroundCheckRemoteServerService.StartAsync(new CancellationToken());
+            });
         }
 
         [HttpGet("turnOff")]
         public async Task TurnOffMachine()
         {
+            await _backgroundCheckRemoteServerService.StopAsync(new CancellationToken());
+            
             var state = _globalStateManager.GlobalState;
             state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
             await _globalStateManager.UpdateState(state);
 
             await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
+
+            await Task.Run(async () => {
+                await Task.Delay(10000);
+                await _backgroundCheckRemoteServerService.StartAsync(new CancellationToken());
+            });
         }
 
         private static byte[] BuildMagicPacket(PhysicalAddress macAddress)

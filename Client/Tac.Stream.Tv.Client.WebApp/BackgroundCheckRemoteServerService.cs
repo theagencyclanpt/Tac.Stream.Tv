@@ -31,9 +31,9 @@ namespace Tac.Stream.Tv.Client.WebApp
             timer?.Dispose();
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
-            timer = new Timer(o => {
+            timer = new Timer(async o => {
 
                 var state = _globalStateManager.GlobalState;
 
@@ -47,42 +47,13 @@ namespace Tac.Stream.Tv.Client.WebApp
                     state.RemoteServerState = RemoteServerStateTypeModel.Off;
                 }
 
-                _globalStateManager.UpdateState(state).GetAwaiter().GetResult();
+                await _globalStateManager.UpdateState(state);
             },
             null,
             TimeSpan.Zero,
             TimeSpan.FromSeconds(4));
 
-            return Task.CompletedTask;
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken, bool withouValidateIfIsTurningOn = false)
-        {
-            timer = new Timer(o => {
-
-                var state = _globalStateManager.GlobalState;
-                if (state.RemoteServerState == RemoteServerStateTypeModel.TurningOn && withouValidateIfIsTurningOn)
-                {
-                    return;
-                }
-
-                try
-                {
-                    var response = client.GetAsync(_remoteServerConfiguration.RemoteServerBaseAddress + "/api/machine-manager/isOn").GetAwaiter().GetResult();
-                    state.RemoteServerState = RemoteServerStateTypeModel.On;
-                }
-                catch (Exception ex)
-                {
-                    state.RemoteServerState = RemoteServerStateTypeModel.Off;
-                }
-
-                _globalStateManager.UpdateState(state).GetAwaiter().GetResult();
-            },
-            null,
-            TimeSpan.Zero,
-            TimeSpan.FromSeconds(4));
-
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
