@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
@@ -41,7 +42,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
             var state = _globalStateManager.GlobalState;
             state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
             await _globalStateManager.UpdateState(state);
-
+            
             try
             {
                 var macParse = PhysicalAddress.Parse(_machineConfiguration.MacAddress);

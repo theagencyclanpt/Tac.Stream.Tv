@@ -215,7 +215,9 @@ export class AppComponent implements OnInit {
           }
         },
         err => console.log(err),
-        () => console.log('complete')
+        () => {
+          this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+        }
       );
   }
 
