@@ -25,7 +25,7 @@ namespace Tac.Stream.Tv.Client.WebApp
             
             services.AddSingleton<NotificationHandler>();
             services.AddSingleton<GlobalStateManager>();
-
+            services.AddCors();
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -37,6 +37,8 @@ namespace Tac.Stream.Tv.Client.WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseWebSockets();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,13 +53,8 @@ namespace Tac.Stream.Tv.Client.WebApp
             {
                 app.UseSpaStaticFiles();
             }
-
-            var webSocketOptions = new WebSocketOptions()
-            {
-                KeepAliveInterval = TimeSpan.FromSeconds(300),
-            };
-
-            app.UseWebSockets(webSocketOptions);
+            
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseRouting();
 

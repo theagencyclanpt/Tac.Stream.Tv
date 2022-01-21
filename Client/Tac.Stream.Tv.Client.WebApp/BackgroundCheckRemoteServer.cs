@@ -38,7 +38,7 @@ namespace Tac.Stream.Tv.Client.WebApp
 
                 try
                 {
-                    var response = client.GetAsync(_remoteServerConfiguration.CheckStateAddress).GetAwaiter().GetResult();
+                    var response = client.GetAsync(_remoteServerConfiguration.RemoteServerBaseAddress + "/api/machine-manager/isOn").GetAwaiter().GetResult();
                     state.RemoteServerState = RemoteServerStateTypeModel.On;
                 }
                 catch (Exception ex)
@@ -50,7 +50,7 @@ namespace Tac.Stream.Tv.Client.WebApp
             },
             null,
             TimeSpan.Zero,
-            TimeSpan.FromSeconds(5));
+            TimeSpan.FromSeconds(4));
 
             return Task.CompletedTask;
         }

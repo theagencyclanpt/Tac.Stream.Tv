@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, MissingTranslationStrategy } from '@angular/core';
 import { webSocket, WebSocketSubject } from "rxjs/webSocket";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,6 +33,10 @@ enum ObsStateType {
   Aborted = 9
 }
 
+interface IClientState {
+  RemoteServerState: MachineState;
+}
+
 interface IObsState {
   State: ObsStateType;
   ErrorMessages: string[];
@@ -57,6 +61,7 @@ interface IGlobalState {
   ObsState: IObsState;
   CounterStikeGameState: CounterStikeGameState;
 }
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -68,6 +73,7 @@ export class AppComponent implements OnInit {
   public machineState: MachineState = MachineState.Off;
   private previewSocket$: WebSocketSubject<INotificationPreview> | undefined;
   private stateSocket$: WebSocketSubject<IGlobalState> | undefined;
+  private clientSocket$: WebSocketSubject<IClientState> | undefined;
 
   @ViewChild('streamingAnimation', { static: true })
   streamingAnimation?: ElementRef<HTMLDivElement>;
@@ -83,13 +89,94 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
+    this.clientSocket$ = webSocket<IClientState>("ws://" + location.host + "/client/notification/subscribe");
     this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
 
-    this.previewSocket$
+    this.clientSocket$
       .pipe(
-        tap((msg: INotificationPreview) => {
-          this.currentSceneImage = msg.CurrentScene;
-          this.previewSceneImage = msg.PreviewScene;
+        tap((msg: IClientState) => {
+          console.log(msg);
+
+          switch (msg.RemoteServerState) {
+            case MachineState.Off:
+
+              if (this.machineState == MachineState.Off) {
+                break;
+              }
+
+              console.log("LOADING OFF");
+
+              this.machineState = msg.RemoteServerState;
+
+              this.loaders.pop();
+              this._snackBar.open("Remote server is OFF.", "", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center'
+              });
+
+              break;
+            case MachineState.On:
+
+              if (this.machineState == MachineState.On ||
+                this.machineState == MachineState.TurningOn) {
+                break;
+              }
+
+              console.log("LOADING on");
+
+              this.machineState = msg.RemoteServerState;
+
+              this.loaders.pop();
+              this._snackBar.open("Remote server is ON.", "", {
+                duration: 5000,
+                verticalPosition: 'top',
+                horizontalPosition: 'center'
+              });
+
+              break;
+
+            case MachineState.TurningOff:
+              if (this.machineState == MachineState.TurningOff) {
+                break;
+              }
+
+              console.log("LOADING turning off");
+
+              this.machineState = msg.RemoteServerState;
+
+              this.machineState = MachineState.TurningOff;
+              this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
+              this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
+
+              this._snackBar.open("Turning off remote server.", "", {
+                verticalPosition: 'top',
+                horizontalPosition: 'center'
+              });
+              break;
+            case MachineState.TurningOn:
+              if (this.machineState == MachineState.TurningOn) {
+                break;
+              }
+
+              this.machineState = msg.RemoteServerState;
+
+              console.log("LOADING turning on");
+
+
+              this.machineState = MachineState.TurningOn;
+              this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
+              this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
+
+              this._snackBar.open("Turning on remote server.", "", {
+                verticalPosition: 'top',
+                horizontalPosition: 'center'
+              });
+              break;
+
+            default:
+              console.warn("The state not mapped" + msg.RemoteServerState);
+          }
         }),
         retryWhen((errors: any) => {
           return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
@@ -100,8 +187,6 @@ export class AppComponent implements OnInit {
     this.stateSocket$
       .pipe(
         tap((msg: IGlobalState) => {
-          this.machineState = MachineState.On;
-          this.loaders = this.loaders.filter(x => x !== MachineState[MachineState.TurningOn]);
 
           if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
             this.handlerObsState(msg.ObsState);
@@ -117,6 +202,21 @@ export class AppComponent implements OnInit {
           return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
         })
       ).subscribe();
+
+    this.previewSocket$
+      .pipe(
+        retry()
+      )
+      .subscribe(
+        msg => {
+          if (msg) {
+            this.currentSceneImage = msg.CurrentScene;
+            this.previewSceneImage = msg.PreviewScene;
+          }
+        },
+        err => console.log(err),
+        () => console.log('complete')
+      );
   }
 
   canShowPreview(): boolean {
@@ -174,6 +274,8 @@ export class AppComponent implements OnInit {
       default:
         console.warn("The type is not mapped.");
     }
+
+
   }
 
   private proccessLoadingObs(state: IObsState) {
@@ -309,40 +411,15 @@ export class AppComponent implements OnInit {
 
   turnOnOrOffRemoteServer() {
     if (this.machineState == MachineState.On) {
-      this.machineState = MachineState.TurningOff;
-      this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
-      this.loaders = this.loaders.filter((v, i, a) => a.indexOf(v) === i);
-
-      this._snackBar.open("Turning off remote server.", "", {
-        duration: 10000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
-
-      this.http.get(environment.apiUrl + "/machine-manager/shutdown")
+      this.http.get("/api/machine-manager/turnOff")
         .subscribe(() => EMPTY);
-
-      setTimeout(() => {
-        this.machineState = MachineState.Off;
-        this.loaders.pop();
-      }, 10000);
     } else if (this.machineState == MachineState.Off) {
-      this.machineState = MachineState.TurningOn;
-      this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
-
-      this._snackBar.open("Turning on remote server.", "", {
-        duration: 15000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center'
-      });
-
-      this.http.get("/machine-manager/turnOn")
+      this.http.get("/api/machine-manager/turnOn")
         .subscribe(() => EMPTY);
     }
   }
 
   hasConnectionToRemoteServer() {
-    console.log(this.machineState);
     return this.machineState == MachineState.On;
   }
 }

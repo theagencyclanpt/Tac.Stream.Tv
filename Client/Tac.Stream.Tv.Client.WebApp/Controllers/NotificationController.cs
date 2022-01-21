@@ -12,11 +12,16 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
     {
         private readonly ILogger<NotificationController> _logger;
         private NotificationHandler _notificationHandler;
+        private GlobalStateManager _globalStateManager;
 
-        public NotificationController(ILogger<NotificationController> looger, NotificationHandler notificationHandler)
+        public NotificationController(
+            ILogger<NotificationController> looger,
+            GlobalStateManager globalStateManager,
+            NotificationHandler notificationHandler)
         {
             _logger = looger;
             _notificationHandler = notificationHandler;
+            _globalStateManager = globalStateManager;
         }
 
         [HttpGet("subscribe")]
@@ -27,7 +32,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
                 using WebSocket webSocket = await
                                    HttpContext.WebSockets.AcceptWebSocketAsync();
 
-                await _notificationHandler.AddWebScoketState(webSocket, null);
+                await _notificationHandler.AddWebScoketState(webSocket, _globalStateManager.GlobalState);
             }
             else
             {

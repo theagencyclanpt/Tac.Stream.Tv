@@ -164,24 +164,13 @@ namespace Tac.Stream.Tv.Server.Manager
             ObsScreenshotTaskCancellationToken = new CancellationTokenSource();
             var token = ObsScreenshotTaskCancellationToken.Token;
 
-            var task = Task.Factory.StartNew(() =>
+            Task.Run(async () =>
             {
-                Thread.CurrentThread.IsBackground = true;
-
-                while (true)
+                try
                 {
-                    if (token.IsCancellationRequested)
+                    while (IsRunning())
                     {
-                        break;
-                    }
-
-                    Thread.Sleep(500);
-
-                    if (IsRunning())
-                    {
-                        try
-                        {
-                            _notificationHandler.SendNotificationToWebSocketPreviewAll(
+                        await _notificationHandler.SendNotificationToWebSocketPreviewAll(
                                 new
                                 {
                                     PreviewScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.PreviewScene, "jpeg", null)
@@ -190,15 +179,16 @@ namespace Tac.Stream.Tv.Server.Manager
                                         .ImageData
                                 }
 
-                           ).GetAwaiter().GetResult();
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                    
+                           );
+
+                        await Task.Delay(1000);
                     }
                 }
-            }, token);
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            });
         }
 
         private void onDisconnect(object sender, EventArgs e)

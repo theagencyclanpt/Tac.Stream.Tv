@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
@@ -17,10 +18,16 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         private readonly Socket _sock;
         private readonly ILogger<MachineManagerController> _logger;
         private readonly RemoteServerConfiguration _machineConfiguration;
+        private readonly GlobalStateManager _globalStateManager;
+        private static readonly HttpClient client = new HttpClient();
 
-        public MachineManagerController(ILogger<MachineManagerController> logger, IOptions<RemoteServerConfiguration> machineOptions)
+        public MachineManagerController(
+            GlobalStateManager globalStateManager,
+            ILogger<MachineManagerController> logger, 
+            IOptions<RemoteServerConfiguration> machineOptions)
         {
             _logger = logger;
+            _globalStateManager = globalStateManager;
             _machineConfiguration = machineOptions.Value;
             _sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp)
                 {
@@ -29,8 +36,12 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         }
 
         [HttpGet("turnOn")]
-        public void TurnOnMachine()
+        public async Task TurnOnMachine()
         {
+            var state = _globalStateManager.GlobalState;
+            state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
+            await _globalStateManager.UpdateState(state);
+
             try
             {
                 var macParse = PhysicalAddress.Parse(_machineConfiguration.MacAddress);
@@ -45,6 +56,16 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
             {
                 _logger.LogError("Some error on turn on machine.");
             }
+        }
+
+        [HttpGet("turnOff")]
+        public async Task TurnOffMachine()
+        {
+            var state = _globalStateManager.GlobalState;
+            state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
+            await _globalStateManager.UpdateState(state);
+
+            await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
         }
 
         private static byte[] BuildMagicPacket(PhysicalAddress macAddress)
