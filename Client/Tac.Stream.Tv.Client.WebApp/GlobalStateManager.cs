@@ -15,9 +15,9 @@ namespace Tac.Stream.Tv.Client.WebApp
 
         public GlobalState GlobalState { get; set; }
 
-        public async Task UpdateState(GlobalState oldState)
+        public async Task UpdateStateAsync(GlobalState newState)
         {
-            GlobalState = oldState;
+            GlobalState = newState;
 
             await _notificationHandler.SendNotificationToWebScoketStateAll(GlobalState);
         }

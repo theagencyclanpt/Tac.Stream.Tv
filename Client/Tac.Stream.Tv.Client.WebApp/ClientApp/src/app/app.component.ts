@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
-    this.clientSocket$ = webSocket<IClientState>("ws://" + location.host + "/client/notification/subscribe");
+    this.clientSocket$ = webSocket<IClientState>(environment.notificationWebSocket.client);
     this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
 
     this.clientSocket$

@@ -45,7 +45,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
             await _backgroundCheckRemoteServerService.StopAsync(new CancellationToken());
             var state = _globalStateManager.GlobalState;
             state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
-            await _globalStateManager.UpdateState(state);
+            await _globalStateManager.UpdateStateAsync(state);
             
             try
             {
@@ -75,7 +75,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
             
             var state = _globalStateManager.GlobalState;
             state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
-            await _globalStateManager.UpdateState(state);
+            await _globalStateManager.UpdateStateAsync(state);
 
             await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
 

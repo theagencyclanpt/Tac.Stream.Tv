@@ -7,7 +7,8 @@ export const environment = {
   apiUrl: "http://localhost:64590/api",
   notificationWebSocket: {
     state: "ws://localhost:64590/notification/state/subscribe",
-    preview: "ws://localhost:64590/notification/preview/subscribe"
+    preview: "ws://localhost:64590/notification/preview/subscribe",
+    client: "ws://localhost:59892/client/notification/subscribe"
   }
 };
 
