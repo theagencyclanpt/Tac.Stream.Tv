@@ -24,6 +24,7 @@ namespace Tac.Stream.Tv.Client.WebApp
             _globalStateManager = globalStateManager;
             _logger = logger;
             _remoteServerConfiguration = remoteServerOptions.Value;
+            client.Timeout = TimeSpan.FromSeconds(2);
         }
 
         public void Dispose()
@@ -31,15 +32,20 @@ namespace Tac.Stream.Tv.Client.WebApp
             timer?.Dispose();
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            timer = new Timer(async o => {
+            timer = new Timer(o => {
+
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
 
                 var state = _globalStateManager.GlobalState;
 
                 try
                 {
-                    var response = client.GetAsync(_remoteServerConfiguration.RemoteServerBaseAddress + "/api/machine-manager/isOn").GetAwaiter().GetResult();
+                    client.GetAsync(_remoteServerConfiguration.RemoteServerBaseAddress + "/api/machine-manager/isOn").Wait();
                     state.RemoteServerState = RemoteServerStateTypeModel.On;
                 }
                 catch (Exception ex)
@@ -47,19 +53,20 @@ namespace Tac.Stream.Tv.Client.WebApp
                     state.RemoteServerState = RemoteServerStateTypeModel.Off;
                 }
 
-                await _globalStateManager.UpdateStateAsync(state);
+                _globalStateManager.UpdateStateAsync(state).Wait();
             },
             null,
             TimeSpan.Zero,
             TimeSpan.FromSeconds(4));
 
-            await Task.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
             timer?.Change(Timeout.Infinite, Timeout.Infinite);
-            return Task.CompletedTask;
+            timer = null;
+            return  Task.CompletedTask;
         }
     }
 }

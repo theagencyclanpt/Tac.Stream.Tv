@@ -84,7 +84,7 @@ namespace Tac.Stream.Tv.Server.Manager
                 return;
             }
 
-            if (timer == 2 && String.IsNullOrEmpty(gameState.Map.Name))
+            if (timer == 4 && String.IsNullOrEmpty(gameState.Map.Name))
             {
                 _gameStateListener.Stop();
                 

@@ -22,7 +22,6 @@ namespace Tac.Stream.Tv.Client.WebApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>().UseUrls("http://*:8080");
-                }).ConfigureServices(services =>
-                    services.AddHostedService<BackgroundCheckRemoteServerService>());
+                });
     }
 }

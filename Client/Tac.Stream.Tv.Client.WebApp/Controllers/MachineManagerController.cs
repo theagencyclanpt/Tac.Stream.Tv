@@ -22,6 +22,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         private readonly RemoteServerConfiguration _machineConfiguration;
         private readonly GlobalStateManager _globalStateManager;
         private static readonly HttpClient client = new HttpClient();
+        private static readonly CancellationToken _cancelationToken = new CancellationToken();
 
         public MachineManagerController(
             BackgroundCheckRemoteServerService backgroundCheckRemoteServerService,
@@ -31,6 +32,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         {
             _logger = logger;
             _backgroundCheckRemoteServerService = backgroundCheckRemoteServerService;
+            
             _globalStateManager = globalStateManager;
             _machineConfiguration = machineOptions.Value;
             _sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp)
@@ -42,47 +44,54 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         [HttpGet("turnOn")]
         public async Task TurnOnMachine()
         {
-            await _backgroundCheckRemoteServerService.StopAsync(new CancellationToken());
-            var state = _globalStateManager.GlobalState;
-            state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
-            await _globalStateManager.UpdateStateAsync(state);
-            
+            await _backgroundCheckRemoteServerService.StopAsync(_cancelationToken);
+           
             try
             {
                 var macParse = PhysicalAddress.Parse(_machineConfiguration.MacAddress);
                 byte[] magicPacket = BuildMagicPacket(macParse);
 
-                for (int i = 0; i < _machineConfiguration.NumberOfPackages; i++)
-                {
-                    _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse(_machineConfiguration.Address), 9));
-                }
+                _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse(_machineConfiguration.Address), 9));
             }
             catch (Exception ex)
             {
                 _logger.LogError("Some error on turn on machine.");
             }
 
-            await Task.Run(async () => {
-                await Task.Delay(10000);
-                await _backgroundCheckRemoteServerService.StartAsync(new CancellationToken());
-            });
+            var count = 0;
+
+            await Task.Run(async () =>
+            {
+                var state = _globalStateManager.GlobalState;
+
+                while (count <= 40)
+                {
+                    state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
+                    await _globalStateManager.UpdateStateAsync(state);
+                    await Task.Delay(1000);
+                    count++;
+                }
+
+                await _backgroundCheckRemoteServerService.StartAsync(_cancelationToken);
+            }).ConfigureAwait(false);
         }
 
         [HttpGet("turnOff")]
         public async Task TurnOffMachine()
         {
-            await _backgroundCheckRemoteServerService.StopAsync(new CancellationToken());
-            
             var state = _globalStateManager.GlobalState;
-            state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
-            await _globalStateManager.UpdateStateAsync(state);
+            await _backgroundCheckRemoteServerService.StopAsync(_cancelationToken);
 
             await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
 
-            await Task.Run(async () => {
-                await Task.Delay(10000);
-                await _backgroundCheckRemoteServerService.StartAsync(new CancellationToken());
-            });
+            state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
+            await _globalStateManager.UpdateStateAsync(state);
+
+            await Task.Run(async () =>
+            {
+                await Task.Delay(7000);
+                await _backgroundCheckRemoteServerService.StartAsync(_cancelationToken);
+            }).ConfigureAwait(false);
         }
 
         private static byte[] BuildMagicPacket(PhysicalAddress macAddress)

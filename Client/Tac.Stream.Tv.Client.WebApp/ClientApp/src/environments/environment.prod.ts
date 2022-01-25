@@ -4,7 +4,6 @@ export const environment = {
   notificationWebSocket: {
     state: "ws://tv.sailer.pt:8081/notification/state/subscribe",
     preview: "ws://tv.sailer.pt:8081/notification/preview/subscribe",
-    // client: "ws://lab.theagencyclan.pt:8080/client/notification/subscribe"
-    client: "ws://localhost:59892/client/notification/subscribe"
+    client: "ws://lab.theagencyclan.pt:8080/client/notification/subscribe"
   }
 };

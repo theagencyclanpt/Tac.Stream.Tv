@@ -120,7 +120,7 @@ export class AppComponent implements OnInit {
 
               if (this.machineState == MachineState.On ||
                 this.machineState == MachineState.TurningOn) {
-                break;
+                this._snackBar.dismiss();
               }
 
               console.log("LOADING on");
@@ -128,11 +128,7 @@ export class AppComponent implements OnInit {
               this.machineState = msg.RemoteServerState;
 
               this.loaders.pop();
-              this._snackBar.open("Remote server is ON.", "", {
-                duration: 5000,
-                verticalPosition: 'top',
-                horizontalPosition: 'center'
-              });
+
 
               break;
 

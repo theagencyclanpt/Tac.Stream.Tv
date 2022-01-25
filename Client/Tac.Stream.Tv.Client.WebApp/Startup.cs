@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using Tac.Stream.Tv.Shared.Notifications;
 
@@ -22,11 +24,17 @@ namespace Tac.Stream.Tv.Client.WebApp
         {
             services.AddOptions();
 
-            services.AddSingleton<BackgroundCheckRemoteServerService>();
             services.Configure<RemoteServerConfiguration>(Configuration.GetSection("MachineConfiguration"));
             
             services.AddSingleton<NotificationHandler>();
             services.AddSingleton<GlobalStateManager>();
+
+            services.AddSingleton<BackgroundCheckRemoteServerService>();
+            services.AddSingleton<IHostedService, BackgroundCheckRemoteServerService>(
+                serviceProvider => serviceProvider.GetService<BackgroundCheckRemoteServerService>());
+
+
+
             services.AddCors();
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
