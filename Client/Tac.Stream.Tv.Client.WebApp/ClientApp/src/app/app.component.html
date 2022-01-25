@@ -13,6 +13,12 @@
   </div>
   <div class="form">
     <div class="button-col">
+      <button mat-flat-button [ngClass]="{
+        'turn-on': !hasConnectionToRemoteServer(),
+        'turn-off': hasConnectionToRemoteServer()
+      }" (click)="turnOnOrOffRemoteServer()">Turn
+        {{hasConnectionToRemoteServer()?
+        "Off" : "On"}} Remote Server</button>
       <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="openObs()">Open Obs</button>
       <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
@@ -40,13 +46,10 @@
       <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="closeCsGo()">Close Cs
         Go</button>
-
-      <button mat-flat-button [ngClass]="{
-        'turn-on': !hasConnectionToRemoteServer(),
-        'turn-off': hasConnectionToRemoteServer()
-      }" (click)="turnOnOrOffRemoteServer()">Turn
-        {{hasConnectionToRemoteServer()?
-        "Off" : "On"}} Remote Server</button>
+      <button mat-flat-button color="primary" [disabled]="true">
+        <mat-icon aria-hidden="false">settings</mat-icon>
+        Settings
+      </button>
     </div>
   </div>
 

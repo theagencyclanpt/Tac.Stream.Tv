@@ -88,14 +88,13 @@ export class AppComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
-    this.stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
     this.clientSocket$ = webSocket<IClientState>(environment.notificationWebSocket.client);
-    this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+    this.connectToSocketRemoteServer();
 
     this.clientSocket$
       .pipe(
         tap((msg: IClientState) => {
-          console.log(msg);
+          console.log("@CLIENT_STATE", msg);
 
           switch (msg.RemoteServerState) {
             case MachineState.Off:
@@ -104,8 +103,7 @@ export class AppComponent implements OnInit {
                 break;
               }
 
-              console.log("LOADING OFF");
-
+              this.disconectToSocketRemoteServer();
               this.machineState = msg.RemoteServerState;
 
               this.loaders.pop();
@@ -118,16 +116,16 @@ export class AppComponent implements OnInit {
               break;
             case MachineState.On:
 
-              if (this.machineState == MachineState.On ||
-                this.machineState == MachineState.TurningOn) {
+              if (this.machineState !== MachineState.On &&
+                msg.RemoteServerState == MachineState.On) {
                 this._snackBar.dismiss();
+                this.connectToSocketRemoteServer();
+
+                this.machineState = msg.RemoteServerState;
+                this.loaders.pop();
+                break;
               }
 
-              console.log("LOADING on");
-
-              this.machineState = msg.RemoteServerState;
-
-              this.loaders.pop();
 
 
               break;
@@ -137,8 +135,7 @@ export class AppComponent implements OnInit {
                 break;
               }
 
-              console.log("LOADING turning off");
-
+              this.disconectToSocketRemoteServer();
               this.machineState = msg.RemoteServerState;
 
               this.machineState = MachineState.TurningOff;
@@ -155,10 +152,8 @@ export class AppComponent implements OnInit {
                 break;
               }
 
+              this.disconectToSocketRemoteServer();
               this.machineState = msg.RemoteServerState;
-
-              console.log("LOADING turning on");
-
 
               this.machineState = MachineState.TurningOn;
               this.loaders.push("MACHINE_STATE" + MachineState[this.machineState]);
@@ -179,6 +174,33 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  disconectToSocketRemoteServer() {
+    this.stateSocket$?.unsubscribe();
+    this.previewSocket$?.unsubscribe();
+  }
+
+  connectToSocketRemoteServer() {
+    this.stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
+    this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+
+    this.previewSocket$
+      .pipe(
+        retry()
+      )
+      .subscribe(
+        msg => {
+          if (msg) {
+            this.currentSceneImage = msg.CurrentScene;
+            this.previewSceneImage = msg.PreviewScene;
+          }
+        },
+        err => console.log(err),
+        () => {
+          this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+        }
+      );
 
     this.stateSocket$
       .pipe(
@@ -198,23 +220,6 @@ export class AppComponent implements OnInit {
           return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
         })
       ).subscribe();
-
-    this.previewSocket$
-      .pipe(
-        retry()
-      )
-      .subscribe(
-        msg => {
-          if (msg) {
-            this.currentSceneImage = msg.CurrentScene;
-            this.previewSceneImage = msg.PreviewScene;
-          }
-        },
-        err => console.log(err),
-        () => {
-          this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
-        }
-      );
   }
 
   canShowPreview(): boolean {
