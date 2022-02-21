@@ -323,6 +323,10 @@ export class AppComponent implements OnInit {
       case ObsStateType.Streaming:
         this.stopProccessLoadingObs(state, true);
         this.startAnimationStreaming();
+
+        if (this.scenesList.length == 0) {
+          this.getScenes();
+        }
         break;
 
       case ObsStateType.Aborted:
