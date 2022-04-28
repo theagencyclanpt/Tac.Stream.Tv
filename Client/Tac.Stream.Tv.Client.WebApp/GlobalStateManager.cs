@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Tac.Stream.Tv.Shared.Notifications;
 
 namespace Tac.Stream.Tv.Client.WebApp
@@ -15,10 +16,8 @@ namespace Tac.Stream.Tv.Client.WebApp
 
         public GlobalState GlobalState { get; set; }
 
-        public async Task UpdateStateAsync(GlobalState newState)
+        public async Task UpdateStateAsync()
         {
-            GlobalState = newState;
-
             await _notificationHandler.SendNotificationToWebScoketStateAll(GlobalState);
         }
     }
@@ -26,5 +25,7 @@ namespace Tac.Stream.Tv.Client.WebApp
     public class GlobalState
     {
         public RemoteServerStateTypeModel RemoteServerState { get; set; }
+
+        public DateTimeOffset? LastSyncDate { get; set; }
     }
 }

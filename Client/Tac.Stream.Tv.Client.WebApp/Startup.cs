@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using Tac.Stream.Tv.Client.WebApp.Huds;
 using Tac.Stream.Tv.Shared.Notifications;
 
 namespace Tac.Stream.Tv.Client.WebApp
@@ -19,7 +20,6 @@ namespace Tac.Stream.Tv.Client.WebApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
@@ -29,63 +29,43 @@ namespace Tac.Stream.Tv.Client.WebApp
             services.AddSingleton<NotificationHandler>();
             services.AddSingleton<GlobalStateManager>();
 
-            services.AddSingleton<BackgroundCheckRemoteServerService>();
-            services.AddSingleton<IHostedService, BackgroundCheckRemoteServerService>(
-                serviceProvider => serviceProvider.GetService<BackgroundCheckRemoteServerService>());
-
-
-
             services.AddCors();
-            services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+
+            services.AddControllers()
+                .AddMvcOptions(x =>
+                {
+                    x.EnableEndpointRouting = true;
+                });
+
+            services.AddSignalR();
+            services.AddRouting();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseWebSockets();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-            
-            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
+                endpoints.MapControllers();
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+                endpoints.MapFallbackToFile(
+                    "{**route}",
+                    "index.html");
 
-                spa.Options.SourcePath = "ClientApp/dist/client-app";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                }
+                endpoints.MapHub<MachineHud>("/machineHub");
+                endpoints.MapHub<NotificationsHub>("/notificationHub");
             });
         }
     }

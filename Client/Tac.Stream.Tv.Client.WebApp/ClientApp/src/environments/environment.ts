@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:64590/api",
+  apiUrl: "http://localhost:9001/api",
   notificationWebSocket: {
-    state: "ws://localhost:64590/notification/state/subscribe",
-    preview: "ws://localhost:64590/notification/preview/subscribe",
-    client: "ws://localhost:59892/client/notification/subscribe"
+    state: "ws://localhost:9001/notification/state/subscribe",
+    preview: "ws://localhost:9001/notification/preview/subscribe",
+    client: "wss://localhost:44307/client/notification/subscribe"
   }
 };
 

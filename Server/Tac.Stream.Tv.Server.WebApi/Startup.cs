@@ -28,6 +28,7 @@ namespace Tac.Stream.Tv.Server.WebApi
             services.AddSingleton<CounterStrikeManager>();
             services.AddSingleton<ObsManager>();
             services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tac.Stream.Tv.Server.WebApi", Version = "v1" });
@@ -35,8 +36,15 @@ namespace Tac.Stream.Tv.Server.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObsManager obsManager)
         {
+            var turnOnObs = Configuration.GetSection("AutoTurnOnObs").Value;
+
+            if (turnOnObs != null && Boolean.Parse(turnOnObs))
+            {
+                obsManager.StartAsync().ConfigureAwait(false);
+            }
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

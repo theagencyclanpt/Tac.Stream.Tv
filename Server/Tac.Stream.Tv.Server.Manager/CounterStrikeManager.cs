@@ -10,9 +10,9 @@ namespace Tac.Stream.Tv.Server.Manager
 {
     public class CounterStrikeManager
     {
-        private GlobalStateManager _globalStateManager;
-        private GameStateListener _gameStateListener;
-        private ILogger<CounterStrikeManager> _logger;
+        private readonly GlobalStateManager _globalStateManager;
+        private readonly GameStateListener _gameStateListener;
+        private readonly ILogger<CounterStrikeManager> _logger;
 
         public CounterStrikeManager(ILogger<CounterStrikeManager> logger,
             GlobalStateManager globalStateManager)
@@ -51,9 +51,9 @@ namespace Tac.Stream.Tv.Server.Manager
             }
         }
 
-        public void Close(bool HasCustomState)
+        public void Close(bool hasCustomState)
         {
-            if (!HasCustomState)
+            if (!hasCustomState)
             {
                 var oldState = _globalStateManager.GlobalState;
                 oldState.CounterStikeGameState.State = CounterStikeGameStateType.Closed;
@@ -65,7 +65,7 @@ namespace Tac.Stream.Tv.Server.Manager
             Process.GetProcessesByName("csgo").FirstOrDefault()?.Kill();
         }
 
-        public bool IsRunning()
+        private bool IsRunning()
         {
             return Process.GetProcessesByName("csgo").Any();
         }
