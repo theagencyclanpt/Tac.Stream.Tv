@@ -65,6 +65,45 @@ namespace Tac.Stream.Tv.Server.Manager
             Process.GetProcessesByName("csgo").FirstOrDefault()?.Kill();
         }
 
+        //TODO Open hud and save the pid 
+        public void OpenHud()
+        {
+            _logger.LogInformation("Opening hud");
+             
+            
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.CreateNoWindow = false;
+            startInfo.UseShellExecute = false;
+            startInfo.WorkingDirectory = "E:/Temp/hud-builded/"; 
+            startInfo.FileName = "HUD.exe";
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            
+            try
+            {
+                // Start the process with the info we specified.
+                // Call WaitForExit and then the using statement will close.
+                using (Process exeProcess = Process.Start(startInfo))
+                {
+                    exeProcess.WaitForExit();
+                }
+            }
+            catch
+            {
+                // Log error.
+            }
+        }
+
+        //TODO close hud by PID
+        private void CloseHud()
+        {
+            var process = Process.GetProcessesByName("HUD");
+
+            if (process.Any())
+            {
+                process[0].Kill();
+            }
+        }
+
         private bool IsRunning()
         {
             return Process.GetProcessesByName("csgo").Any();

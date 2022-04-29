@@ -2,10 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
 using Tac.Stream.Tv.Client.WebApp.Huds;
 using Tac.Stream.Tv.Shared.Notifications;
 
@@ -47,7 +43,7 @@ namespace Tac.Stream.Tv.Client.WebApp
 
             app.UseCors(options => options.AllowAnyOrigin());
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
@@ -55,6 +51,8 @@ namespace Tac.Stream.Tv.Client.WebApp
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseCors(option => option.AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

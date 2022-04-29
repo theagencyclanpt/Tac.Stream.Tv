@@ -58,11 +58,14 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
 
             Task.Run( async () =>
             {
-               await Task.Delay(40000);
-               _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.Off;
-               await _globalStateManager.UpdateStateAsync();
-               
-            }).Wait();
+               await Task.Delay(90000);
+               if (_globalStateManager.GlobalState.RemoteServerState != RemoteServerStateTypeModel.On)
+               {
+                   _logger.LogError("Something wrong cant connect to remote machine");
+                   _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.Off;
+                   await _globalStateManager.UpdateStateAsync();
+               }
+            }).ConfigureAwait(false);
         }
 
         [HttpGet("turnOff")]

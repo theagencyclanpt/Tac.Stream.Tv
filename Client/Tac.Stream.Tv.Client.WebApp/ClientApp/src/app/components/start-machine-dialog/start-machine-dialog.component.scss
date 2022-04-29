@@ -1,0 +1,32 @@
+.content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+
+  &>* {
+    width: 100%;
+  }
+
+    .button-col {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 500px;
+    
+      &>button {
+        margin-top: 10px;
+        height: 75px;
+        background-color: rgba(0, 0, 0, 0.877);
+      }
+    
+      &>.mat-button-disabled {
+        background-color: rgba(158, 158, 158, 0.877);
+        color: black;
+      }
+    
+      .turn-on {
+        background-color: rgba(19, 44, 19, 0.911);
+        color: white;
+      }
+    }
+}

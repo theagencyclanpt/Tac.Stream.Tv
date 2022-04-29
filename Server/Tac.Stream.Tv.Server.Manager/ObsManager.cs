@@ -64,7 +64,7 @@ namespace Tac.Stream.Tv.Server.Manager
             }
 
             //Delay to open obs
-            await Task.Delay(500);
+            await Task.Delay(2000);
 
             try
             {
@@ -192,9 +192,9 @@ namespace Tac.Stream.Tv.Server.Manager
                         await _notificationHandler.SendNotificationToWebSocketPreviewAll(
                                 new
                                 {
-                                    PreviewScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.PreviewScene, "jpeg", null, 640, 480)
+                                    PreviewScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.PreviewScene, "jpeg", null, 1280, 720)
                                         .ImageData,
-                                    CurrentScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.CurrenteScene, "jpeg", null, 640, 480)
+                                    CurrentScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.CurrenteScene, "jpeg", null, 1280, 720)
                                         .ImageData
                                 }
 
