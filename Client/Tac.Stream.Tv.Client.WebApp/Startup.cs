@@ -47,8 +47,6 @@ namespace Tac.Stream.Tv.Client.WebApp
 
             app.UseCors(options => options.AllowAnyOrigin());
 
-            app.UseHttpsRedirection();
-
             app.UseStaticFiles();
 
             app.UseRouting();

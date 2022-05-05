@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="TAC.STREAM" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" delete_existing_files="true" platform="Any CPU" runtime="Portable" target_folder="D:/Deploy/tac.stream" target_framework="net5.0" uuid_high="-8485771008598456983" uuid_low="-4711680594039520796" />
+    <method v="2" />
+  </configuration>
+</component>

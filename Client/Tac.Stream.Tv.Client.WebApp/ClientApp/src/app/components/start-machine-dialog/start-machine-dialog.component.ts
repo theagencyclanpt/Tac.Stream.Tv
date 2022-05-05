@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-start-machine-dialog',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartMachineDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _http: HttpClient
+  ) { }
 
   ngOnInit(): void {
   }
 
+  turnOn() {
+    this._http.get("/api/machine-manager/turnOn")
+      .subscribe(() => EMPTY);
+  }
 }

@@ -12,8 +12,6 @@ interface INotificationPreview {
   CurrentScene: string;
 }
 
-const preview = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
-
 @Component({
   selector: 'dialog-change-scene',
   templateUrl: 'change-scene-dialog.component.html',
@@ -26,25 +24,25 @@ export class ChangeSceneDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ChangeSceneDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { initialImage: string, options: string[], selected: string},
+    @Inject(MAT_DIALOG_DATA) public data: { initialImage: string, options: string[], selected: string, remoteIp: string },
     private http: HttpClient
   ) {
     this.previewSceneImage = data.initialImage;
     this.selectedScene = data.selected;
 
+    var preview = webSocket<INotificationPreview>("ws://" + this.removeHttp(data.remoteIp) + 'notification/preview/subscribe');
+
     preview.subscribe(
       msg => {
-        if(msg.Previews)
+        if (msg.Previews)
           this.previews = msg.Previews;
-
-          // this.previewSceneImage = msg.PreviewScene;
       },
       err => console.log(err)
     );
   }
 
-  selectScene(scene: string){
-    if(scene == this.selectedScene){
+  selectScene(scene: string) {
+    if (scene == this.selectedScene) {
       this.selectedScene = "";
 
       return;
@@ -55,7 +53,7 @@ export class ChangeSceneDialogComponent {
   }
 
   select(scene: any) {
-    this.http.get(environment.apiUrl + "/obs/change-preview-scene?scene=" + scene)
+    this.http.get(this.data.remoteIp + "api/obs/change-preview-scene?scene=" + scene)
       .subscribe(() => EMPTY);
   }
 
@@ -65,7 +63,16 @@ export class ChangeSceneDialogComponent {
 
   onClickOk(): void {
     this.dialogRef.close();
-    this.http.get(environment.apiUrl + "/obs/change-current-scene?scene=" + this.selectedScene)
+    this.http.get(this.data.remoteIp + "api/obs/change-current-scene?scene=" + this.selectedScene)
       .subscribe(() => EMPTY);
+  }
+
+  removeHttp(url?: string | null) {
+    if (url) {
+      return url.replace(/^http?:\/\//, '');
+    }
+
+    console.error("URL INVALID");
+    return "";
   }
 }

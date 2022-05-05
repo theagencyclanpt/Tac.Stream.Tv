@@ -3,12 +3,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Tac.Stream.Tv.Client.WebApp.Controllers
 {
@@ -41,12 +43,44 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         [HttpGet("turnOn")]
         public async Task TurnOnMachine()
         {
+            IPAddress ip;
+            
+            try
+            {
+                var address = new Uri(_machineConfiguration.Address);
+                
+                Ping p = new Ping();
+                PingReply r;
+                r = p.Send(address.Host);
+
+                if (r.Status == IPStatus.Success)
+                {
+                    ip = r.Address;
+                }
+                else
+                {
+                    throw new Exception("Cant get remote ip");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                _logger.LogError(e, "Cant get ip address of remote server");
+                throw;
+            }
+
+            if (ip == null)
+            {
+                _logger.LogError("Invalid ip address + " + ip);
+                throw new Exception("Invalid ip address + " + ip);
+            }
+            
             try
             {
                 var macParse = PhysicalAddress.Parse(_machineConfiguration.MacAddress);
                 byte[] magicPacket = BuildMagicPacket(macParse);
 
-                _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse(_machineConfiguration.Address), 9));
+                _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(ip, 9));
 
                 _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
                 await _globalStateManager.UpdateStateAsync();
@@ -68,7 +102,7 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         [HttpGet("turnOff")]
         public async Task TurnOffMachine()
         {
-            await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
+            await client.GetAsync(_machineConfiguration.Address + "/api/machine-manager/shutdown");
 
             _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
             await _globalStateManager.UpdateStateAsync();

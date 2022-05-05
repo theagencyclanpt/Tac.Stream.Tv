@@ -16,7 +16,8 @@ import {
   IObsState,
   CounterStikeGameStateType,
   CounterStikeGameState,
-  IGlobalState
+  IGlobalState,
+  IRemoteIp
 } from './interfaces';
 
 @Component({
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
   public previewSceneImage: string = "";
   public machineState: MachineState = MachineState.Off;
 
+  private _remoteIp?: string | null;
   private previewSocket$: WebSocketSubject<INotificationPreview> | undefined;
   private stateSocket$: WebSocketSubject<IGlobalState> | undefined;
   private clientSocket$: WebSocketSubject<IClientState> | undefined;
@@ -42,7 +44,9 @@ export class AppComponent implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     private _dialog: MatDialog,
-    private _http: HttpClient) { }
+    private _http: HttpClient) {
+    this._remoteIp = localStorage.getItem('ip');
+  }
 
   ngOnInit() {
     this.clientSocket$ = webSocket<IClientState>(environment.notificationWebSocket.client);
@@ -147,12 +151,14 @@ export class AppComponent implements OnInit {
   }
 
   connectToSocketRemoteServer() {
-    this.stateSocket$ = webSocket<IGlobalState>(environment.notificationWebSocket.state);
-    this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
+    console.log("TENTANDO CONNECTAR IP:" + this._remoteIp);
+
+    this.stateSocket$ = webSocket<IGlobalState>("ws://" + this.removeHttp(this._remoteIp) + 'notification/state/subscribe');
+    this.previewSocket$ = webSocket<INotificationPreview>("ws://" + this.removeHttp(this._remoteIp) + 'notification/preview/subscribe');
 
     this.previewSocket$
       .pipe(
-        retry()
+        retry(3)
       )
       .subscribe(
         msg => {
@@ -160,30 +166,24 @@ export class AppComponent implements OnInit {
             this.currentSceneImage = msg.CurrentScene;
           }
         },
-        err => console.log(err),
-        () => {
-          this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
-        }
+        err => console.log(err)
       );
 
     this.stateSocket$
       .pipe(
-        tap((msg: IGlobalState) => {
+        retry(3),
+      ).subscribe((msg: IGlobalState) => {
 
-          if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
-            this.handlerObsState(msg.ObsState);
-          }
+        if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
+          this.handlerObsState(msg.ObsState);
+        }
 
-          if (this.previewsState?.CounterStikeGameState.State !== msg.CounterStikeGameState.State) {
-            this.handlerCsGoState(msg.CounterStikeGameState);
-          }
+        if (this.previewsState?.CounterStikeGameState.State !== msg.CounterStikeGameState.State) {
+          this.handlerCsGoState(msg.CounterStikeGameState);
+        }
 
-          this.previewsState = msg;
-        }),
-        retryWhen((errors: any) => {
-          return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
-        })
-      ).subscribe();
+        this.previewsState = msg;
+      });
   }
 
   canShowPreview(): boolean {
@@ -303,7 +303,10 @@ export class AppComponent implements OnInit {
     this._dialog.open(CsgoStartDialogComponent, {
       width: '100%',
       maxWidth: '424px',
-      panelClass: 'kastr-dialog-container'
+      panelClass: 'kastr-dialog-container',
+      data: {
+        remoteIp: this._remoteIp,
+      }
     });
   }
 
@@ -334,6 +337,7 @@ export class AppComponent implements OnInit {
       maxWidth: "906px",
       width: "100%",
       data: {
+        remoteIp: this._remoteIp,
         initialImage: this.previewSceneImage,
         options: this.scenesList.filter(x => x != this.previewsState?.ObsState.CurrenteScene),
         selected: this.previewsState?.ObsState.PreviewScene
@@ -343,24 +347,24 @@ export class AppComponent implements OnInit {
   }
 
   getScenes() {
-    this._http.get(environment.apiUrl + "/obs/scenes")
+    this._http.get(this._remoteIp + "api/obs/scenes")
       .subscribe((data) => {
         this.scenesList = data as string[];
       });
   }
 
   startStream() {
-    this._http.get(environment.apiUrl + "/obs/start/stream")
+    this._http.get(this._remoteIp + "api/obs/start/stream")
       .subscribe(() => EMPTY);
   }
 
   stopStream() {
-    this._http.get(environment.apiUrl + "/obs/stop/stream")
+    this._http.get(this._remoteIp + "api/obs/stop/stream")
       .subscribe(() => EMPTY);
   }
 
   closeCsGo() {
-    this._http.get(environment.apiUrl + "/counter-strike/close")
+    this._http.get(this._remoteIp + "api/counter-strike/close")
       .subscribe(() => EMPTY);
   }
 
@@ -368,4 +372,14 @@ export class AppComponent implements OnInit {
     this._http.get("/api/machine-manager/turnOff")
       .subscribe(() => EMPTY);
   }
+
+  removeHttp(url?: string | null) {
+    if (url) {
+      return url.replace(/^http?:\/\//, '');
+    }
+
+    console.error("URL INVALID");
+    return "";
+  }
 }
+

@@ -51,3 +51,7 @@ export interface IGlobalState {
   ObsState: IObsState;
   CounterStikeGameState: CounterStikeGameState;
 }
+
+export interface IRemoteIp {
+  ip: string;
+}
