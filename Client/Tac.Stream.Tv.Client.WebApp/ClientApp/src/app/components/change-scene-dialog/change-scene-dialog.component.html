@@ -1,0 +1,27 @@
+<div class="container-fluid full-height overflow-auto">
+
+  <div class="d-flex flex-row flex-wrap align-items-center justify-content-center" *ngIf="previews else loadingPreviews">
+    <div class="pe-md-3 mb-2 scene-option"
+        [ngClass]="{'scene-option--selected' : scene == selectedScene}"
+        (click)="selectScene(scene)"
+      *ngFor="let scene of data.options">
+        <img class="img-fluid rounded mx-auto d-block" [src]="previews[scene]">
+        <span class="justify-content-center align-items-center">{{scene}}</span>
+    </div>
+  </div>
+
+  <ng-template #loadingPreviews>
+    <h3>Loading</h3>
+  </ng-template>
+</div>
+
+  <div class="container-fluid justify-content-center align-items-center mt-3">
+    <div class="row g-1 py-2">
+      <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+        <button class="btn-kastr" mat-dialog-close>Cancel</button>
+      </div>
+      <div class="col-12 col-md-6 d-flex justify-content-center align-items-center">
+        <button class="btn-kastr btn-kastr-red" [disabled]="!selectedScene" (click)="onClickOk()">Apply</button>
+      </div>
+    </div>
+  </div>

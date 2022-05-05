@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "ng build --watch  --configuration development",
+    "dev": "ng build --output-path ../wwwroot --watch --configuration development",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
     "angular2-uuid": "^1.1.1",
+    "bootstrap": "^5.1.3",
+    "ngx-bootstrap": "^8.0.0",
     "normalize.css": "^8.0.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

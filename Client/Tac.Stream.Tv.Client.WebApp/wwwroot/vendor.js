@@ -4505,6 +4505,282 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
 
 /***/ }),
 
+/***/ 4929:
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "__extends": () => (/* binding */ __extends),
+/* harmony export */   "__assign": () => (/* binding */ __assign),
+/* harmony export */   "__rest": () => (/* binding */ __rest),
+/* harmony export */   "__decorate": () => (/* binding */ __decorate),
+/* harmony export */   "__param": () => (/* binding */ __param),
+/* harmony export */   "__metadata": () => (/* binding */ __metadata),
+/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
+/* harmony export */   "__generator": () => (/* binding */ __generator),
+/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
+/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
+/* harmony export */   "__values": () => (/* binding */ __values),
+/* harmony export */   "__read": () => (/* binding */ __read),
+/* harmony export */   "__spread": () => (/* binding */ __spread),
+/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
+/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
+/* harmony export */   "__await": () => (/* binding */ __await),
+/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
+/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
+/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
+/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
+/* harmony export */   "__importStar": () => (/* binding */ __importStar),
+/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
+/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
+/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet)
+/* harmony export */ });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+/** @deprecated */
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+
+/***/ }),
+
 /***/ 1631:
 /*!******************************************************************!*\
   !*** ./node_modules/@angular/animations/fesm2015/animations.mjs ***!
@@ -87759,6 +88035,2953 @@ const VERSION = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.Version('13.1.2')
 /**
  * Generated bundle index. Do not edit.
  */
+
+
+
+/***/ }),
+
+/***/ 3247:
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/ngx-bootstrap/component-loader/fesm2015/ngx-bootstrap-component-loader.mjs ***!
+  \*************************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BsComponentRef": () => (/* binding */ BsComponentRef),
+/* harmony export */   "ComponentLoader": () => (/* binding */ ComponentLoader),
+/* harmony export */   "ComponentLoaderFactory": () => (/* binding */ ComponentLoaderFactory),
+/* harmony export */   "ContentRef": () => (/* binding */ ContentRef)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap/utils */ 8172);
+/* harmony import */ var ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-bootstrap/positioning */ 78);
+
+
+
+
+
+class BsComponentRef {}
+/**
+ * @copyright Valor Software
+ * @copyright Angular ng-bootstrap team
+ */
+
+
+class ContentRef {
+  constructor( // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  nodes, viewRef, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  componentRef) {
+    this.nodes = nodes;
+    this.viewRef = viewRef;
+    this.componentRef = componentRef;
+  }
+
+} // todo: add delay support
+
+
+class ComponentLoader {
+  /**
+   * Do not use this directly, it should be instanced via
+   * `ComponentLoadFactory.attach`
+   * @internal
+   */
+  constructor(_viewContainerRef, _renderer, _elementRef, _injector, _componentFactoryResolver, _ngZone, _applicationRef, _posService) {
+    this._viewContainerRef = _viewContainerRef;
+    this._renderer = _renderer;
+    this._elementRef = _elementRef;
+    this._injector = _injector;
+    this._componentFactoryResolver = _componentFactoryResolver;
+    this._ngZone = _ngZone;
+    this._applicationRef = _applicationRef;
+    this._posService = _posService;
+    this.onBeforeShow = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    this.onShown = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    this.onBeforeHide = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    this.onHidden = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    this._providers = [];
+    this._isHiding = false;
+    /**
+     * A selector used if container element was not found
+     */
+
+    this.containerDefaultSelector = 'body';
+    this._listenOpts = {};
+    this._globalListener = Function.prototype;
+  }
+
+  get isShown() {
+    if (this._isHiding) {
+      return false;
+    }
+
+    return !!this._componentRef;
+  }
+
+  attach(compType) {
+    this._componentFactory = this._componentFactoryResolver.resolveComponentFactory(compType);
+    return this;
+  } // todo: add behaviour: to target element, `body`, custom element
+
+
+  to(container) {
+    this.container = container || this.container;
+    return this;
+  }
+
+  position(opts) {
+    if (!opts) {
+      return this;
+    }
+
+    this.attachment = opts.attachment || this.attachment;
+    this._elementRef = opts.target || this._elementRef;
+    return this;
+  }
+
+  provide(provider) {
+    this._providers.push(provider);
+
+    return this;
+  } // todo: appendChild to element or document.querySelector(this.container)
+
+
+  show(opts = {}) {
+    this._subscribePositioning();
+
+    this._innerComponent = void 0;
+
+    if (!this._componentRef) {
+      this.onBeforeShow.emit();
+      this._contentRef = this._getContentRef(opts.content, opts.context, opts.initialState);
+      const injector = _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injector.create({
+        providers: this._providers,
+        parent: this._injector
+      });
+
+      if (!this._componentFactory) {
+        return;
+      }
+
+      this._componentRef = this._componentFactory.create(injector, this._contentRef.nodes);
+
+      this._applicationRef.attachView(this._componentRef.hostView); // this._componentRef = this._viewContainerRef
+      //   .createComponent(this._componentFactory, 0, injector, this._contentRef.nodes);
+
+
+      this.instance = this._componentRef.instance;
+      Object.assign(this._componentRef.instance, opts);
+
+      if (this.container instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__.ElementRef) {
+        this.container.nativeElement.appendChild(this._componentRef.location.nativeElement);
+      }
+
+      if (typeof this.container === 'string' && typeof document !== 'undefined') {
+        const selectedElement = document.querySelector(this.container) || document.querySelector(this.containerDefaultSelector);
+
+        if (!selectedElement) {
+          return;
+        }
+
+        selectedElement.appendChild(this._componentRef.location.nativeElement);
+      }
+
+      if (!this.container && this._elementRef && this._elementRef.nativeElement.parentElement) {
+        this._elementRef.nativeElement.parentElement.appendChild(this._componentRef.location.nativeElement);
+      } // we need to manually invoke change detection since events registered
+      // via
+      // Renderer::listen() are not picked up by change detection with the
+      // OnPush strategy
+
+
+      if (this._contentRef.componentRef) {
+        this._innerComponent = this._contentRef.componentRef.instance;
+
+        this._contentRef.componentRef.changeDetectorRef.markForCheck();
+
+        this._contentRef.componentRef.changeDetectorRef.detectChanges();
+      }
+
+      this._componentRef.changeDetectorRef.markForCheck();
+
+      this._componentRef.changeDetectorRef.detectChanges();
+
+      this.onShown.emit(opts.id ? {
+        id: opts.id
+      } : this._componentRef.instance);
+    }
+
+    this._registerOutsideClick();
+
+    return this._componentRef;
+  }
+
+  hide(id) {
+    var _a, _b, _c, _d, _e, _f;
+
+    if (!this._componentRef) {
+      return this;
+    }
+
+    this._posService.deletePositionElement(this._componentRef.location);
+
+    this.onBeforeHide.emit(this._componentRef.instance);
+    const componentEl = this._componentRef.location.nativeElement;
+    (_a = componentEl.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(componentEl);
+    (_c = (_b = this._contentRef) === null || _b === void 0 ? void 0 : _b.componentRef) === null || _c === void 0 ? void 0 : _c.destroy();
+
+    if (this._viewContainerRef && ((_d = this._contentRef) === null || _d === void 0 ? void 0 : _d.viewRef)) {
+      this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._contentRef.viewRef));
+    }
+
+    (_f = (_e = this._contentRef) === null || _e === void 0 ? void 0 : _e.viewRef) === null || _f === void 0 ? void 0 : _f.destroy();
+    this._contentRef = void 0;
+    this._componentRef = void 0;
+
+    this._removeGlobalListener();
+
+    this.onHidden.emit(id ? {
+      id
+    } : null);
+    return this;
+  }
+
+  toggle() {
+    if (this.isShown) {
+      this.hide();
+      return;
+    }
+
+    this.show();
+  }
+
+  dispose() {
+    if (this.isShown) {
+      this.hide();
+    }
+
+    this._unsubscribePositioning();
+
+    if (this._unregisterListenersFn) {
+      this._unregisterListenersFn();
+    }
+  }
+
+  listen(listenOpts) {
+    var _a;
+
+    this.triggers = listenOpts.triggers || this.triggers;
+    this._listenOpts.outsideClick = listenOpts.outsideClick;
+    this._listenOpts.outsideEsc = listenOpts.outsideEsc;
+    listenOpts.target = listenOpts.target || ((_a = this._elementRef) === null || _a === void 0 ? void 0 : _a.nativeElement);
+
+    const hide = this._listenOpts.hide = () => listenOpts.hide ? listenOpts.hide() : void this.hide();
+
+    const show = this._listenOpts.show = registerHide => {
+      listenOpts.show ? listenOpts.show(registerHide) : this.show(registerHide);
+      registerHide();
+    }; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+    const toggle = registerHide => {
+      this.isShown ? hide() : show(registerHide);
+    };
+
+    if (this._renderer) {
+      this._unregisterListenersFn = (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.listenToTriggersV2)(this._renderer, {
+        target: listenOpts.target,
+        triggers: listenOpts.triggers,
+        show,
+        hide,
+        toggle
+      });
+    }
+
+    return this;
+  }
+
+  _removeGlobalListener() {
+    if (this._globalListener) {
+      this._globalListener();
+
+      this._globalListener = Function.prototype;
+    }
+  }
+
+  attachInline(vRef, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  template) {
+    if (vRef && template) {
+      this._inlineViewRef = vRef.createEmbeddedView(template);
+    }
+
+    return this;
+  }
+
+  _registerOutsideClick() {
+    if (!this._componentRef || !this._componentRef.location) {
+      return;
+    } // why: should run after first event bubble
+
+
+    if (this._listenOpts.outsideClick) {
+      const target = this._componentRef.location.nativeElement;
+      setTimeout(() => {
+        if (this._renderer && this._elementRef) {
+          this._globalListener = (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.registerOutsideClick)(this._renderer, {
+            targets: [target, this._elementRef.nativeElement],
+            outsideClick: this._listenOpts.outsideClick,
+            hide: () => this._listenOpts.hide && this._listenOpts.hide()
+          });
+        }
+      });
+    }
+
+    if (this._listenOpts.outsideEsc && this._renderer && this._elementRef) {
+      const target = this._componentRef.location.nativeElement;
+      this._globalListener = (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.registerEscClick)(this._renderer, {
+        targets: [target, this._elementRef.nativeElement],
+        outsideEsc: this._listenOpts.outsideEsc,
+        hide: () => this._listenOpts.hide && this._listenOpts.hide()
+      });
+    }
+  }
+
+  getInnerComponent() {
+    return this._innerComponent;
+  }
+
+  _subscribePositioning() {
+    if (this._zoneSubscription || !this.attachment) {
+      return;
+    }
+
+    this.onShown.subscribe(() => {
+      var _a;
+
+      this._posService.position({
+        element: (_a = this._componentRef) === null || _a === void 0 ? void 0 : _a.location,
+        target: this._elementRef,
+        attachment: this.attachment,
+        appendToBody: this.container === 'body'
+      });
+    });
+    this._zoneSubscription = this._ngZone.onStable.subscribe(() => {
+      if (!this._componentRef) {
+        return;
+      }
+
+      this._posService.calcPosition();
+    });
+  }
+
+  _unsubscribePositioning() {
+    if (!this._zoneSubscription) {
+      return;
+    }
+
+    this._zoneSubscription.unsubscribe();
+
+    this._zoneSubscription = void 0;
+  }
+
+  _getContentRef( // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  content, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context, // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  initialState) {
+    if (!content) {
+      return new ContentRef([]);
+    }
+
+    if (content instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__.TemplateRef) {
+      if (this._viewContainerRef) {
+        const _viewRef = this._viewContainerRef.createEmbeddedView(content, context);
+
+        _viewRef.markForCheck();
+
+        return new ContentRef([_viewRef.rootNodes], _viewRef);
+      }
+
+      const viewRef = content.createEmbeddedView({});
+
+      this._applicationRef.attachView(viewRef);
+
+      return new ContentRef([viewRef.rootNodes], viewRef);
+    }
+
+    if (typeof content === 'function') {
+      const contentCmptFactory = this._componentFactoryResolver.resolveComponentFactory(content);
+
+      const modalContentInjector = _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injector.create({
+        providers: this._providers,
+        parent: this._injector
+      });
+      const componentRef = contentCmptFactory.create(modalContentInjector);
+      Object.assign(componentRef.instance, initialState);
+
+      this._applicationRef.attachView(componentRef.hostView);
+
+      return new ContentRef([[componentRef.location.nativeElement]], componentRef.hostView, componentRef);
+    }
+
+    const nodes = this._renderer ? [this._renderer.createText(`${content}`)] : [];
+    return new ContentRef([nodes]);
+  }
+
+}
+
+class ComponentLoaderFactory {
+  constructor(_componentFactoryResolver, _ngZone, _injector, _posService, _applicationRef) {
+    this._componentFactoryResolver = _componentFactoryResolver;
+    this._ngZone = _ngZone;
+    this._injector = _injector;
+    this._posService = _posService;
+    this._applicationRef = _applicationRef;
+  }
+  /**
+   *
+   * @param _elementRef
+   * @param _viewContainerRef
+   * @param _renderer
+   */
+
+
+  createLoader(_elementRef, _viewContainerRef, _renderer) {
+    return new ComponentLoader(_viewContainerRef, _renderer, _elementRef, this._injector, this._componentFactoryResolver, this._ngZone, this._applicationRef, this._posService);
+  }
+
+}
+
+ComponentLoaderFactory.ɵfac = function ComponentLoaderFactory_Factory(t) {
+  return new (t || ComponentLoaderFactory)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.ComponentFactoryResolver), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.Injector), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PositioningService), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.ApplicationRef));
+};
+
+ComponentLoaderFactory.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+  token: ComponentLoaderFactory,
+  factory: ComponentLoaderFactory.ɵfac,
+  providedIn: 'root'
+});
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ComponentLoaderFactory, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injectable,
+    args: [{
+      providedIn: 'root'
+    }]
+  }], function () {
+    return [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ComponentFactoryResolver
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.NgZone
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injector
+    }, {
+      type: ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PositioningService
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ApplicationRef
+    }];
+  }, null);
+})();
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+
+/***/ }),
+
+/***/ 78:
+/*!***************************************************************************************!*\
+  !*** ./node_modules/ngx-bootstrap/positioning/fesm2015/ngx-bootstrap-positioning.mjs ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PlacementForBs5": () => (/* binding */ PlacementForBs5),
+/* harmony export */   "Positioning": () => (/* binding */ Positioning),
+/* harmony export */   "PositioningService": () => (/* binding */ PositioningService),
+/* harmony export */   "checkMargins": () => (/* binding */ checkMargins),
+/* harmony export */   "positionElements": () => (/* binding */ positionElements)
+/* harmony export */ });
+/* harmony import */ var ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ngx-bootstrap/utils */ 8172);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ 6362);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ 228);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 6646);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 3280);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 745);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 8184);
+
+
+
+
+
+var MapPlacementInToRL;
+
+(function (MapPlacementInToRL) {
+  MapPlacementInToRL["top"] = "top";
+  MapPlacementInToRL["bottom"] = "bottom";
+  MapPlacementInToRL["left"] = "left";
+  MapPlacementInToRL["right"] = "right";
+  MapPlacementInToRL["auto"] = "auto";
+  MapPlacementInToRL["end"] = "right";
+  MapPlacementInToRL["start"] = "left";
+  MapPlacementInToRL["top left"] = "top left";
+  MapPlacementInToRL["top right"] = "top right";
+  MapPlacementInToRL["right top"] = "right top";
+  MapPlacementInToRL["right bottom"] = "right bottom";
+  MapPlacementInToRL["bottom right"] = "bottom right";
+  MapPlacementInToRL["bottom left"] = "bottom left";
+  MapPlacementInToRL["left bottom"] = "left bottom";
+  MapPlacementInToRL["left top"] = "left top";
+  MapPlacementInToRL["top start"] = "top left";
+  MapPlacementInToRL["top end"] = "top right";
+  MapPlacementInToRL["end top"] = "right top";
+  MapPlacementInToRL["end bottom"] = "right bottom";
+  MapPlacementInToRL["bottom end"] = "bottom right";
+  MapPlacementInToRL["bottom start"] = "bottom left";
+  MapPlacementInToRL["start bottom"] = "start bottom";
+  MapPlacementInToRL["start top"] = "left top";
+})(MapPlacementInToRL || (MapPlacementInToRL = {}));
+
+var PlacementForBs5;
+
+(function (PlacementForBs5) {
+  PlacementForBs5["top"] = "top";
+  PlacementForBs5["bottom"] = "bottom";
+  PlacementForBs5["left"] = "start";
+  PlacementForBs5["right"] = "end";
+  PlacementForBs5["auto"] = "auto";
+  PlacementForBs5["end"] = "end";
+  PlacementForBs5["start"] = "start";
+  PlacementForBs5["top left"] = "top start";
+  PlacementForBs5["top right"] = "top end";
+  PlacementForBs5["right top"] = "end top";
+  PlacementForBs5["right bottom"] = "end bottom";
+  PlacementForBs5["bottom right"] = "bottom end";
+  PlacementForBs5["bottom left"] = "bottom start";
+  PlacementForBs5["left bottom"] = "start bottom";
+  PlacementForBs5["left top"] = "start top";
+  PlacementForBs5["top start"] = "top start";
+  PlacementForBs5["top end"] = "top end";
+  PlacementForBs5["end top"] = "end top";
+  PlacementForBs5["end bottom"] = "end bottom";
+  PlacementForBs5["bottom end"] = "bottom end";
+  PlacementForBs5["bottom start"] = "bottom start";
+  PlacementForBs5["start bottom"] = "start bottom";
+  PlacementForBs5["start top"] = "start top";
+})(PlacementForBs5 || (PlacementForBs5 = {}));
+
+function getStyleComputedProperty(element, property) {
+  if (element.nodeType !== 1) {
+    return [];
+  } // NOTE: 1 DOM access here
+
+
+  const window = element.ownerDocument.defaultView;
+  const css = window === null || window === void 0 ? void 0 : window.getComputedStyle(element, null); // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+
+  return property ? css && css[property] : css;
+}
+/**
+ * Returns the offset parent of the given element
+ */
+
+
+function getOffsetParent(element) {
+  if (!element) {
+    return document.documentElement;
+  }
+
+  const noOffsetParent = null; // NOTE: 1 DOM access here
+
+  let offsetParent = element === null || element === void 0 ? void 0 : element.offsetParent; // Skip hidden elements which don't have an offsetParent
+
+  let sibling = void 0;
+
+  while (offsetParent === noOffsetParent && element.nextElementSibling && sibling !== element.nextElementSibling) {
+    // todo: valorkin fix
+    sibling = element.nextElementSibling;
+    offsetParent = sibling.offsetParent;
+  }
+
+  const nodeName = offsetParent && offsetParent.nodeName;
+
+  if (!nodeName || nodeName === 'BODY' || nodeName === 'HTML') {
+    return sibling ? sibling.ownerDocument.documentElement : document.documentElement;
+  } // .offsetParent will return the closest TH, TD or TABLE in case
+
+
+  if (offsetParent && ['TH', 'TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+    return getOffsetParent(offsetParent);
+  }
+
+  return offsetParent;
+} // todo: valorkin fix
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+function isOffsetContainer(element) {
+  const {
+    nodeName
+  } = element;
+
+  if (nodeName === 'BODY') {
+    return false;
+  }
+
+  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+}
+/**
+ * Finds the root node (document, shadowDOM root) of the given element
+ */
+
+
+function getRoot(node) {
+  if (node.parentNode !== null) {
+    return getRoot(node.parentNode);
+  }
+
+  return node;
+}
+/**
+ * Finds the offset parent common to the two provided nodes
+ */
+
+
+function findCommonOffsetParent(element1, element2) {
+  // This check is needed to avoid errors in case one of the elements isn't defined for any reason
+  if (!element1 || !element1.nodeType || !element2 || !element2.nodeType) {
+    return document.documentElement;
+  } // Here we make sure to give as "start" the element that comes first in the DOM
+
+
+  const order = element1.compareDocumentPosition(element2) & Node.DOCUMENT_POSITION_FOLLOWING;
+  const start = order ? element1 : element2;
+  const end = order ? element2 : element1; // Get common ancestor container
+
+  const range = document.createRange();
+  range.setStart(start, 0);
+  range.setEnd(end, 0); // todo: valorkin fix
+
+  const commonAncestorContainer = range.commonAncestorContainer; // Both nodes are inside #document
+
+  if (element1 !== commonAncestorContainer && element2 !== commonAncestorContainer || start.contains(end)) {
+    if (isOffsetContainer(commonAncestorContainer)) {
+      return commonAncestorContainer;
+    }
+
+    return getOffsetParent(commonAncestorContainer);
+  } // one of the nodes is inside shadowDOM, find which one
+
+
+  const element1root = getRoot(element1);
+
+  if (element1root.host) {
+    return findCommonOffsetParent(element1root.host, element2);
+  } else {
+    return findCommonOffsetParent(element1, getRoot(element2).host);
+  }
+}
+/**
+ * Finds the first parent of an element that has a transformed property defined
+ */
+
+
+function getFixedPositionOffsetParent(element) {
+  // This check is needed to avoid errors in case one of the elements isn't defined for any reason
+  if (!element || !element.parentElement) {
+    return document.documentElement;
+  }
+
+  let el = element.parentElement;
+
+  while ((el === null || el === void 0 ? void 0 : el.parentElement) && getStyleComputedProperty(el, 'transform') === 'none') {
+    el = el.parentElement;
+  }
+
+  return el || document.documentElement;
+}
+/**
+ * Helper to detect borders of a given element
+ */
+
+
+function getBordersSize(styles, axis) {
+  const sideA = axis === 'x' ? 'Left' : 'Top';
+  const sideB = sideA === 'Left' ? 'Right' : 'Bottom';
+  return parseFloat(styles[`border${sideA}Width`]) + parseFloat(styles[`border${sideB}Width`]);
+}
+
+function getSize(axis, body, html, computedStyle) {
+  const _body = body;
+  const _html = html;
+  const _computedStyle = computedStyle;
+  return Math.max(_body[`offset${axis}`], _body[`scroll${axis}`], _html[`client${axis}`], _html[`offset${axis}`], _html[`scroll${axis}`], 0);
+}
+
+function getWindowSizes(document) {
+  const body = document.body;
+  const html = document.documentElement;
+  const computedStyle = void 0;
+  return {
+    height: getSize('Height', body, html, computedStyle),
+    width: getSize('Width', body, html, computedStyle)
+  };
+}
+
+function getClientRect(offsets) {
+  return Object.assign(Object.assign({}, offsets), {
+    right: (offsets.left || 0) + offsets.width,
+    bottom: (offsets.top || 0) + offsets.height
+  });
+}
+/**
+ * Tells if a given input is a number
+ */
+
+
+function isNumeric(n) {
+  return n !== '' && !isNaN(parseFloat(n)) && isFinite(Number(n));
+} // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+function isNumber(value) {
+  return typeof value === 'number' || Object.prototype.toString.call(value) === '[object Number]';
+}
+/**
+ * Get bounding client rect of given element
+ */
+
+
+function getBoundingClientRect(element) {
+  const rect = element.getBoundingClientRect(); // IE10 10 FIX: Please, don't ask, the element isn't
+  // considered in DOM in some circumstances...
+  // This isn't reproducible in IE10 compatibility mode of IE11
+  // try {
+  //   if (isIE(10)) {
+  //     const scrollTop = getScroll(element, 'top');
+  //     const scrollLeft = getScroll(element, 'left');
+  //     if (rect && isNumber(rect.top) && isNumber(rect.left) && isNumber(rect.bottom) && isNumber(rect.right)) {
+  //       rect.top += scrollTop;
+  //       rect.left += scrollLeft;
+  //       rect.bottom += scrollTop;
+  //       rect.right += scrollLeft;
+  //     }
+  //   }
+  // } catch (e) {
+  //   return rect;
+  // }
+
+  if (!(rect && isNumber(rect.top) && isNumber(rect.left) && isNumber(rect.bottom) && isNumber(rect.right))) {
+    return rect;
+  }
+
+  const result = {
+    left: rect.left,
+    top: rect.top,
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top
+  }; // subtract scrollbar size from sizes
+
+  const sizes = element.nodeName === 'HTML' ? getWindowSizes(element.ownerDocument) : undefined;
+  const width = (sizes === null || sizes === void 0 ? void 0 : sizes.width) || element.clientWidth || isNumber(rect.right) && isNumber(result.left) && rect.right - result.left || 0;
+  const height = (sizes === null || sizes === void 0 ? void 0 : sizes.height) || element.clientHeight || isNumber(rect.bottom) && isNumber(result.top) && rect.bottom - result.top || 0;
+  let horizScrollbar = element.offsetWidth - width;
+  let vertScrollbar = element.offsetHeight - height; // if an hypothetical scrollbar is detected, we must be sure it's not a `border`
+  // we make this check conditional for performance reasons
+
+  if (horizScrollbar || vertScrollbar) {
+    const styles = getStyleComputedProperty(element);
+    horizScrollbar -= getBordersSize(styles, 'x');
+    vertScrollbar -= getBordersSize(styles, 'y');
+    result.width -= horizScrollbar;
+    result.height -= vertScrollbar;
+  }
+
+  return getClientRect(result);
+}
+/**
+ * Returns the parentNode or the host of the element
+ */
+// todo: valorkin fix
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+function getParentNode(element) {
+  if (element.nodeName === 'HTML') {
+    return element;
+  }
+
+  return element.parentNode || element.host;
+}
+/**
+ * Returns the scrolling parent of the given element
+ */
+// todo: valorkin fix
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+function getScrollParent(element) {
+  // Return body, `getScroll` will take care to get the correct `scrollTop` from it
+  if (!element) {
+    return document.body;
+  }
+
+  switch (element.nodeName) {
+    case 'HTML':
+    case 'BODY':
+      return element.ownerDocument.body;
+
+    case '#document':
+      return element.body;
+
+    default:
+  } // Firefox want us to check `-x` and `-y` variations as well
+
+
+  const {
+    overflow,
+    overflowX,
+    overflowY
+  } = getStyleComputedProperty(element);
+
+  if (/(auto|scroll|overlay)/.test(String(overflow) + String(overflowY) + String(overflowX))) {
+    return element;
+  }
+
+  return getScrollParent(getParentNode(element));
+}
+
+function getOffsetRectRelativeToArbitraryNode(children, parent, fixedPosition = false) {
+  var _a, _b, _c, _d, _e, _f;
+
+  const isHTML = parent.nodeName === 'HTML';
+  const childrenRect = getBoundingClientRect(children);
+  const parentRect = getBoundingClientRect(parent);
+  const scrollParent = getScrollParent(children);
+  const styles = getStyleComputedProperty(parent);
+  const borderTopWidth = parseFloat(styles.borderTopWidth);
+  const borderLeftWidth = parseFloat(styles.borderLeftWidth); // In cases where the parent is fixed, we must ignore negative scroll in offset calc
+
+  if (fixedPosition && isHTML) {
+    parentRect.top = Math.max((_a = parentRect.top) !== null && _a !== void 0 ? _a : 0, 0);
+    parentRect.left = Math.max((_b = parentRect.left) !== null && _b !== void 0 ? _b : 0, 0);
+  }
+
+  const offsets = getClientRect({
+    top: ((_c = childrenRect.top) !== null && _c !== void 0 ? _c : 0) - ((_d = parentRect.top) !== null && _d !== void 0 ? _d : 0) - borderTopWidth,
+    left: ((_e = childrenRect.left) !== null && _e !== void 0 ? _e : 0) - ((_f = parentRect.left) !== null && _f !== void 0 ? _f : 0) - borderLeftWidth,
+    width: childrenRect.width,
+    height: childrenRect.height
+  });
+  offsets.marginTop = 0;
+  offsets.marginLeft = 0; // Subtract margins of documentElement in case it's being used as parent
+  // we do this only on HTML because it's the only element that behaves
+  // differently when margins are applied to it. The margins are included in
+  // the box of the documentElement, in the other cases not.
+
+  if (isHTML) {
+    const marginTop = parseFloat(styles.marginTop);
+    const marginLeft = parseFloat(styles.marginLeft);
+
+    if (isNumber(offsets.top)) {
+      offsets.top -= borderTopWidth - marginTop;
+    }
+
+    if (isNumber(offsets.bottom)) {
+      offsets.bottom -= borderTopWidth - marginTop;
+    }
+
+    if (isNumber(offsets.left)) {
+      offsets.left -= borderLeftWidth - marginLeft;
+    }
+
+    if (isNumber(offsets.right)) {
+      offsets.right -= borderLeftWidth - marginLeft;
+    } // Attach marginTop and marginLeft because in some circumstances we may need them
+
+
+    offsets.marginTop = marginTop;
+    offsets.marginLeft = marginLeft;
+  }
+
+  return offsets;
+}
+/**
+ * Gets the scroll value of the given element in the given side (top and left)
+ */
+
+
+function getScroll(element, side = 'top') {
+  const upperSide = side === 'top' ? 'scrollTop' : 'scrollLeft';
+  const nodeName = element.nodeName;
+
+  if (nodeName === 'BODY' || nodeName === 'HTML') {
+    const html = element.ownerDocument.documentElement;
+    const scrollingElement = element.ownerDocument.scrollingElement || html;
+    return scrollingElement[upperSide];
+  }
+
+  return element[upperSide];
+}
+
+function getViewportOffsetRectRelativeToArtbitraryNode(element, excludeScroll = false) {
+  const html = element.ownerDocument.documentElement;
+  const relativeOffset = getOffsetRectRelativeToArbitraryNode(element, html);
+  const width = Math.max(html.clientWidth, window.innerWidth || 0);
+  const height = Math.max(html.clientHeight, window.innerHeight || 0);
+  const scrollTop = !excludeScroll ? getScroll(html) : 0;
+  const scrollLeft = !excludeScroll ? getScroll(html, 'left') : 0;
+  const offset = {
+    top: scrollTop - Number(relativeOffset === null || relativeOffset === void 0 ? void 0 : relativeOffset.top) + Number(relativeOffset === null || relativeOffset === void 0 ? void 0 : relativeOffset.marginTop),
+    left: scrollLeft - Number(relativeOffset === null || relativeOffset === void 0 ? void 0 : relativeOffset.left) + Number(relativeOffset === null || relativeOffset === void 0 ? void 0 : relativeOffset.marginLeft),
+    width,
+    height
+  };
+  return getClientRect(offset);
+}
+/**
+ * Check if the given element is fixed or is inside a fixed parent
+ */
+
+
+function isFixed(element) {
+  const nodeName = element.nodeName;
+
+  if (nodeName === 'BODY' || nodeName === 'HTML') {
+    return false;
+  }
+
+  if (getStyleComputedProperty(element, 'position') === 'fixed') {
+    return true;
+  }
+
+  return isFixed(getParentNode(element));
+}
+
+function getBoundaries(target, host, padding = 0, boundariesElement, fixedPosition = false) {
+  // NOTE: 1 DOM access here
+  let boundaries = {
+    top: 0,
+    left: 0
+  };
+  const offsetParent = fixedPosition ? getFixedPositionOffsetParent(target) : findCommonOffsetParent(target, host); // Handle viewport case
+
+  if (boundariesElement === 'viewport') {
+    boundaries = getViewportOffsetRectRelativeToArtbitraryNode(offsetParent, fixedPosition);
+  } else {
+    // Handle other cases based on DOM element used as boundaries
+    let boundariesNode;
+
+    if (boundariesElement === 'scrollParent') {
+      boundariesNode = getScrollParent(getParentNode(host));
+
+      if (boundariesNode.nodeName === 'BODY') {
+        boundariesNode = target.ownerDocument.documentElement;
+      }
+    } else if (boundariesElement === 'window') {
+      boundariesNode = target.ownerDocument.documentElement;
+    } else {
+      boundariesNode = boundariesElement;
+    }
+
+    const offsets = getOffsetRectRelativeToArbitraryNode(boundariesNode, offsetParent, fixedPosition); // In case of HTML, we need a different computation
+
+    if (offsets && boundariesNode.nodeName === 'HTML' && !isFixed(offsetParent)) {
+      const {
+        height,
+        width
+      } = getWindowSizes(target.ownerDocument);
+
+      if (isNumber(boundaries.top) && isNumber(offsets.top) && isNumber(offsets.marginTop)) {
+        boundaries.top += offsets.top - offsets.marginTop;
+      }
+
+      if (isNumber(boundaries.top)) {
+        boundaries.bottom = Number(height) + Number(offsets.top);
+      }
+
+      if (isNumber(boundaries.left) && isNumber(offsets.left) && isNumber(offsets.marginLeft)) {
+        boundaries.left += offsets.left - offsets.marginLeft;
+      }
+
+      if (isNumber(boundaries.top)) {
+        boundaries.right = Number(width) + Number(offsets.left);
+      }
+    } else if (offsets) {
+      // for all the other DOM elements, this one is good
+      boundaries = offsets;
+    }
+  } // Add paddings
+
+
+  if (isNumber(boundaries.left)) {
+    boundaries.left += padding;
+  }
+
+  if (isNumber(boundaries.top)) {
+    boundaries.top += padding;
+  }
+
+  if (isNumber(boundaries.right)) {
+    boundaries.right -= padding;
+  }
+
+  if (isNumber(boundaries.bottom)) {
+    boundaries.bottom -= padding;
+  }
+
+  return boundaries;
+}
+/**
+ * Utility used to transform the `auto` placement to the placement with more
+ * available space.
+ */
+
+
+function getArea({
+  width,
+  height
+}) {
+  return width * height;
+}
+
+function computeAutoPlacement(placement, refRect, target, host, allowedPositions = ['top', 'bottom', 'right', 'left'], boundariesElement = 'viewport', padding = 0) {
+  var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+
+  if (placement.indexOf('auto') === -1) {
+    return placement;
+  }
+
+  const boundaries = getBoundaries(target, host, padding, boundariesElement);
+  const rects = {
+    top: {
+      width: (_a = boundaries === null || boundaries === void 0 ? void 0 : boundaries.width) !== null && _a !== void 0 ? _a : 0,
+      height: ((_b = refRect === null || refRect === void 0 ? void 0 : refRect.top) !== null && _b !== void 0 ? _b : 0) - ((_c = boundaries === null || boundaries === void 0 ? void 0 : boundaries.top) !== null && _c !== void 0 ? _c : 0)
+    },
+    right: {
+      width: ((_d = boundaries === null || boundaries === void 0 ? void 0 : boundaries.right) !== null && _d !== void 0 ? _d : 0) - ((_e = refRect === null || refRect === void 0 ? void 0 : refRect.right) !== null && _e !== void 0 ? _e : 0),
+      height: (_f = boundaries === null || boundaries === void 0 ? void 0 : boundaries.height) !== null && _f !== void 0 ? _f : 0
+    },
+    bottom: {
+      width: (_g = boundaries === null || boundaries === void 0 ? void 0 : boundaries.width) !== null && _g !== void 0 ? _g : 0,
+      height: ((_h = boundaries === null || boundaries === void 0 ? void 0 : boundaries.bottom) !== null && _h !== void 0 ? _h : 0) - ((_j = refRect === null || refRect === void 0 ? void 0 : refRect.bottom) !== null && _j !== void 0 ? _j : 0)
+    },
+    left: {
+      width: ((_k = refRect.left) !== null && _k !== void 0 ? _k : 0) - ((_l = boundaries === null || boundaries === void 0 ? void 0 : boundaries.left) !== null && _l !== void 0 ? _l : 0),
+      height: (_m = boundaries === null || boundaries === void 0 ? void 0 : boundaries.height) !== null && _m !== void 0 ? _m : 0
+    }
+  };
+  const sortedAreas = Object.keys(rects).map(key => Object.assign(Object.assign({
+    position: key
+  }, rects[key]), {
+    area: getArea(rects[key])
+  })).sort((a, b) => b.area - a.area);
+  let filteredAreas = sortedAreas.filter(({
+    width,
+    height
+  }) => {
+    return width >= target.clientWidth && height >= target.clientHeight;
+  });
+  filteredAreas = filteredAreas.filter(({
+    position
+  }) => {
+    return allowedPositions.some(allowedPosition => {
+      return allowedPosition === position;
+    });
+  });
+  const computedPlacement = filteredAreas.length > 0 ? filteredAreas[0].position : sortedAreas[0].position;
+  const variation = placement.split(' ')[1]; // for tooltip on auto position
+
+  target.className = target.className.replace(/bs-tooltip-auto/g, `bs-tooltip-${(0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_0__.getBsVer)().isBs5 ? PlacementForBs5[computedPlacement] : computedPlacement}`);
+  return computedPlacement + (variation ? `-${variation}` : '');
+}
+
+function getOffsets(data) {
+  var _a, _b, _c, _d;
+
+  return {
+    width: data.offsets.target.width,
+    height: data.offsets.target.height,
+    left: Math.floor((_a = data.offsets.target.left) !== null && _a !== void 0 ? _a : 0),
+    top: Math.round((_b = data.offsets.target.top) !== null && _b !== void 0 ? _b : 0),
+    bottom: Math.round((_c = data.offsets.target.bottom) !== null && _c !== void 0 ? _c : 0),
+    right: Math.floor((_d = data.offsets.target.right) !== null && _d !== void 0 ? _d : 0)
+  };
+}
+/**
+ * Get the opposite placement of the given one
+ */
+
+
+function getOppositePlacement(placement) {
+  const hash = {
+    left: 'right',
+    right: 'left',
+    bottom: 'top',
+    top: 'bottom'
+  };
+  return placement.replace(/left|right|bottom|top/g, matched => hash[matched]);
+}
+/**
+ * Get the opposite placement variation of the given one
+ */
+
+
+function getOppositeVariation(variation) {
+  if (variation === 'right') {
+    return 'left';
+  } else if (variation === 'left') {
+    return 'right';
+  }
+
+  return variation;
+}
+
+const parse = (value, def = 0) => value ? parseFloat(value) : def;
+
+function getOuterSizes(element) {
+  const window = element.ownerDocument.defaultView;
+  const styles = window === null || window === void 0 ? void 0 : window.getComputedStyle(element);
+  const x = parse(styles === null || styles === void 0 ? void 0 : styles.marginTop) + parse(styles === null || styles === void 0 ? void 0 : styles.marginBottom);
+  const y = parse(styles === null || styles === void 0 ? void 0 : styles.marginLeft) + parse(styles === null || styles === void 0 ? void 0 : styles.marginRight);
+  return {
+    width: Number(element.offsetWidth) + y,
+    height: Number(element.offsetHeight) + x
+  };
+}
+/**
+ * Get offsets to the reference element
+ */
+
+
+function getReferenceOffsets(target, host, fixedPosition) {
+  const commonOffsetParent = fixedPosition ? getFixedPositionOffsetParent(target) : findCommonOffsetParent(target, host);
+  return getOffsetRectRelativeToArbitraryNode(host, commonOffsetParent, fixedPosition);
+}
+/**
+ * Get offsets to the target
+ */
+
+
+function getTargetOffsets(target, hostOffsets, position) {
+  var _a, _b, _c;
+
+  const placement = position.split(' ')[0]; // Get target node sizes
+
+  const targetRect = getOuterSizes(target); // Add position, width and height to our offsets object
+
+  const targetOffsets = {
+    width: targetRect.width,
+    height: targetRect.height
+  }; // depending by the target placement we have to compute its offsets slightly differently
+
+  const isHoriz = ['right', 'left'].indexOf(placement) !== -1;
+  const mainSide = isHoriz ? 'top' : 'left';
+  const secondarySide = isHoriz ? 'left' : 'top';
+  const measurement = isHoriz ? 'height' : 'width';
+  const secondaryMeasurement = !isHoriz ? 'height' : 'width';
+  targetOffsets[mainSide] = ((_a = hostOffsets[mainSide]) !== null && _a !== void 0 ? _a : 0) + hostOffsets[measurement] / 2 - targetRect[measurement] / 2;
+  targetOffsets[secondarySide] = placement === secondarySide ? ((_b = hostOffsets[secondarySide]) !== null && _b !== void 0 ? _b : 0) - targetRect[secondaryMeasurement] : (_c = hostOffsets[getOppositePlacement(secondarySide)]) !== null && _c !== void 0 ? _c : 0;
+  return targetOffsets;
+}
+
+function isModifierEnabled(options, modifierName) {
+  var _a;
+
+  return !!((_a = options.modifiers[modifierName]) === null || _a === void 0 ? void 0 : _a.enabled);
+}
+
+const availablePositions = {
+  top: ['top', 'top start', 'top end'],
+  bottom: ['bottom', 'bottom start', 'bottom end'],
+  start: ['start', 'start top', 'start bottom'],
+  end: ['end', 'end top', 'end bottom']
+};
+
+function checkPopoverMargin(placement, checkPosition) {
+  if (!(0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_0__.getBsVer)().isBs5) {
+    return false;
+  }
+
+  return availablePositions[checkPosition].includes(placement);
+}
+
+function checkMargins(placement) {
+  if (!(0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_0__.getBsVer)().isBs5) {
+    return '';
+  }
+
+  if (checkPopoverMargin(placement, 'end')) {
+    return 'ms-2';
+  }
+
+  if (checkPopoverMargin(placement, 'start')) {
+    return 'me-2';
+  }
+
+  if (checkPopoverMargin(placement, 'top')) {
+    return 'mb-2';
+  }
+
+  if (checkPopoverMargin(placement, 'bottom')) {
+    return 'mt-2';
+  }
+
+  return '';
+}
+
+function updateContainerClass(data, renderer) {
+  const target = data.instance.target;
+  let containerClass = target.className;
+  const dataPlacement = (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_0__.getBsVer)().isBs5 ? PlacementForBs5[data.placement] : data.placement;
+
+  if (data.placementAuto) {
+    containerClass = containerClass.replace(/bs-popover-auto/g, `bs-popover-${dataPlacement}`);
+    containerClass = containerClass.replace(/ms-2|me-2|mb-2|mt-2/g, '');
+    containerClass = containerClass.replace(/bs-tooltip-auto/g, `bs-tooltip-${dataPlacement}`);
+    containerClass = containerClass.replace(/\sauto/g, ` ${dataPlacement}`);
+
+    if (containerClass.indexOf('popover') !== -1) {
+      containerClass = containerClass + ' ' + checkMargins(dataPlacement);
+    }
+
+    if (containerClass.indexOf('popover') !== -1 && containerClass.indexOf('popover-auto') === -1) {
+      containerClass += ' popover-auto';
+    }
+
+    if (containerClass.indexOf('tooltip') !== -1 && containerClass.indexOf('tooltip-auto') === -1) {
+      containerClass += ' tooltip-auto';
+    }
+  }
+
+  containerClass = containerClass.replace(/left|right|top|bottom|end|start/g, `${dataPlacement.split(' ')[0]}`);
+
+  if (renderer) {
+    renderer.setAttribute(target, 'class', containerClass);
+    return;
+  }
+
+  target.className = containerClass;
+}
+
+function setStyles(element, styles, renderer) {
+  if (!element || !styles) {
+    return;
+  }
+
+  Object.keys(styles).forEach(prop => {
+    let unit = ''; // add unit if the value is numeric and is one of the following
+
+    if (['width', 'height', 'top', 'right', 'bottom', 'left'].indexOf(prop) !== -1 && isNumeric(styles[prop])) {
+      unit = 'px';
+    }
+
+    if (renderer) {
+      renderer.setStyle(element, prop, `${String(styles[prop])}${unit}`);
+      return;
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
+
+    element.style[prop] = String(styles[prop]) + unit;
+  });
+}
+
+function arrow(data) {
+  var _a, _b, _c, _d, _e, _f;
+
+  let targetOffsets = data.offsets.target; // if arrowElement is a string, suppose it's a CSS selector
+
+  const arrowElement = data.instance.target.querySelector('.arrow'); // if arrowElement is not found, don't run the modifier
+
+  if (!arrowElement) {
+    return data;
+  }
+
+  const isVertical = ['left', 'right'].indexOf(data.placement.split(' ')[0]) !== -1;
+  const len = isVertical ? 'height' : 'width';
+  const sideCapitalized = isVertical ? 'Top' : 'Left';
+  const side = sideCapitalized.toLowerCase();
+  const altSide = isVertical ? 'left' : 'top';
+  const opSide = isVertical ? 'bottom' : 'right';
+  const arrowElementSize = getOuterSizes(arrowElement)[len];
+  const placementVariation = data.placement.split(' ')[1]; // top/left side
+
+  if (((_a = data.offsets.host[opSide]) !== null && _a !== void 0 ? _a : 0) - arrowElementSize < ((_b = targetOffsets[side]) !== null && _b !== void 0 ? _b : 0)) {
+    targetOffsets[side] -= ((_c = targetOffsets[side]) !== null && _c !== void 0 ? _c : 0) - (((_d = data.offsets.host[opSide]) !== null && _d !== void 0 ? _d : 0) - arrowElementSize);
+  } // bottom/right side
+
+
+  if (Number(data.offsets.host[side]) + Number(arrowElementSize) > ((_e = targetOffsets[opSide]) !== null && _e !== void 0 ? _e : 0)) {
+    targetOffsets[side] += Number(data.offsets.host[side]) + Number(arrowElementSize) - Number(targetOffsets[opSide]);
+  }
+
+  targetOffsets = getClientRect(targetOffsets); // Compute the sideValue using the updated target offsets
+  // take target margin in account because we don't have this info available
+
+  const css = getStyleComputedProperty(data.instance.target);
+  const targetMarginSide = parseFloat(css[`margin${sideCapitalized}`]) || 0;
+  const targetBorderSide = parseFloat(css[`border${sideCapitalized}Width`]) || 0; // compute center of the target
+
+  let center;
+
+  if (!placementVariation) {
+    center = Number(data.offsets.host[side]) + Number(data.offsets.host[len] / 2 - arrowElementSize / 2);
+  } else {
+    const targetBorderRadius = parseFloat(css["borderRadius"]) || 0;
+    const targetSideArrowOffset = Number(targetMarginSide + targetBorderSide + targetBorderRadius);
+    center = side === placementVariation ? Number(data.offsets.host[side]) + targetSideArrowOffset : Number(data.offsets.host[side]) + Number(data.offsets.host[len] - targetSideArrowOffset);
+  }
+
+  let sideValue = center - ((_f = targetOffsets[side]) !== null && _f !== void 0 ? _f : 0) - targetMarginSide - targetBorderSide; // prevent arrowElement from being placed not contiguously to its target
+
+  sideValue = Math.max(Math.min(targetOffsets[len] - (arrowElementSize + 5), sideValue), 0);
+  data.offsets.arrow = {
+    [side]: Math.round(sideValue),
+    [altSide]: '' // make sure to unset any eventual altSide value from the DOM node
+
+  };
+  data.instance.arrow = arrowElement;
+  return data;
+}
+
+function flip(data) {
+  data.offsets.target = getClientRect(data.offsets.target);
+
+  if (!isModifierEnabled(data.options, 'flip')) {
+    data.offsets.target = Object.assign(Object.assign({}, data.offsets.target), getTargetOffsets(data.instance.target, data.offsets.host, data.placement));
+    return data;
+  }
+
+  const boundaries = getBoundaries(data.instance.target, data.instance.host, 0, // padding
+  'viewport', false // positionFixed
+  );
+  let placement = data.placement.split(' ')[0];
+  let variation = data.placement.split(' ')[1] || '';
+  const offsetsHost = data.offsets.host;
+  const target = data.instance.target;
+  const host = data.instance.host;
+  const adaptivePosition = computeAutoPlacement('auto', offsetsHost, target, host, data.options.allowedPositions);
+  const flipOrder = [placement, adaptivePosition];
+  flipOrder.forEach((step, index) => {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+
+    if (placement !== step || flipOrder.length === index + 1) {
+      return;
+    }
+
+    placement = data.placement.split(' ')[0]; // using floor because the host offsets may contain decimals we are not going to consider here
+
+    const overlapsRef = placement === 'left' && Math.floor((_a = data.offsets.target.right) !== null && _a !== void 0 ? _a : 0) > Math.floor((_b = data.offsets.host.left) !== null && _b !== void 0 ? _b : 0) || placement === 'right' && Math.floor((_c = data.offsets.target.left) !== null && _c !== void 0 ? _c : 0) < Math.floor((_d = data.offsets.host.right) !== null && _d !== void 0 ? _d : 0) || placement === 'top' && Math.floor((_e = data.offsets.target.bottom) !== null && _e !== void 0 ? _e : 0) > Math.floor((_f = data.offsets.host.top) !== null && _f !== void 0 ? _f : 0) || placement === 'bottom' && Math.floor((_g = data.offsets.target.top) !== null && _g !== void 0 ? _g : 0) < Math.floor((_h = data.offsets.host.bottom) !== null && _h !== void 0 ? _h : 0);
+    const overflowsLeft = Math.floor((_j = data.offsets.target.left) !== null && _j !== void 0 ? _j : 0) < Math.floor((_k = boundaries.left) !== null && _k !== void 0 ? _k : 0);
+    const overflowsRight = Math.floor((_l = data.offsets.target.right) !== null && _l !== void 0 ? _l : 0) > Math.floor((_m = boundaries.right) !== null && _m !== void 0 ? _m : 0);
+    const overflowsTop = Math.floor((_o = data.offsets.target.top) !== null && _o !== void 0 ? _o : 0) < Math.floor((_p = boundaries.top) !== null && _p !== void 0 ? _p : 0);
+    const overflowsBottom = Math.floor((_q = data.offsets.target.bottom) !== null && _q !== void 0 ? _q : 0) > Math.floor((_r = boundaries.bottom) !== null && _r !== void 0 ? _r : 0);
+    const overflowsBoundaries = placement === 'left' && overflowsLeft || placement === 'right' && overflowsRight || placement === 'top' && overflowsTop || placement === 'bottom' && overflowsBottom; // flip the variation if required
+
+    const isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
+    const flippedVariation = isVertical && variation === 'left' && overflowsLeft || isVertical && variation === 'right' && overflowsRight || !isVertical && variation === 'left' && overflowsTop || !isVertical && variation === 'right' && overflowsBottom;
+
+    if (overlapsRef || overflowsBoundaries || flippedVariation) {
+      if (overlapsRef || overflowsBoundaries) {
+        placement = flipOrder[index + 1];
+      }
+
+      if (flippedVariation) {
+        variation = getOppositeVariation(variation);
+      }
+
+      data.placement = placement + (variation ? ` ${variation}` : '');
+      data.offsets.target = Object.assign(Object.assign({}, data.offsets.target), getTargetOffsets(data.instance.target, data.offsets.host, data.placement));
+    }
+  });
+  return data;
+}
+
+function initData(targetElement, hostElement, position, options) {
+  if (!targetElement || !hostElement) {
+    return;
+  }
+
+  const hostElPosition = getReferenceOffsets(targetElement, hostElement);
+
+  if (!position.match(/^(auto)*\s*(left|right|top|bottom|start|end)*$/) && !position.match(/^(left|right|top|bottom|start|end)*(?: (left|right|top|bottom|start|end))*$/)) {
+    position = 'auto';
+  }
+
+  const placementAuto = !!position.match(/auto/g); // support old placements 'auto left|right|top|bottom'
+
+  let placement = position.match(/auto\s(left|right|top|bottom|start|end)/) ? position.split(' ')[1] || 'auto' : position; // Normalize placements that have identical main placement and variation ("right right" => "right").
+
+  const matches = placement.match(/^(left|right|top|bottom|start|end)* ?(?!\1)(left|right|top|bottom|start|end)?/);
+
+  if (matches) {
+    placement = matches[1] + (matches[2] ? ` ${matches[2]}` : '');
+  } // "left right", "top bottom" etc. placements also considered incorrect.
+
+
+  if (['left right', 'right left', 'top bottom', 'bottom top'].indexOf(placement) !== -1) {
+    placement = 'auto';
+  }
+
+  placement = computeAutoPlacement(placement, hostElPosition, targetElement, hostElement, options ? options.allowedPositions : undefined);
+  const targetOffset = getTargetOffsets(targetElement, hostElPosition, placement);
+  return {
+    options: options || {
+      modifiers: {}
+    },
+    instance: {
+      target: targetElement,
+      host: hostElement,
+      arrow: void 0
+    },
+    offsets: {
+      target: targetOffset,
+      host: hostElPosition,
+      arrow: void 0
+    },
+    positionFixed: false,
+    placement,
+    placementAuto
+  };
+}
+
+function preventOverflow(data) {
+  var _a;
+
+  if (!isModifierEnabled(data.options, 'preventOverflow')) {
+    return data;
+  } // NOTE: DOM access here
+  // resets the target Offsets's position so that the document size can be calculated excluding
+  // the size of the targetOffsets element itself
+
+
+  const transformProp = 'transform';
+  const targetStyles = data.instance.target.style; // assignment to help minification
+
+  const {
+    top,
+    left,
+    [transformProp]: transform
+  } = targetStyles;
+  targetStyles.top = '';
+  targetStyles.left = '';
+  targetStyles[transformProp] = '';
+  const boundaries = getBoundaries(data.instance.target, data.instance.host, 0, // padding
+  ((_a = data.options.modifiers.preventOverflow) === null || _a === void 0 ? void 0 : _a.boundariesElement) || 'scrollParent', false // positionFixed
+  ); // NOTE: DOM access here
+  // restores the original style properties after the offsets have been computed
+
+  targetStyles.top = top;
+  targetStyles.left = left;
+  targetStyles[transformProp] = transform;
+  const order = ['left', 'right', 'top', 'bottom'];
+  const check = {
+    primary(placement) {
+      var _a, _b, _c, _d;
+
+      let value = data.offsets.target[placement]; // options.escapeWithReference
+
+      if (((_a = data.offsets.target[placement]) !== null && _a !== void 0 ? _a : 0) < ((_b = boundaries[placement]) !== null && _b !== void 0 ? _b : 0)) {
+        value = Math.max((_c = data.offsets.target[placement]) !== null && _c !== void 0 ? _c : 0, (_d = boundaries[placement]) !== null && _d !== void 0 ? _d : 0);
+      }
+
+      return {
+        [placement]: value
+      };
+    },
+
+    secondary(placement) {
+      var _a, _b, _c, _d;
+
+      const isPlacementHorizontal = placement === 'right';
+      const mainSide = isPlacementHorizontal ? 'left' : 'top';
+      const measurement = isPlacementHorizontal ? 'width' : 'height';
+      let value = data.offsets.target[mainSide]; // escapeWithReference
+
+      if (((_a = data.offsets.target[placement]) !== null && _a !== void 0 ? _a : 0) > ((_b = boundaries[placement]) !== null && _b !== void 0 ? _b : 0)) {
+        value = Math.min((_c = data.offsets.target[mainSide]) !== null && _c !== void 0 ? _c : 0, ((_d = boundaries[placement]) !== null && _d !== void 0 ? _d : 0) - data.offsets.target[measurement]);
+      }
+
+      return {
+        [mainSide]: value
+      };
+    }
+
+  };
+  order.forEach(placement => {
+    const side = ['left', 'top', 'start'].indexOf(placement) !== -1 ? check['primary'] : check['secondary'];
+    data.offsets.target = Object.assign(Object.assign({}, data.offsets.target), side(placement));
+  });
+  return data;
+}
+
+function shift(data) {
+  var _a;
+
+  const placement = data.placement;
+  const basePlacement = placement.split(' ')[0];
+  const shiftVariation = placement.split(' ')[1];
+
+  if (shiftVariation) {
+    const {
+      host,
+      target
+    } = data.offsets;
+    const isVertical = ['bottom', 'top'].indexOf(basePlacement) !== -1;
+    const side = isVertical ? 'left' : 'top';
+    const measurement = isVertical ? 'width' : 'height';
+    const shiftOffsets = {
+      start: {
+        [side]: host[side]
+      },
+      end: {
+        [side]: ((_a = host[side]) !== null && _a !== void 0 ? _a : 0) + host[measurement] - target[measurement]
+      }
+    };
+    data.offsets.target = Object.assign(Object.assign({}, target), {
+      [side]: side === shiftVariation ? shiftOffsets.start[side] : shiftOffsets.end[side]
+    });
+  }
+
+  return data;
+}
+
+class Positioning {
+  position(hostElement, targetElement
+  /*, round = true*/
+  ) {
+    return this.offset(hostElement, targetElement
+    /*, false*/
+    );
+  }
+
+  offset(hostElement, targetElement
+  /*, round = true*/
+  ) {
+    return getReferenceOffsets(targetElement, hostElement);
+  }
+
+  positionElements(hostElement, targetElement, position, appendToBody, options) {
+    const chainOfModifiers = [flip, shift, preventOverflow, arrow];
+    const _position = MapPlacementInToRL[position];
+    const data = initData(targetElement, hostElement, _position, options);
+
+    if (!data) {
+      return;
+    }
+
+    return chainOfModifiers.reduce((modifiedData, modifier) => modifier(modifiedData), data);
+  }
+
+}
+
+const positionService = new Positioning();
+
+function positionElements(hostElement, targetElement, placement, appendToBody, options, renderer) {
+  const data = positionService.positionElements(hostElement, targetElement, placement, appendToBody, options);
+
+  if (!data) {
+    return;
+  }
+
+  const offsets = getOffsets(data);
+  setStyles(targetElement, {
+    'will-change': 'transform',
+    top: '0px',
+    left: '0px',
+    transform: `translate3d(${offsets.left}px, ${offsets.top}px, 0px)`
+  }, renderer);
+
+  if (data.instance.arrow) {
+    setStyles(data.instance.arrow, data.offsets.arrow, renderer);
+  }
+
+  updateContainerClass(data, renderer);
+}
+
+class PositioningService {
+  constructor(ngZone, rendererFactory, platformId) {
+    this.update$$ = new rxjs__WEBPACK_IMPORTED_MODULE_1__.Subject();
+    this.positionElements = new Map();
+    this.isDisabled = false;
+
+    if ((0,_angular_common__WEBPACK_IMPORTED_MODULE_2__.isPlatformBrowser)(platformId)) {
+      ngZone.runOutsideAngular(() => {
+        this.triggerEvent$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_3__.merge)((0,rxjs__WEBPACK_IMPORTED_MODULE_4__.fromEvent)(window, 'scroll', {
+          passive: true
+        }), (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.fromEvent)(window, 'resize', {
+          passive: true
+        }), (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.of)(0, rxjs__WEBPACK_IMPORTED_MODULE_6__.animationFrameScheduler), this.update$$);
+        this.triggerEvent$.subscribe(() => {
+          if (this.isDisabled) {
+            return;
+          }
+
+          this.positionElements // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .forEach(positionElement => {
+            positionElements(_getHtmlElement(positionElement.target), _getHtmlElement(positionElement.element), positionElement.attachment, positionElement.appendToBody, this.options, rendererFactory.createRenderer(null, null));
+          });
+        });
+      });
+    }
+  }
+
+  position(options) {
+    this.addPositionElement(options);
+  }
+
+  get event$() {
+    return this.triggerEvent$;
+  }
+
+  disable() {
+    this.isDisabled = true;
+  }
+
+  enable() {
+    this.isDisabled = false;
+  }
+
+  addPositionElement(options) {
+    this.positionElements.set(_getHtmlElement(options.element), options);
+  }
+
+  calcPosition() {
+    this.update$$.next(null);
+  }
+
+  deletePositionElement(elRef) {
+    this.positionElements.delete(_getHtmlElement(elRef));
+  }
+
+  setOptions(options) {
+    this.options = options;
+  }
+
+}
+
+PositioningService.ɵfac = function PositioningService_Factory(t) {
+  return new (t || PositioningService)(_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.NgZone), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.RendererFactory2), _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_7__.PLATFORM_ID));
+};
+
+PositioningService.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵɵdefineInjectable"]({
+  token: PositioningService,
+  factory: PositioningService.ɵfac,
+  providedIn: 'root'
+});
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_7__["ɵsetClassMetadata"](PositioningService, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable,
+    args: [{
+      providedIn: 'root'
+    }]
+  }], function () {
+    return [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.NgZone
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.RendererFactory2
+    }, {
+      type: undefined,
+      decorators: [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.Inject,
+        args: [_angular_core__WEBPACK_IMPORTED_MODULE_7__.PLATFORM_ID]
+      }]
+    }];
+  }, null);
+})();
+
+function _getHtmlElement(element) {
+  // it means that we got a selector
+  if (typeof element === 'string') {
+    return document.querySelector(element);
+  }
+
+  if (element instanceof _angular_core__WEBPACK_IMPORTED_MODULE_7__.ElementRef) {
+    return element.nativeElement;
+  }
+
+  return element !== null && element !== void 0 ? element : null;
+}
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+
+/***/ }),
+
+/***/ 6996:
+/*!*******************************************************************************!*\
+  !*** ./node_modules/ngx-bootstrap/tooltip/fesm2015/ngx-bootstrap-tooltip.mjs ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TooltipConfig": () => (/* binding */ TooltipConfig),
+/* harmony export */   "TooltipContainerComponent": () => (/* binding */ TooltipContainerComponent),
+/* harmony export */   "TooltipDirective": () => (/* binding */ TooltipDirective),
+/* harmony export */   "TooltipModule": () => (/* binding */ TooltipModule)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 3184);
+/* harmony import */ var ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-bootstrap/utils */ 8172);
+/* harmony import */ var ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-bootstrap/positioning */ 78);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 8947);
+/* harmony import */ var ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-bootstrap/component-loader */ 3247);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 6362);
+
+
+
+
+
+
+
+
+
+
+/** Default values provider for tooltip */
+
+const _c0 = ["*"];
+
+class TooltipConfig {
+  constructor() {
+    /** sets disable adaptive position */
+    this.adaptivePosition = true;
+    /** tooltip placement, supported positions: 'top', 'bottom', 'left', 'right' */
+
+    this.placement = 'top';
+    /** array of event names which triggers tooltip opening */
+
+    this.triggers = 'hover focus';
+    /** delay before showing the tooltip */
+
+    this.delay = 0;
+  }
+
+}
+
+TooltipConfig.ɵfac = function TooltipConfig_Factory(t) {
+  return new (t || TooltipConfig)();
+};
+
+TooltipConfig.ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+  token: TooltipConfig,
+  factory: TooltipConfig.ɵfac,
+  providedIn: 'root'
+});
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TooltipConfig, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Injectable,
+    args: [{
+      providedIn: 'root'
+    }]
+  }], null, null);
+})();
+
+class TooltipContainerComponent {
+  constructor(config) {
+    Object.assign(this, config);
+  }
+
+  get _bsVersions() {
+    return (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.getBsVer)();
+  }
+
+  ngAfterViewInit() {
+    this.classMap = {
+      in: false,
+      fade: false
+    };
+
+    if (this.placement) {
+      if (this._bsVersions.isBs5) {
+        this.placement = ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PlacementForBs5[this.placement];
+      }
+
+      this.classMap[this.placement] = true;
+    }
+
+    this.classMap[`tooltip-${this.placement}`] = true;
+    this.classMap["in"] = true;
+
+    if (this.animation) {
+      this.classMap["fade"] = true;
+    }
+
+    if (this.containerClass) {
+      this.classMap[this.containerClass] = true;
+    }
+  }
+
+}
+
+TooltipContainerComponent.ɵfac = function TooltipContainerComponent_Factory(t) {
+  return new (t || TooltipContainerComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](TooltipConfig));
+};
+
+TooltipContainerComponent.ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({
+  type: TooltipContainerComponent,
+  selectors: [["bs-tooltip-container"]],
+  hostAttrs: ["role", "tooltip"],
+  hostVars: 7,
+  hostBindings: function TooltipContainerComponent_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵattribute"]("id", ctx.id);
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassMap"]("tooltip in tooltip-" + ctx.placement + " " + "bs-tooltip-" + ctx.placement + " " + ctx.placement + " " + ctx.containerClass);
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("show", !ctx._bsVersions.isBs3)("bs3", ctx._bsVersions.isBs3);
+    }
+  },
+  ngContentSelectors: _c0,
+  decls: 3,
+  vars: 0,
+  consts: [[1, "tooltip-arrow", "arrow"], [1, "tooltip-inner"]],
+  template: function TooltipContainerComponent_Template(rf, ctx) {
+    if (rf & 1) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵprojectionDef"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "div", 0);
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵprojection"](2);
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    }
+  },
+  styles: [".tooltip[_nghost-%COMP%]{display:block;pointer-events:none}.bs3.tooltip.top[_nghost-%COMP%] > .arrow[_ngcontent-%COMP%]{margin-left:-2px}.bs3.tooltip.bottom[_nghost-%COMP%]{margin-top:0}.bs3.bs-tooltip-left[_nghost-%COMP%], .bs3.bs-tooltip-right[_nghost-%COMP%]{margin:0}.bs3.bs-tooltip-right[_nghost-%COMP%]   .arrow[_ngcontent-%COMP%], .bs3.bs-tooltip-left[_nghost-%COMP%]   .arrow[_ngcontent-%COMP%]{margin:.3rem 0}"],
+  changeDetection: 0
+});
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TooltipContainerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Component,
+    args: [{
+      selector: 'bs-tooltip-container',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ChangeDetectionStrategy.OnPush,
+      // eslint-disable-next-line @angular-eslint/no-host-metadata-property
+      host: {
+        '[class]': '"tooltip in tooltip-" + placement + " " + "bs-tooltip-" + placement + " " + placement + " " + containerClass',
+        '[class.show]': '!_bsVersions.isBs3',
+        '[class.bs3]': '_bsVersions.isBs3',
+        '[attr.id]': 'this.id',
+        role: 'tooltip'
+      },
+      styles: [`
+    :host.tooltip {
+      display: block;
+      pointer-events: none;
+    }
+    :host.bs3.tooltip.top>.arrow {
+      margin-left: -2px;
+    }
+    :host.bs3.tooltip.bottom {
+      margin-top: 0px;
+    }
+    :host.bs3.bs-tooltip-left, :host.bs3.bs-tooltip-right{
+      margin: 0px;
+    }
+    :host.bs3.bs-tooltip-right .arrow, :host.bs3.bs-tooltip-left .arrow {
+      margin: .3rem 0;
+    }
+  `],
+      template: `
+    <div class="tooltip-arrow arrow"></div>
+    <div class="tooltip-inner"><ng-content></ng-content></div>
+    `
+    }]
+  }], function () {
+    return [{
+      type: TooltipConfig
+    }];
+  }, null);
+})();
+
+let id = 0;
+
+class TooltipDirective {
+  constructor(_viewContainerRef, cis, config, _elementRef, _renderer, _positionService) {
+    this._elementRef = _elementRef;
+    this._renderer = _renderer;
+    this._positionService = _positionService;
+    this.tooltipId = id++;
+    /** sets disable adaptive position */
+
+    this.adaptivePosition = true;
+    /** Fired when tooltip content changes */
+
+    this.tooltipChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    /**
+     * Placement of a tooltip. Accepts: "top", "bottom", "left", "right"
+     */
+
+    this.placement = 'top';
+    /**
+     * Specifies events that should trigger. Supports a space separated list of
+     * event names.
+     */
+
+    this.triggers = 'hover focus';
+    /**
+     * Css class for tooltip container
+     */
+
+    this.containerClass = '';
+    /**
+     * Allows to disable tooltip
+     */
+
+    this.isDisabled = false;
+    /**
+     * Delay before showing the tooltip
+     */
+
+    this.delay = 0;
+    /** @deprecated - removed, will be added to configuration */
+
+    this.tooltipAnimation = true;
+    /** @deprecated */
+
+    this.tooltipFadeDuration = 150;
+    /** @deprecated */
+
+    this.tooltipStateChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.EventEmitter();
+    this._tooltip = cis.createLoader(this._elementRef, _viewContainerRef, this._renderer).provide({
+      provide: TooltipConfig,
+      useValue: config
+    });
+    Object.assign(this, config);
+    this.onShown = this._tooltip.onShown;
+    this.onHidden = this._tooltip.onHidden;
+  }
+  /**
+   * Returns whether or not the tooltip is currently being shown
+   */
+
+
+  get isOpen() {
+    return this._tooltip.isShown;
+  }
+
+  set isOpen(value) {
+    if (value) {
+      this.show();
+    } else {
+      this.hide();
+    }
+  }
+  /** @deprecated - please use `tooltip` instead */
+
+
+  set htmlContent(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipHtml was deprecated, please use `tooltip` instead');
+    this.tooltip = value;
+  }
+  /** @deprecated - please use `placement` instead */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _placement(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipPlacement was deprecated, please use `placement` instead');
+    this.placement = value;
+  }
+  /** @deprecated - please use `isOpen` instead */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _isOpen(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipIsOpen was deprecated, please use `isOpen` instead');
+    this.isOpen = value;
+  }
+
+  get _isOpen() {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipIsOpen was deprecated, please use `isOpen` instead');
+    return this.isOpen;
+  }
+  /** @deprecated - please use `isDisabled` instead */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _enable(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipEnable was deprecated, please use `isDisabled` instead');
+    this.isDisabled = !value;
+  }
+
+  get _enable() {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipEnable was deprecated, please use `isDisabled` instead');
+    return this.isDisabled;
+  }
+  /** @deprecated - please use `container="body"` instead */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _appendToBody(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipAppendToBody was deprecated, please use `container="body"` instead');
+    this.container = value ? 'body' : this.container;
+  }
+
+  get _appendToBody() {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipAppendToBody was deprecated, please use `container="body"` instead');
+    return this.container === 'body';
+  }
+  /** @deprecated - will replaced with customClass */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _popupClass(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipClass deprecated');
+  }
+  /** @deprecated - removed */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _tooltipContext(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipContext deprecated');
+  }
+  /** @deprecated */
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+
+
+  set _tooltipPopupDelay(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipPopupDelay is deprecated, use `delay` instead');
+    this.delay = value;
+  }
+  /** @deprecated -  please use `triggers` instead */
+
+
+  get _tooltipTrigger() {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipTrigger was deprecated, please use `triggers` instead');
+    return this.triggers;
+  }
+
+  set _tooltipTrigger(value) {
+    (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.warnOnce)('tooltipTrigger was deprecated, please use `triggers` instead');
+    this.triggers = (value || '').toString();
+  }
+
+  ngOnInit() {
+    this._tooltip.listen({
+      triggers: this.triggers,
+      show: () => this.show()
+    });
+
+    this.tooltipChange.subscribe(value => {
+      if (!value) {
+        this._tooltip.hide();
+      }
+    });
+    this.onShown.subscribe(() => {
+      this.setAriaDescribedBy();
+    });
+    this.onHidden.subscribe(() => {
+      this.setAriaDescribedBy();
+    });
+  }
+
+  setAriaDescribedBy() {
+    this._ariaDescribedby = this.isOpen ? `tooltip-${this.tooltipId}` : void 0;
+
+    if (this._ariaDescribedby) {
+      this._renderer.setAttribute(this._elementRef.nativeElement, 'aria-describedby', this._ariaDescribedby);
+    } else {
+      this._renderer.removeAttribute(this._elementRef.nativeElement, 'aria-describedby');
+    }
+  }
+  /**
+   * Toggles an element’s tooltip. This is considered a “manual” triggering of
+   * the tooltip.
+   */
+
+
+  toggle() {
+    if (this.isOpen) {
+      return this.hide();
+    }
+
+    this.show();
+  }
+  /**
+   * Opens an element’s tooltip. This is considered a “manual” triggering of
+   * the tooltip.
+   */
+
+
+  show() {
+    this._positionService.setOptions({
+      modifiers: {
+        flip: {
+          enabled: this.adaptivePosition
+        },
+        preventOverflow: {
+          enabled: this.adaptivePosition,
+          boundariesElement: this.boundariesElement || 'scrollParent'
+        }
+      }
+    });
+
+    if (this.isOpen || this.isDisabled || this._delayTimeoutId || !this.tooltip) {
+      return;
+    }
+
+    const showTooltip = () => {
+      if (this._delayTimeoutId) {
+        this._delayTimeoutId = undefined;
+      }
+
+      this._tooltip.attach(TooltipContainerComponent).to(this.container).position({
+        attachment: this.placement
+      }).show({
+        content: this.tooltip,
+        placement: this.placement,
+        containerClass: this.containerClass,
+        id: `tooltip-${this.tooltipId}`
+      });
+    };
+
+    const cancelDelayedTooltipShowing = () => {
+      if (this._tooltipCancelShowFn) {
+        this._tooltipCancelShowFn();
+      }
+    };
+
+    if (this.delay) {
+      if (this._delaySubscription) {
+        this._delaySubscription.unsubscribe();
+      }
+
+      this._delaySubscription = (0,rxjs__WEBPACK_IMPORTED_MODULE_3__.timer)(this.delay).subscribe(() => {
+        showTooltip();
+        cancelDelayedTooltipShowing();
+      });
+
+      if (this.triggers) {
+        (0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.parseTriggers)(this.triggers).forEach(trigger => {
+          if (!trigger.close) {
+            return;
+          }
+
+          this._tooltipCancelShowFn = this._renderer.listen(this._elementRef.nativeElement, trigger.close, () => {
+            var _a;
+
+            (_a = this._delaySubscription) === null || _a === void 0 ? void 0 : _a.unsubscribe();
+            cancelDelayedTooltipShowing();
+          });
+        });
+      }
+    } else {
+      showTooltip();
+    }
+  }
+  /**
+   * Closes an element’s tooltip. This is considered a “manual” triggering of
+   * the tooltip.
+   */
+
+
+  hide() {
+    var _a;
+
+    if (this._delayTimeoutId) {
+      clearTimeout(this._delayTimeoutId);
+      this._delayTimeoutId = undefined;
+    }
+
+    if (!this._tooltip.isShown) {
+      return;
+    }
+
+    if ((_a = this._tooltip.instance) === null || _a === void 0 ? void 0 : _a.classMap) {
+      this._tooltip.instance.classMap["in"] = false;
+    }
+
+    setTimeout(() => {
+      this._tooltip.hide();
+    }, this.tooltipFadeDuration);
+  }
+
+  ngOnDestroy() {
+    this._tooltip.dispose();
+
+    this.tooltipChange.unsubscribe();
+
+    if (this._delaySubscription) {
+      this._delaySubscription.unsubscribe();
+    }
+
+    this.onShown.unsubscribe();
+    this.onHidden.unsubscribe();
+  }
+
+}
+
+TooltipDirective.ɵfac = function TooltipDirective_Factory(t) {
+  return new (t || TooltipDirective)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.ViewContainerRef), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_4__.ComponentLoaderFactory), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](TooltipConfig), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.ElementRef), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__.Renderer2), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PositioningService));
+};
+
+TooltipDirective.ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineDirective"]({
+  type: TooltipDirective,
+  selectors: [["", "tooltip", ""], ["", "tooltipHtml", ""]],
+  inputs: {
+    adaptivePosition: "adaptivePosition",
+    tooltip: "tooltip",
+    placement: "placement",
+    triggers: "triggers",
+    container: "container",
+    containerClass: "containerClass",
+    boundariesElement: "boundariesElement",
+    isOpen: "isOpen",
+    isDisabled: "isDisabled",
+    delay: "delay",
+    htmlContent: ["tooltipHtml", "htmlContent"],
+    _placement: ["tooltipPlacement", "_placement"],
+    _isOpen: ["tooltipIsOpen", "_isOpen"],
+    _enable: ["tooltipEnable", "_enable"],
+    _appendToBody: ["tooltipAppendToBody", "_appendToBody"],
+    tooltipAnimation: "tooltipAnimation",
+    _popupClass: ["tooltipClass", "_popupClass"],
+    _tooltipContext: ["tooltipContext", "_tooltipContext"],
+    _tooltipPopupDelay: ["tooltipPopupDelay", "_tooltipPopupDelay"],
+    tooltipFadeDuration: "tooltipFadeDuration",
+    _tooltipTrigger: ["tooltipTrigger", "_tooltipTrigger"]
+  },
+  outputs: {
+    tooltipChange: "tooltipChange",
+    onShown: "onShown",
+    onHidden: "onHidden",
+    tooltipStateChanged: "tooltipStateChanged"
+  },
+  exportAs: ["bs-tooltip"]
+});
+
+(0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,ngx_bootstrap_utils__WEBPACK_IMPORTED_MODULE_1__.OnChange)(), (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__metadata)("design:type", Object)], TooltipDirective.prototype, "tooltip", void 0);
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TooltipDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Directive,
+    args: [{
+      selector: '[tooltip], [tooltipHtml]',
+      exportAs: 'bs-tooltip'
+    }]
+  }], function () {
+    return [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ViewContainerRef
+    }, {
+      type: ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_4__.ComponentLoaderFactory
+    }, {
+      type: TooltipConfig
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.ElementRef
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Renderer2
+    }, {
+      type: ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PositioningService
+    }];
+  }, {
+    adaptivePosition: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    tooltip: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    tooltipChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+    }],
+    placement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    triggers: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    container: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    containerClass: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    boundariesElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    isOpen: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    isDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    delay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    onShown: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+    }],
+    onHidden: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+    }],
+    htmlContent: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipHtml']
+    }],
+    _placement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipPlacement']
+    }],
+    _isOpen: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipIsOpen']
+    }],
+    _enable: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipEnable']
+    }],
+    _appendToBody: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipAppendToBody']
+    }],
+    tooltipAnimation: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    _popupClass: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipClass']
+    }],
+    _tooltipContext: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipContext']
+    }],
+    _tooltipPopupDelay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipPopupDelay']
+    }],
+    tooltipFadeDuration: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input
+    }],
+    _tooltipTrigger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Input,
+      args: ['tooltipTrigger']
+    }],
+    tooltipStateChanged: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.Output
+    }]
+  });
+})();
+
+class TooltipModule {
+  static forRoot() {
+    return {
+      ngModule: TooltipModule,
+      providers: [ngx_bootstrap_component_loader__WEBPACK_IMPORTED_MODULE_4__.ComponentLoaderFactory, ngx_bootstrap_positioning__WEBPACK_IMPORTED_MODULE_2__.PositioningService]
+    };
+  }
+
+}
+
+TooltipModule.ɵfac = function TooltipModule_Factory(t) {
+  return new (t || TooltipModule)();
+};
+
+TooltipModule.ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({
+  type: TooltipModule
+});
+TooltipModule.ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+  imports: [[_angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule]]
+});
+
+(function () {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](TooltipModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_0__.NgModule,
+    args: [{
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule],
+      declarations: [TooltipDirective, TooltipContainerComponent],
+      exports: [TooltipDirective],
+      entryComponents: [TooltipContainerComponent]
+    }]
+  }], null, null);
+})();
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+
+/***/ }),
+
+/***/ 8172:
+/*!***************************************************************************!*\
+  !*** ./node_modules/ngx-bootstrap/utils/fesm2015/ngx-bootstrap-utils.mjs ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BsVerions": () => (/* binding */ BsVerions),
+/* harmony export */   "LinkedList": () => (/* binding */ LinkedList),
+/* harmony export */   "OnChange": () => (/* binding */ OnChange),
+/* harmony export */   "Trigger": () => (/* binding */ Trigger),
+/* harmony export */   "Utils": () => (/* binding */ Utils),
+/* harmony export */   "currentBsVersion": () => (/* binding */ currentBsVersion),
+/* harmony export */   "document": () => (/* binding */ document),
+/* harmony export */   "getBsVer": () => (/* binding */ getBsVer),
+/* harmony export */   "isBs3": () => (/* binding */ isBs3),
+/* harmony export */   "listenToTriggers": () => (/* binding */ listenToTriggers),
+/* harmony export */   "listenToTriggersV2": () => (/* binding */ listenToTriggersV2),
+/* harmony export */   "parseTriggers": () => (/* binding */ parseTriggers),
+/* harmony export */   "registerEscClick": () => (/* binding */ registerEscClick),
+/* harmony export */   "registerOutsideClick": () => (/* binding */ registerOutsideClick),
+/* harmony export */   "setTheme": () => (/* binding */ setTheme),
+/* harmony export */   "warnOnce": () => (/* binding */ warnOnce),
+/* harmony export */   "window": () => (/* binding */ win)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 3184);
+
+
+/**
+ * @copyright Valor Software
+ * @copyright Angular ng-bootstrap team
+ */
+class Trigger {
+    constructor(open, close) {
+        this.open = open;
+        this.close = close || open;
+    }
+    isManual() {
+        return this.open === 'manual' || this.close === 'manual';
+    }
+}
+
+const DEFAULT_ALIASES = {
+    hover: ['mouseover', 'mouseout'],
+    focus: ['focusin', 'focusout']
+};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseTriggers(triggers, aliases = DEFAULT_ALIASES) {
+    const trimmedTriggers = (triggers || '').trim();
+    if (trimmedTriggers.length === 0) {
+        return [];
+    }
+    const parsedTriggers = trimmedTriggers
+        .split(/\s+/)
+        .map((trigger) => trigger.split(':'))
+        .map((triggerPair) => {
+        const alias = aliases[triggerPair[0]] || triggerPair;
+        return new Trigger(alias[0], alias[1]);
+    });
+    const manualTriggers = parsedTriggers.filter((triggerPair) => triggerPair.isManual());
+    if (manualTriggers.length > 1) {
+        throw new Error('Triggers parse error: only one manual trigger is allowed');
+    }
+    if (manualTriggers.length === 1 && parsedTriggers.length > 1) {
+        throw new Error('Triggers parse error: manual trigger can\'t be mixed with other triggers');
+    }
+    return parsedTriggers;
+}
+function listenToTriggers(renderer, 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+target, triggers, showFn, hideFn, toggleFn) {
+    const parsedTriggers = parseTriggers(triggers);
+    const listeners = [];
+    if (parsedTriggers.length === 1 && parsedTriggers[0].isManual()) {
+        return Function.prototype;
+    }
+    parsedTriggers.forEach((trigger) => {
+        if (trigger.open === trigger.close) {
+            listeners.push(renderer.listen(target, trigger.open, toggleFn));
+            return;
+        }
+        listeners.push(renderer.listen(target, trigger.open, showFn));
+        if (trigger.close) {
+            listeners.push(renderer.listen(target, trigger.close, hideFn));
+        }
+    });
+    return () => {
+        listeners.forEach((unsubscribeFn) => unsubscribeFn());
+    };
+}
+function listenToTriggersV2(renderer, options) {
+    const parsedTriggers = parseTriggers(options.triggers);
+    const target = options.target;
+    // do nothing
+    if (parsedTriggers.length === 1 && parsedTriggers[0].isManual()) {
+        return Function.prototype;
+    }
+    // all listeners
+    const listeners = [];
+    // lazy listeners registration
+    const _registerHide = [];
+    const registerHide = () => {
+        // add hide listeners to unregister array
+        _registerHide.forEach((fn) => listeners.push(fn()));
+        // register hide events only once
+        _registerHide.length = 0;
+    };
+    // register open\close\toggle listeners
+    parsedTriggers.forEach((trigger) => {
+        const useToggle = trigger.open === trigger.close;
+        const showFn = useToggle ? options.toggle : options.show;
+        if (!useToggle && trigger.close && options.hide) {
+            const _hide = renderer.listen(target, trigger.close, options.hide);
+            _registerHide.push(() => _hide);
+        }
+        if (showFn) {
+            listeners.push(renderer.listen(target, trigger.open, () => showFn(registerHide)));
+        }
+    });
+    return () => {
+        listeners.forEach((unsubscribeFn) => unsubscribeFn());
+    };
+}
+function registerOutsideClick(renderer, options) {
+    if (!options.outsideClick) {
+        return Function.prototype;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return renderer.listen('document', 'click', (event) => {
+        if (options.target && options.target.contains(event.target)) {
+            return;
+        }
+        if (options.targets &&
+            options.targets.some(target => target.contains(event.target))) {
+            return;
+        }
+        if (options.hide) {
+            options.hide();
+        }
+    });
+}
+function registerEscClick(renderer, options) {
+    if (!options.outsideEsc) {
+        return Function.prototype;
+    }
+    return renderer.listen('document', 'keyup.esc', (event) => {
+        if (options.target && options.target.contains(event.target)) {
+            return;
+        }
+        if (options.targets &&
+            options.targets.some(target => target.contains(event.target))) {
+            return;
+        }
+        if (options.hide) {
+            options.hide();
+        }
+    });
+}
+
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * JS version of browser APIs. This library can only run in the browser.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const win = (typeof window !== 'undefined' && window) || {};
+const document = win.document;
+const location = win.location;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const gc = win.gc ? () => win.gc() : () => null;
+const performance = win.performance ? win.performance : null;
+const Event = win.Event;
+const MouseEvent = win.MouseEvent;
+const KeyboardEvent = win.KeyboardEvent;
+const EventTarget = win.EventTarget;
+const History = win.History;
+const Location = win.Location;
+const EventListener = win.EventListener;
+
+var BsVerions;
+(function (BsVerions) {
+    BsVerions["isBs3"] = "bs3";
+    BsVerions["isBs4"] = "bs4";
+    BsVerions["isBs5"] = "bs5";
+})(BsVerions || (BsVerions = {}));
+let guessedVersion;
+function _guessBsVersion() {
+    if (typeof win.document === 'undefined') {
+        return 'bs4';
+    }
+    const spanEl = win.document.createElement('span');
+    spanEl.innerText = 'testing bs version';
+    spanEl.classList.add('d-none');
+    spanEl.classList.add('pl-1');
+    win.document.head.appendChild(spanEl);
+    const rect = spanEl.getBoundingClientRect();
+    const checkPadding = win.getComputedStyle(spanEl).paddingLeft;
+    if (!rect || (rect && rect.top !== 0)) {
+        win.document.head.removeChild(spanEl);
+        return 'bs3';
+    }
+    if (checkPadding && parseFloat(checkPadding)) {
+        win.document.head.removeChild(spanEl);
+        return 'bs4';
+    }
+    win.document.head.removeChild(spanEl);
+    return 'bs5';
+}
+function setTheme(theme) {
+    guessedVersion = theme;
+}
+// todo: in ngx-bootstrap, bs4 will became a default one
+function isBs3() {
+    if (typeof win === 'undefined') {
+        return true;
+    }
+    if (typeof win.__theme === 'undefined') {
+        if (guessedVersion) {
+            return guessedVersion === 'bs3';
+        }
+        guessedVersion = _guessBsVersion();
+        return guessedVersion === 'bs3';
+    }
+    return win.__theme === 'bs3';
+}
+function isBs4() {
+    if (isBs3())
+        return false;
+    if (guessedVersion)
+        return guessedVersion === 'bs4';
+    guessedVersion = _guessBsVersion();
+    return guessedVersion === 'bs4';
+}
+function isBs5() {
+    if (isBs3() || isBs4())
+        return false;
+    if (guessedVersion)
+        return guessedVersion === 'bs5';
+    guessedVersion = _guessBsVersion();
+    return guessedVersion === 'bs5';
+}
+function getBsVer() {
+    return {
+        isBs3: isBs3(),
+        isBs4: isBs4(),
+        isBs5: isBs5()
+    };
+}
+function currentBsVersion() {
+    const bsVer = getBsVer();
+    const resVersion = Object.keys(bsVer).find(key => bsVer[key]);
+    return BsVerions[resVersion];
+}
+
+class LinkedList {
+    constructor() {
+        this.length = 0;
+        this.asArray = [];
+        // Array methods overriding END
+    }
+    get(position) {
+        if (this.length === 0 || position < 0 || position >= this.length) {
+            return void 0;
+        }
+        let current = this.head;
+        for (let index = 0; index < position; index++) {
+            current = current === null || current === void 0 ? void 0 : current.next;
+        }
+        return current === null || current === void 0 ? void 0 : current.value;
+    }
+    add(value, position = this.length) {
+        if (position < 0 || position > this.length) {
+            throw new Error('Position is out of the list');
+        }
+        const node = {
+            value,
+            next: undefined,
+            previous: undefined
+        };
+        if (this.length === 0) {
+            this.head = node;
+            this.tail = node;
+            this.current = node;
+        }
+        else {
+            if (position === 0 && this.head) {
+                // first node
+                node.next = this.head;
+                this.head.previous = node;
+                this.head = node;
+            }
+            else if (position === this.length && this.tail) {
+                // last node
+                this.tail.next = node;
+                node.previous = this.tail;
+                this.tail = node;
+            }
+            else {
+                // node in middle
+                const currentPreviousNode = this.getNode(position - 1);
+                const currentNextNode = currentPreviousNode === null || currentPreviousNode === void 0 ? void 0 : currentPreviousNode.next;
+                if (currentPreviousNode && currentNextNode) {
+                    currentPreviousNode.next = node;
+                    currentNextNode.previous = node;
+                    node.previous = currentPreviousNode;
+                    node.next = currentNextNode;
+                }
+            }
+        }
+        this.length++;
+        this.createInternalArrayRepresentation();
+    }
+    remove(position = 0) {
+        var _a;
+        if (this.length === 0 || position < 0 || position >= this.length) {
+            throw new Error('Position is out of the list');
+        }
+        if (position === 0 && this.head) {
+            // first node
+            this.head = this.head.next;
+            if (this.head) {
+                // there is no second node
+                this.head.previous = undefined;
+            }
+            else {
+                // there is no second node
+                this.tail = undefined;
+            }
+        }
+        else if (position === this.length - 1 && ((_a = this.tail) === null || _a === void 0 ? void 0 : _a.previous)) {
+            // last node
+            this.tail = this.tail.previous;
+            this.tail.next = undefined;
+        }
+        else {
+            // middle node
+            const removedNode = this.getNode(position);
+            if ((removedNode === null || removedNode === void 0 ? void 0 : removedNode.next) && removedNode.previous) {
+                removedNode.next.previous = removedNode.previous;
+                removedNode.previous.next = removedNode.next;
+            }
+        }
+        this.length--;
+        this.createInternalArrayRepresentation();
+    }
+    set(position, value) {
+        if (this.length === 0 || position < 0 || position >= this.length) {
+            throw new Error('Position is out of the list');
+        }
+        const node = this.getNode(position);
+        if (node) {
+            node.value = value;
+            this.createInternalArrayRepresentation();
+        }
+    }
+    toArray() {
+        return this.asArray;
+    }
+    findAll(fn) {
+        let current = this.head;
+        const result = [];
+        if (!current) {
+            return result;
+        }
+        for (let index = 0; index < this.length; index++) {
+            if (!current) {
+                return result;
+            }
+            if (fn(current.value, index)) {
+                result.push({ index, value: current.value });
+            }
+            current = current.next;
+        }
+        return result;
+    }
+    // Array methods overriding start
+    push(...args) {
+        args.forEach((arg) => {
+            this.add(arg);
+        });
+        return this.length;
+    }
+    pop() {
+        if (this.length === 0) {
+            return undefined;
+        }
+        const last = this.tail;
+        this.remove(this.length - 1);
+        return last === null || last === void 0 ? void 0 : last.value;
+    }
+    unshift(...args) {
+        args.reverse();
+        args.forEach((arg) => {
+            this.add(arg, 0);
+        });
+        return this.length;
+    }
+    shift() {
+        var _a;
+        if (this.length === 0) {
+            return undefined;
+        }
+        const lastItem = (_a = this.head) === null || _a === void 0 ? void 0 : _a.value;
+        this.remove();
+        return lastItem;
+    }
+    forEach(fn) {
+        let current = this.head;
+        for (let index = 0; index < this.length; index++) {
+            if (!current) {
+                return;
+            }
+            fn(current.value, index);
+            current = current.next;
+        }
+    }
+    indexOf(value) {
+        let current = this.head;
+        let position = -1;
+        for (let index = 0; index < this.length; index++) {
+            if (!current) {
+                return position;
+            }
+            if (current.value === value) {
+                position = index;
+                break;
+            }
+            current = current.next;
+        }
+        return position;
+    }
+    some(fn) {
+        let current = this.head;
+        let result = false;
+        while (current && !result) {
+            if (fn(current.value)) {
+                result = true;
+                break;
+            }
+            current = current.next;
+        }
+        return result;
+    }
+    every(fn) {
+        let current = this.head;
+        let result = true;
+        while (current && result) {
+            if (!fn(current.value)) {
+                result = false;
+            }
+            current = current.next;
+        }
+        return result;
+    }
+    toString() {
+        return '[Linked List]';
+    }
+    find(fn) {
+        let current = this.head;
+        for (let index = 0; index < this.length; index++) {
+            if (!current) {
+                return;
+            }
+            if (fn(current.value, index)) {
+                return current.value;
+            }
+            current = current.next;
+        }
+    }
+    findIndex(fn) {
+        let current = this.head;
+        for (let index = 0; index < this.length; index++) {
+            if (!current) {
+                return -1;
+            }
+            if (fn(current.value, index)) {
+                return index;
+            }
+            current = current.next;
+        }
+        return -1;
+    }
+    getNode(position) {
+        if (this.length === 0 || position < 0 || position >= this.length) {
+            throw new Error('Position is out of the list');
+        }
+        let current = this.head;
+        for (let index = 0; index < position; index++) {
+            current = current === null || current === void 0 ? void 0 : current.next;
+        }
+        return current;
+    }
+    createInternalArrayRepresentation() {
+        const outArray = [];
+        let current = this.head;
+        while (current) {
+            outArray.push(current.value);
+            current = current.next;
+        }
+        this.asArray = outArray;
+    }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function OnChange() {
+    const sufix = 'Change';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return function OnChangeHandler(target, propertyKey) {
+        const _key = ` __${propertyKey}Value`;
+        Object.defineProperty(target, propertyKey, {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            get() {
+                return this[_key];
+            },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            set(value) {
+                const prevValue = this[_key];
+                this[_key] = value;
+                if (prevValue !== value && this[propertyKey + sufix]) {
+                    this[propertyKey + sufix].emit(value);
+                }
+            }
+        });
+    };
+}
+
+class Utils {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static reflow(element) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ((bs) => bs)(element.offsetHeight);
+    }
+    // source: https://github.com/jquery/jquery/blob/master/src/css/var/getStyles.js
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static getStyles(elem) {
+        // Support: IE <=11 only, Firefox <=30 (#15098, #14150)
+        // IE throws on elements created in popups
+        // FF meanwhile throws on frame elements through "defaultView.getComputedStyle"
+        let view = elem.ownerDocument.defaultView;
+        if (!view || !view.opener) {
+            view = win;
+        }
+        return view.getComputedStyle(elem);
+    }
+    static stackOverflowConfig() {
+        const bsVer = currentBsVersion();
+        return {
+            crossorigin: bsVer !== 'bs3' ? "anonymous" : undefined,
+            integrity: bsVer === 'bs5' ? 'sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We' : bsVer === 'bs4' ? 'sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2' : undefined,
+            cdnLink: bsVer === 'bs5' ? 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' : bsVer === 'bs4' ? 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css' : 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+        };
+    }
+}
+
+const _messagesHash = {};
+const _hideMsg = typeof console === 'undefined' || !('warn' in console);
+function warnOnce(msg) {
+    if (!(0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.isDevMode)() || _hideMsg || msg in _messagesHash) {
+        return;
+    }
+    _messagesHash[msg] = true;
+    console.warn(msg);
+}
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
 
 
 

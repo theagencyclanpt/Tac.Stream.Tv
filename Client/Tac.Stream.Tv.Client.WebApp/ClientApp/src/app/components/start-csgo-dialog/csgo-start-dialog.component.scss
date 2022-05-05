@@ -1,0 +1,51 @@
+@import '/src/shared/variables';
+
+:host{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px;
+
+  width: 100%;
+  max-width: 423px;
+
+  height: 562px;
+
+  @media (min-width: 300px) and (max-width: 950px) {
+    padding: 16px;
+  }
+
+  background: #FFFFFF;
+
+  h3{
+    font-size: 19.2px;
+    color: $cool-gray-100;
+  }
+
+  .custom-input{
+    height: 64px;
+    border: 1px solid #DDE1E6;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+    &-file{
+      width: 64px;
+    }
+  }
+
+  .file-upload-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px;
+    width: 66px;
+    height: 64px;
+    background: #FFFFFF;
+    border: 1px solid #DDE1E6;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+}

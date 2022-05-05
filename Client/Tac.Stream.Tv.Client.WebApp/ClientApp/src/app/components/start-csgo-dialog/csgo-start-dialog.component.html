@@ -1,0 +1,39 @@
+<h3 class="mb-4">CSGO Settings</h3>
+
+<div class="input-group mb-5">
+
+  <input type="text" class="form-control custom-input" placeholder="GOTV*" [(ngModel)]='ip'>
+
+</div>
+
+<h3 class="mb-4">Hud Settings <mat-icon tooltip="If you don't configure hud, it will run with the default values" style="font-size:16px; width: 16px; height: 16px">info</mat-icon></h3>
+
+<div class="input-group mb-3">
+
+  <input type="text" class="form-control custom-input me-md-4 me-sm-0" placeholder="Counter-Terrorists">
+  <button class="file-upload-button" tooltip="Upload Counter-Terrorists Logo">
+    <mat-icon>cloud_upload</mat-icon>
+  </button>
+
+</div>
+
+<div class="input-group mb-5">
+
+  <input type="text" class="form-control custom-input me-md-4 me-sm-0" placeholder="Terrorists">
+  <button class="file-upload-button" tooltip="Upload Terrorists Logo">
+    <mat-icon>cloud_upload</mat-icon>
+  </button>
+
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 g-1 pe-1">
+      <button mat-dialog-close class="btn-kastr">Cancel</button>
+    </div>
+    <div class="col-6 g-1">
+      <button class="btn-kastr btn-kastr-red" (click)="onClickOk()" [disabled]="!ip">Start</button>
+    </div>
+  </div>
+</div>
+

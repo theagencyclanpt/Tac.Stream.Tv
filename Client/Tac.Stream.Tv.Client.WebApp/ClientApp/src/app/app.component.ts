@@ -1,95 +1,51 @@
-import { Component, ViewChild, ElementRef, OnInit, MissingTranslationStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { webSocket, WebSocketSubject } from "rxjs/webSocket";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
-import { DialogChangeSceneComponent } from "./components/dialog-change-scene.component";
-import { DialogStartCsGoComponent } from "./components/dialog-start-csgo.component";
 import { delayWhen, EMPTY, retry, retryWhen, tap, timer } from 'rxjs';
+import { ChangeSceneDialogComponent } from './components/change-scene-dialog/change-scene-dialog.component';
+import { CsgoStartDialogComponent } from './components/start-csgo-dialog/csgo-start-dialog.component';
+import { StartMachineDialogComponent } from "./components/start-machine-dialog/start-machine-dialog.component";
 import { environment } from "../environments/environment";
-
-interface INotificationPreview {
-  PreviewScene: string;
-  CurrentScene: string;
-}
-
-enum MachineState {
-  Off = 0,
-  On = 1,
-  TurningOn = 2,
-  TurningOff = 3
-}
-
-enum ObsStateType {
-  Opening = 0,
-  Opened = 1,
-  Closed = 2,
-  Closing = 3,
-  StartingStream = 4,
-  Streaming = 5,
-  StopingStream = 6,
-  ChangingScene = 7,
-  ChangedScene = 8,
-  Aborted = 9
-}
-
-interface IClientState {
-  RemoteServerState: MachineState;
-}
-
-interface IObsState {
-  State: ObsStateType;
-  ErrorMessages: string[];
-  CurrenteScene: string;
-  PreviewScene: string;
-}
-
-enum CounterStikeGameStateType {
-  Connecting = 0,
-  Connected = 1,
-  Closing = 2,
-  Closed = 3,
-  Aborted = 4
-}
-interface CounterStikeGameState {
-  ServerAddress: string;
-  ErrorMessages: string[];
-  State: CounterStikeGameStateType;
-}
-
-interface IGlobalState {
-  ObsState: IObsState;
-  CounterStikeGameState: CounterStikeGameState;
-}
+import {
+  INotificationPreview,
+  MachineState,
+  ObsStateType,
+  IClientState,
+  IObsState,
+  CounterStikeGameStateType,
+  CounterStikeGameState,
+  IGlobalState
+} from './interfaces';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   public currentSceneImage: string = "";
   public previewSceneImage: string = "";
   public machineState: MachineState = MachineState.Off;
+
   private previewSocket$: WebSocketSubject<INotificationPreview> | undefined;
   private stateSocket$: WebSocketSubject<IGlobalState> | undefined;
   private clientSocket$: WebSocketSubject<IClientState> | undefined;
-
-  @ViewChild('streamingAnimation', { static: true })
-  streamingAnimation?: ElementRef<HTMLDivElement>;
 
   public loaders: string[] = [];
   public loadingMessage: string | null = null;
   public previewsState: IGlobalState | undefined;
   private scenesList: string[] = [];
 
-  constructor(private _snackBar: MatSnackBar,
-    public dialog: MatDialog,
-    private http: HttpClient) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private _dialog: MatDialog,
+    private _http: HttpClient) { }
 
   ngOnInit() {
     this.clientSocket$ = webSocket<IClientState>(environment.notificationWebSocket.client);
-    this.connectToSocketRemoteServer();
 
     this.clientSocket$
       .pipe(
@@ -98,6 +54,16 @@ export class AppComponent implements OnInit {
 
           switch (msg.RemoteServerState) {
             case MachineState.Off:
+
+              this._dialog.closeAll();
+
+              this._dialog.open(StartMachineDialogComponent, {
+                hasBackdrop: false,
+                disableClose: true,
+                maxWidth: '340px',
+                width: '100%',
+                panelClass: 'kastr-dialog-container'
+              });
 
               if (this.machineState == MachineState.Off) {
                 break;
@@ -118,18 +84,16 @@ export class AppComponent implements OnInit {
 
               if (this.machineState !== MachineState.On &&
                 msg.RemoteServerState == MachineState.On) {
-                this._snackBar.dismiss();
                 this.connectToSocketRemoteServer();
 
                 this.machineState = msg.RemoteServerState;
+                this._dialog.closeAll();
+                this._snackBar.dismiss();
                 this.loaders.pop();
                 break;
               }
 
-
-
               break;
-
             case MachineState.TurningOff:
               if (this.machineState == MachineState.TurningOff) {
                 break;
@@ -146,6 +110,7 @@ export class AppComponent implements OnInit {
                 verticalPosition: 'top',
                 horizontalPosition: 'center'
               });
+
               break;
             case MachineState.TurningOn:
               if (this.machineState == MachineState.TurningOn) {
@@ -163,8 +128,8 @@ export class AppComponent implements OnInit {
                 verticalPosition: 'top',
                 horizontalPosition: 'center'
               });
-              break;
 
+              break;
             default:
               console.warn("The state not mapped" + msg.RemoteServerState);
           }
@@ -191,9 +156,8 @@ export class AppComponent implements OnInit {
       )
       .subscribe(
         msg => {
-          if (msg) {
+          if (msg.CurrentScene) {
             this.currentSceneImage = msg.CurrentScene;
-            this.previewSceneImage = msg.PreviewScene;
           }
         },
         err => console.log(err),
@@ -250,8 +214,6 @@ export class AppComponent implements OnInit {
   }
 
   handlerCsGoState(state: CounterStikeGameState) {
-    console.log(state);
-
     switch (state.State) {
       case CounterStikeGameStateType.Closing:
         this.proccessLoadingCsgo(state);
@@ -303,7 +265,6 @@ export class AppComponent implements OnInit {
   }
 
   handlerObsState(state: IObsState) {
-    console.log(state);
 
     switch (state.State) {
       case ObsStateType.ChangingScene:
@@ -316,13 +277,11 @@ export class AppComponent implements OnInit {
 
       case ObsStateType.Opened:
         this.stopProccessLoadingObs(state, true);
-        this.stopAnimationStreaming();
         this.getScenes();
         break;
 
       case ObsStateType.Streaming:
         this.stopProccessLoadingObs(state, true);
-        this.startAnimationStreaming();
 
         if (this.scenesList.length == 0) {
           this.getScenes();
@@ -338,6 +297,14 @@ export class AppComponent implements OnInit {
       default:
         console.warn("The type is not mapped.");
     }
+  }
+
+  startCsGo() {
+    this._dialog.open(CsgoStartDialogComponent, {
+      width: '100%',
+      maxWidth: '424px',
+      panelClass: 'kastr-dialog-container'
+    });
   }
 
   csgoIsClosedOrAborted() {
@@ -360,73 +327,45 @@ export class AppComponent implements OnInit {
       this.previewsState?.ObsState.State != ObsStateType.Streaming;
   }
 
-  startAnimationStreaming() {
-    this.streamingAnimation?.nativeElement.classList.add("streaming");
-  }
-
-  stopAnimationStreaming() {
-    this.streamingAnimation?.nativeElement.classList.remove("streaming");
-  }
-
   openPreviewModal() {
     console.log(this.scenesList.filter(x => x != this.previewsState?.ObsState.CurrenteScene), this.previewsState?.ObsState.CurrenteScene, this.scenesList);
 
-    this.dialog.open(DialogChangeSceneComponent, {
+    this._dialog.open(ChangeSceneDialogComponent, {
+      maxWidth: "906px",
+      width: "100%",
       data: {
         initialImage: this.previewSceneImage,
         options: this.scenesList.filter(x => x != this.previewsState?.ObsState.CurrenteScene),
         selected: this.previewsState?.ObsState.PreviewScene
-      }
+      },
+      panelClass: 'kastr-dialog-container'
     });
   }
 
   getScenes() {
-    this.http.get(environment.apiUrl + "/obs/scenes")
+    this._http.get(environment.apiUrl + "/obs/scenes")
       .subscribe((data) => {
         this.scenesList = data as string[];
       });
   }
 
-  openObs() {
-    this.http.get(environment.apiUrl + "/obs/start")
-      .subscribe(() => EMPTY);
-  }
-
-  closeObs() {
-    this.http.get(environment.apiUrl + "/obs/close")
-      .subscribe(() => EMPTY);
-  }
-
   startStream() {
-    this.http.get(environment.apiUrl + "/obs/start/stream")
+    this._http.get(environment.apiUrl + "/obs/start/stream")
       .subscribe(() => EMPTY);
   }
 
   stopStream() {
-    this.http.get(environment.apiUrl + "/obs/stop/stream")
+    this._http.get(environment.apiUrl + "/obs/stop/stream")
       .subscribe(() => EMPTY);
-  }
-
-  startCsGo() {
-    this.dialog.open(DialogStartCsGoComponent);
   }
 
   closeCsGo() {
-    this.http.get(environment.apiUrl + "/counter-strike/close")
+    this._http.get(environment.apiUrl + "/counter-strike/close")
       .subscribe(() => EMPTY);
   }
 
-  turnOnOrOffRemoteServer() {
-    if (this.machineState == MachineState.On) {
-      this.http.get("/api/machine-manager/turnOff")
-        .subscribe(() => EMPTY);
-    } else if (this.machineState == MachineState.Off) {
-      this.http.get("/api/machine-manager/turnOn")
-        .subscribe(() => EMPTY);
-    }
-  }
-
-  hasConnectionToRemoteServer() {
-    return this.machineState == MachineState.On;
+  turnOfRemoteServer() {
+    this._http.get("/api/machine-manager/turnOff")
+      .subscribe(() => EMPTY);
   }
 }

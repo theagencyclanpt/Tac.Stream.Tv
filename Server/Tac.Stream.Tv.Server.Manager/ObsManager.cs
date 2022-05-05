@@ -192,13 +192,41 @@ namespace Tac.Stream.Tv.Server.Manager
                         await _notificationHandler.SendNotificationToWebSocketPreviewAll(
                                 new
                                 {
-                                    PreviewScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.PreviewScene, "jpeg", null, 640, 480)
-                                        .ImageData,
-                                    CurrentScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.CurrenteScene, "jpeg", null, 640, 480)
+                                    CurrentScene = _obs.TakeSourceScreenshot(_globalStateManager.GlobalState.ObsState.CurrenteScene, "jpeg", null, 1280, 720)
                                         .ImageData
                                 }
-
                            );
+
+                        await Task.Delay(25, token);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    _logger.LogError(exception, "Error on get images from obs.");
+                }
+            }, token);
+            
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var scenes = _obs.GetSceneList().Scenes;
+                    
+                    while (IsRunning())
+                    {
+                        var previews = new Dictionary<string, string>();
+                        foreach (var scene in scenes)
+                        {
+                            previews.Add(scene.Name, _obs.TakeSourceScreenshot(scene.Name, "jpeg", null, 1280, 720)
+                                .ImageData);
+                        }
+                        
+                        await _notificationHandler.SendNotificationToWebSocketPreviewAll(
+                            new
+                            {
+                                Previews = previews
+                            }
+                        );
 
                         await Task.Delay(250, token);
                     }

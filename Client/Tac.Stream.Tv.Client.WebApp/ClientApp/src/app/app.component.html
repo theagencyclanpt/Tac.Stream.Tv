@@ -1,59 +1,61 @@
 <div class="loader-container" *ngIf="loaders.length > 0">
-  <div class="loader">
-  </div>
-  <div [hidden]="loadingMessage != null" class="message">
-    <h1>{{loadingMessage}}</h1>
-  </div>
+  <div class="loader"></div>
 </div>
 
-<div class="layout layout-streaming">
-  <div class="current-scene-preview">
-    <img [src]="currentSceneImage" alt="preview" [hidden]="!canShowPreview() || !hasConnectionToRemoteServer()">
-    <h3 [hidden]="canShowPreview() && hasConnectionToRemoteServer()">OBS IS CLOSED</h3>
-  </div>
-  <div class="form">
-    <div class="button-col">
-      <button mat-flat-button [ngClass]="{
-        'turn-on': !hasConnectionToRemoteServer(),
-        'turn-off': hasConnectionToRemoteServer()
-      }" (click)="turnOnOrOffRemoteServer()">Turn
-        {{hasConnectionToRemoteServer()?
-        "Off" : "On"}} Remote Server</button>
-      <!-- <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="openObs()">Open Obs</button>
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="closeObs()">Close
-        Obs</button> -->
-          <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="startCsGo()">Start Cs
-        Go</button>
-      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="closeCsGo()">Close Cs
-        Go</button>
-    </div>
+<div class="container d-flex flex-column full-height justify-content-center" *ngIf="machineState == 1">
 
-    <div class="button-col">
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="openPreviewModal()">Open
-        Preview</button>
-      <button mat-flat-button color="primary" [disabled]="obsIsClosedOrStreaming() || !hasConnectionToRemoteServer()"
-        (click)="startStream()">Start
-        Stream</button>
-      <button mat-flat-button color="primary"
-        [disabled]="obsIsClosedOrAborted() || obsIsNotClosedOrNotStreaming() || !hasConnectionToRemoteServer()"
-        (click)="stopStream()">Stop
-        Stream</button>
-    </div>
+  <div class="row gx-1 mb-5">
+    
+    <div class="col-12 d-flex justify-content-center"  style="max-height: 506px;">
+      <img class="img-fluid rounded mx-auto d-block" *ngIf="currentSceneImage else withoutImage" style="height: 100%;" [src]="currentSceneImage" alt="preview">
 
-    <!-- <div class="button-col">
-      <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="startCsGo()">Start Cs
-        Go</button>
-      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
-        (click)="closeCsGo()">Close Cs
-        Go</button>
-    </div> -->
+      <ng-template #withoutImage>
+        <div class="alert alert-danger" role="alert">
+          Cant get preview from OBS, please restart remote server and try again.
+        </div>
+      </ng-template>
+    </div>
+  
   </div>
 
-  <div #streamingAnimation class="animate-flicker"></div>
+  <div class="row gx-3">
+
+    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end mb-3 ">
+      <button class="btn-kastr-lg btn-kastr" (click)="openPreviewModal()">Change Scene</button>
+    </div>
+
+    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-3 ">
+
+      <button class="btn-kastr btn-kastr-lg btn-kastr-gray" 
+        *ngIf="csgoIsClosedOrAborted() else stopCsgoElse" 
+        (click)="startCsGo()">
+        Start CSGO
+      </button>
+
+      <ng-template #stopCsgoElse>
+
+        <button class="btn-kastr btn-kastr-lg btn-kastr-red" (click)="closeCsGo()">Stop CSGO</button>
+
+      </ng-template>  
+      
+    </div>
+
+  </div>
+
+  <div class="row gx-3">
+
+    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end mb-3 ">
+      <button class="btn-kastr-lg btn-kastr btn-kastr-red">Turn Off Server</button>
+    </div>
+
+    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-3">
+      <button class="btn-kastr btn-kastr-lg btn-kastr-gray" (click)="startStream()" *ngIf="!obsIsClosedOrStreaming() else stopStreamElse">Start Stream</button>
+
+      <ng-template #stopStreamElse>
+        <button class="btn-kastr btn-kastr-lg btn-kastr-red" (click)="stopStream()">Stop Stream</button>
+      </ng-template>
+    </div>
+
+  </div>
+
 </div>

@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { DialogChangeSceneComponent } from './components/dialog-change-scene.component';
-import { DialogStartCsGoComponent } from './components/dialog-start-csgo.component';
+import { ChangeSceneDialogComponent } from './components/change-scene-dialog/change-scene-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -14,13 +13,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { StartMachineDialogComponent } from './components/start-machine-dialog/start-machine-dialog.component';
+import { CsgoStartDialogComponent } from "./components/start-csgo-dialog/csgo-start-dialog.component";
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogChangeSceneComponent,
-    DialogStartCsGoComponent
+    ChangeSceneDialogComponent,
+    StartMachineDialogComponent,
+    CsgoStartDialogComponent
   ],
   imports: [
     FormsModule,
@@ -33,7 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-    MatIconModule
+    MatIconModule,
+    TooltipModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
