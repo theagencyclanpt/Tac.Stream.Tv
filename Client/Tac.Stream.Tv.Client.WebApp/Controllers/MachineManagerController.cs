@@ -18,20 +18,17 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
     {
         private readonly Socket _sock;
         private readonly ILogger<MachineManagerController> _logger;
-        private readonly BackgroundCheckRemoteServerService _backgroundCheckRemoteServerService;
         private readonly RemoteServerConfiguration _machineConfiguration;
         private readonly GlobalStateManager _globalStateManager;
         private static readonly HttpClient client = new HttpClient();
         private static readonly CancellationToken _cancelationToken = new CancellationToken();
 
         public MachineManagerController(
-            BackgroundCheckRemoteServerService backgroundCheckRemoteServerService,
             GlobalStateManager globalStateManager,
             ILogger<MachineManagerController> logger, 
             IOptions<RemoteServerConfiguration> machineOptions)
         {
             _logger = logger;
-            _backgroundCheckRemoteServerService = backgroundCheckRemoteServerService;
             
             _globalStateManager = globalStateManager;
             _machineConfiguration = machineOptions.Value;
@@ -44,54 +41,40 @@ namespace Tac.Stream.Tv.Client.WebApp.Controllers
         [HttpGet("turnOn")]
         public async Task TurnOnMachine()
         {
-            await _backgroundCheckRemoteServerService.StopAsync(_cancelationToken);
-           
             try
             {
                 var macParse = PhysicalAddress.Parse(_machineConfiguration.MacAddress);
                 byte[] magicPacket = BuildMagicPacket(macParse);
 
                 _sock.SendTo(magicPacket, magicPacket.Length, SocketFlags.None, new IPEndPoint(IPAddress.Parse(_machineConfiguration.Address), 9));
+
+                _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
+                await _globalStateManager.UpdateStateAsync();
             }
             catch (Exception ex)
             {
                 _logger.LogError("Some error on turn on machine.");
             }
 
-            var count = 0;
-
-            await Task.Run(async () =>
+            Task.Run( async () =>
             {
-                var state = _globalStateManager.GlobalState;
-
-                while (count <= 40)
-                {
-                    state.RemoteServerState = RemoteServerStateTypeModel.TurningOn;
-                    await _globalStateManager.UpdateStateAsync(state);
-                    await Task.Delay(1000);
-                    count++;
-                }
-
-                await _backgroundCheckRemoteServerService.StartAsync(_cancelationToken);
+               await Task.Delay(90000);
+               if (_globalStateManager.GlobalState.RemoteServerState != RemoteServerStateTypeModel.On)
+               {
+                   _logger.LogError("Something wrong cant connect to remote machine");
+                   _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.Off;
+                   await _globalStateManager.UpdateStateAsync();
+               }
             }).ConfigureAwait(false);
         }
 
         [HttpGet("turnOff")]
         public async Task TurnOffMachine()
         {
-            var state = _globalStateManager.GlobalState;
-            await _backgroundCheckRemoteServerService.StopAsync(_cancelationToken);
-
             await client.GetAsync(_machineConfiguration.RemoteServerBaseAddress + "/api/machine-manager/shutdown");
 
-            state.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
-            await _globalStateManager.UpdateStateAsync(state);
-
-            await Task.Run(async () =>
-            {
-                await Task.Delay(7000);
-                await _backgroundCheckRemoteServerService.StartAsync(_cancelationToken);
-            }).ConfigureAwait(false);
+            _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.TurningOff;
+            await _globalStateManager.UpdateStateAsync();
         }
 
         private static byte[] BuildMagicPacket(PhysicalAddress macAddress)

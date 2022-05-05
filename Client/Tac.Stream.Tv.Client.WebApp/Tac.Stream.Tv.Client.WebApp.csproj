@@ -1,5 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TypeScriptTarget>ES3</TypeScriptTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TypeScriptTarget>ES3</TypeScriptTarget>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -26,6 +34,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Tac.Stream.Tv.Shared\Tac.Stream.Tv.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="BackgroundCheckRemoteServerService.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<div class="layout layout-streaming">
+<div class="layout layout-streaming" *ngIf="stateSocket$ | async">
   <div class="current-scene-preview">
     <img [src]="currentSceneImage" alt="preview" [hidden]="!canShowPreview() || !hasConnectionToRemoteServer()">
     <h3 [hidden]="canShowPreview() && hasConnectionToRemoteServer()">OBS IS CLOSED</h3>
@@ -19,11 +19,17 @@
       }" (click)="turnOnOrOffRemoteServer()">Turn
         {{hasConnectionToRemoteServer()?
         "Off" : "On"}} Remote Server</button>
-      <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
+      <!-- <button mat-flat-button color="primary" [disabled]="!obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="openObs()">Open Obs</button>
       <button mat-flat-button color="primary" [disabled]="obsIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="closeObs()">Close
-        Obs</button>
+        Obs</button> -->
+          <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
+        (click)="startCsGo()">Start Cs
+        Go</button>
+      <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
+        (click)="closeCsGo()">Close Cs
+        Go</button>
     </div>
 
     <div class="button-col">
@@ -39,18 +45,14 @@
         Stream</button>
     </div>
 
-    <div class="button-col">
+    <!-- <div class="button-col">
       <button mat-flat-button color="primary" [disabled]="!csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="startCsGo()">Start Cs
         Go</button>
       <button mat-flat-button color="primary" [disabled]="csgoIsClosedOrAborted() || !hasConnectionToRemoteServer()"
         (click)="closeCsGo()">Close Cs
         Go</button>
-      <button mat-flat-button color="primary" [disabled]="true">
-        <mat-icon aria-hidden="false">settings</mat-icon>
-        Settings
-      </button>
-    </div>
+    </div> -->
   </div>
 
   <div #streamingAnimation class="animate-flicker"></div>

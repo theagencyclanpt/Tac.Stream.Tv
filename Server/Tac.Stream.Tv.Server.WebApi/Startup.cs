@@ -17,9 +17,8 @@ namespace Tac.Stream.Tv.Server.WebApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
@@ -28,6 +27,7 @@ namespace Tac.Stream.Tv.Server.WebApi
             services.AddSingleton<CounterStrikeManager>();
             services.AddSingleton<ObsManager>();
             services.AddCors();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tac.Stream.Tv.Server.WebApi", Version = "v1" });
@@ -35,7 +35,7 @@ namespace Tac.Stream.Tv.Server.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ObsManager obsManager)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +61,13 @@ namespace Tac.Stream.Tv.Server.WebApi
             {
                 endpoints.MapControllers();
             });
+            
+            var turnOnObs = Configuration.GetSection("AutoTurnOnObs").Value;
+
+            if (turnOnObs != null && Boolean.Parse(turnOnObs))
+            {
+                obsManager.StartAsync().ConfigureAwait(false);
+            }
         }
     }
 }

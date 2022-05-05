@@ -1,67 +1,23 @@
 import { Component, ViewChild, ElementRef, OnInit, MissingTranslationStrategy } from '@angular/core';
 import { webSocket, WebSocketSubject } from "rxjs/webSocket";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { DialogChangeSceneComponent } from "./components/dialog-change-scene.component";
 import { DialogStartCsGoComponent } from "./components/dialog-start-csgo.component";
-import { delayWhen, EMPTY, retry, retryWhen, tap, timer } from 'rxjs';
+import { StartMachineDialogComponent } from "./components/start-machine-dialog/start-machine-dialog.component";
+import { delayWhen, EMPTY, Observable, of, retry, retryWhen, tap, timer } from 'rxjs';
 import { environment } from "../environments/environment";
-
-interface INotificationPreview {
-  PreviewScene: string;
-  CurrentScene: string;
-}
-
-enum MachineState {
-  Off = 0,
-  On = 1,
-  TurningOn = 2,
-  TurningOff = 3
-}
-
-enum ObsStateType {
-  Opening = 0,
-  Opened = 1,
-  Closed = 2,
-  Closing = 3,
-  StartingStream = 4,
-  Streaming = 5,
-  StopingStream = 6,
-  ChangingScene = 7,
-  ChangedScene = 8,
-  Aborted = 9
-}
-
-interface IClientState {
-  RemoteServerState: MachineState;
-}
-
-interface IObsState {
-  State: ObsStateType;
-  ErrorMessages: string[];
-  CurrenteScene: string;
-  PreviewScene: string;
-}
-
-enum CounterStikeGameStateType {
-  Connecting = 0,
-  Connected = 1,
-  Closing = 2,
-  Closed = 3,
-  Aborted = 4
-}
-interface CounterStikeGameState {
-  ServerAddress: string;
-  ErrorMessages: string[];
-  State: CounterStikeGameStateType;
-}
-
-interface IGlobalState {
-  ObsState: IObsState;
-  CounterStikeGameState: CounterStikeGameState;
-}
-
+import {
+  CounterStikeGameState,
+  CounterStikeGameStateType,
+  IClientState,
+  IGlobalState,
+  INotificationPreview,
+  IObsState,
+  MachineState,
+  ObsStateType
+} from "./interfaces";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -72,8 +28,9 @@ export class AppComponent implements OnInit {
   public previewSceneImage: string = "";
   public machineState: MachineState = MachineState.Off;
   private previewSocket$: WebSocketSubject<INotificationPreview> | undefined;
-  private stateSocket$: WebSocketSubject<IGlobalState> | undefined;
+  public stateSocket$: WebSocketSubject<IGlobalState> | undefined;
   private clientSocket$: WebSocketSubject<IClientState> | undefined;
+  private _startMachineDialogRef?: MatDialogRef<StartMachineDialogComponent, any>;
 
   @ViewChild('streamingAnimation', { static: true })
   streamingAnimation?: ElementRef<HTMLDivElement>;
@@ -89,7 +46,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.clientSocket$ = webSocket<IClientState>(environment.notificationWebSocket.client);
-    this.connectToSocketRemoteServer();
 
     this.clientSocket$
       .pipe(
@@ -98,6 +54,12 @@ export class AppComponent implements OnInit {
 
           switch (msg.RemoteServerState) {
             case MachineState.Off:
+
+              this._startMachineDialogRef = this.dialog.open(StartMachineDialogComponent, {
+                closeOnNavigation: false,
+                disableClose: true,
+                hasBackdrop: true
+              });
 
               if (this.machineState == MachineState.Off) {
                 break;
@@ -123,6 +85,10 @@ export class AppComponent implements OnInit {
 
                 this.machineState = msg.RemoteServerState;
                 this.loaders.pop();
+
+                if (this._startMachineDialogRef) {
+                  this._startMachineDialogRef.close();
+                }
                 break;
               }
 
@@ -187,7 +153,7 @@ export class AppComponent implements OnInit {
 
     this.previewSocket$
       .pipe(
-        retry()
+        retry(2)
       )
       .subscribe(
         msg => {
@@ -196,7 +162,10 @@ export class AppComponent implements OnInit {
             this.previewSceneImage = msg.PreviewScene;
           }
         },
-        err => console.log(err),
+        err => {
+          this.previewSocket$?.unsubscribe();
+          console.error(err);
+        },
         () => {
           this.previewSocket$ = webSocket<INotificationPreview>(environment.notificationWebSocket.preview);
         }
@@ -204,22 +173,26 @@ export class AppComponent implements OnInit {
 
     this.stateSocket$
       .pipe(
-        tap((msg: IGlobalState) => {
-
-          if (this.previewsState?.ObsState.State !== msg.ObsState.State) {
-            this.handlerObsState(msg.ObsState);
+        retry(2)
+      )
+      .subscribe({
+        next: (data: IGlobalState) => {
+          if (this.previewsState?.ObsState.State !== data.ObsState.State) {
+            this.handlerObsState(data.ObsState);
           }
 
-          if (this.previewsState?.CounterStikeGameState.State !== msg.CounterStikeGameState.State) {
-            this.handlerCsGoState(msg.CounterStikeGameState);
+          if (this.previewsState?.CounterStikeGameState.State !== data.CounterStikeGameState.State) {
+            this.handlerCsGoState(data.CounterStikeGameState);
           }
 
-          this.previewsState = msg;
-        }),
-        retryWhen((errors: any) => {
-          return errors.pipe(delayWhen((val: any) => timer(val * 1000)))
-        })
-      ).subscribe();
+          this.previewsState = data;
+        },
+        error: (error) => {
+          this.stateSocket$?.complete();
+          this.stateSocket$?.unsubscribe();
+          console.error(error);
+        }
+      });
   }
 
   canShowPreview(): boolean {
@@ -369,8 +342,6 @@ export class AppComponent implements OnInit {
   }
 
   openPreviewModal() {
-    console.log(this.scenesList.filter(x => x != this.previewsState?.ObsState.CurrenteScene), this.previewsState?.ObsState.CurrenteScene, this.scenesList);
-
     this.dialog.open(DialogChangeSceneComponent, {
       data: {
         initialImage: this.previewSceneImage,

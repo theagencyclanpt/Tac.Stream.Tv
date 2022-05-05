@@ -53,7 +53,7 @@ namespace Tac.Stream.Tv.Client.WebApp
                     state.RemoteServerState = RemoteServerStateTypeModel.Off;
                 }
 
-                _globalStateManager.UpdateStateAsync(state).Wait();
+                // _globalStateManager.UpdateStateAsync(state).Wait();
             },
             null,
             TimeSpan.Zero,
