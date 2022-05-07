@@ -1,3 +1,12 @@
+<div class="fixed-top" >
+  <h3 class="align-items-center" *ngIf="ping != null else noPing">
+    <mat-icon>network_wifi</mat-icon>{{ping}}
+  </h3>
+      <ng-template #noPing>
+      <h5><mat-icon>perm_scan_wifi</mat-icon>No Conection</h5>
+    </ng-template>
+</div>
+
 <div class="loader-container" *ngIf="loaders.length > 0">
   <div class="loader"></div>
 </div>
@@ -44,8 +53,8 @@
 
   <div class="row gx-3">
 
-    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end mb-3 ">
-      <button class="btn-kastr-lg btn-kastr btn-kastr-red">Turn Off Server</button>
+    <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-end mb-3">
+      <button class="btn-kastr-lg btn-kastr btn-kastr-red" (click)="turnOfRemoteServer()">Turn Off Server</button>
     </div>
 
     <div class="col-12 col-md-6 d-flex justify-content-center justify-content-md-start mb-3">

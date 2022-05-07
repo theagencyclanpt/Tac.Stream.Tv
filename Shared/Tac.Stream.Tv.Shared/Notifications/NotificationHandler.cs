@@ -67,12 +67,12 @@ namespace Tac.Stream.Tv.Shared.Notifications
 
             lock (webSockets)
             {
-                toSentTo = webSockets.ToList();
+                toSentTo = webSockets.Where(x => x.State == WebSocketState.Open).ToList();
             }
 
-            var tasks = toSentTo.Where(x => x.State == WebSocketState.Open).Select(async websocketConnection =>
+            var tasks = toSentTo.Select(websocketConnection =>
             {
-                await SendNotification(websocketConnection, message);
+                return SendNotification(websocketConnection, message);
             });
 
             await Task.WhenAll(tasks);

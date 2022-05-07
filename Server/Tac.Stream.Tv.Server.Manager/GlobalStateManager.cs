@@ -23,5 +23,10 @@ namespace Tac.Stream.Tv.Server.Manager
 
             await _notificationHandler.SendNotificationToWebScoketStateAll(GlobalState);
         }
+
+        public async Task UpdateState()
+        {
+            await _notificationHandler.SendNotificationToWebScoketStateAll(GlobalState);
+        } 
     }
 }

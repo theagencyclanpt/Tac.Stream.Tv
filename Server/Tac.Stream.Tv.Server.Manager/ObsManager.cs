@@ -14,6 +14,7 @@ namespace Tac.Stream.Tv.Server.Manager
 {
     public class ObsManager
     {
+        private const string ProcessName = "obs64";
         private readonly GlobalStateManager _globalStateManager;
         private readonly NotificationHandler _notificationHandler;
         private readonly OBSWebsocket _obs;
@@ -62,39 +63,51 @@ namespace Tac.Stream.Tv.Server.Manager
                 _logger.LogError(ex, "Cant start process OBS");
                 return;
             }
+            
+            var a = new CancellationTokenSource();
+            var token = a.Token;
 
-            //Delay to open obs
-            await Task.Delay(500);
+            Task.Run(async () =>
+            {
+                var check = true;
+                while (check)
+                {
+                    if (IsRunning())
+                    {
+                        check = false;
+                    }
+                    
+                    await Task.Delay(500);
+                }
+                
+                try
+                {
+                    _obs.Connect("ws://localhost:4444", "1234");
+                    oldState = _globalStateManager.GlobalState;
+                    oldState.ObsState.State = ObsStateType.Opened;
+                    oldState.ObsState.ErrorMessages.Clear();
 
-            try
-            {
-                _obs.Connect("ws://localhost:4444", "1234");
-                oldState = _globalStateManager.GlobalState;
-                oldState.ObsState.State = ObsStateType.Opened;
-                oldState.ObsState.ErrorMessages.Clear();
+                    await _globalStateManager.UpdateState(oldState);
+                }
+                catch (AuthFailureException)
+                {
+                    oldState = _globalStateManager.GlobalState;
+                    oldState.ObsState.State = ObsStateType.Aborted;
+                    oldState.ObsState.ErrorMessages.Add("Error of auth trying connect to obs websockets.");
 
-                await _globalStateManager.UpdateState(oldState);
-            }
-            catch (AuthFailureException)
-            {
-                oldState = _globalStateManager.GlobalState;
-                oldState.ObsState.State = ObsStateType.Aborted;
-                oldState.ObsState.ErrorMessages.Add("Error of auth trying connect to obs websockets.");
-
-                await _globalStateManager.UpdateState(oldState);
-                return;
-            }
-            catch (ErrorResponseException ex)
-            {
-                oldState = _globalStateManager.GlobalState;
-                oldState.ObsState.State = ObsStateType.Aborted;
-                oldState.ObsState.ErrorMessages.Add("Error trying connect to obs websockets.");
-                return;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Cant connect to obs");
-            }
+                    await _globalStateManager.UpdateState(oldState);
+                }
+                catch (ErrorResponseException ex)
+                {
+                    oldState = _globalStateManager.GlobalState;
+                    oldState.ObsState.State = ObsStateType.Aborted;
+                    oldState.ObsState.ErrorMessages.Add("Error trying connect to obs websockets.");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Cant connect to obs");
+                }
+            }, token);
         }
 
         public async Task CloseAsync(bool hasCustomState)
@@ -115,7 +128,7 @@ namespace Tac.Stream.Tv.Server.Manager
                 await _globalStateManager.UpdateState(oldState);
             }
 
-            Process.GetProcessesByName("obs64").FirstOrDefault()?.Kill();
+            Process.GetProcessesByName(ProcessName).FirstOrDefault()?.Kill();
         }
 
         public async Task StartStreamAsync()
@@ -159,17 +172,23 @@ namespace Tac.Stream.Tv.Server.Manager
 
         public void SetCurrentSceneByName(string scene)
         {
+            _globalStateManager.GlobalState.ObsState.State = ObsStateType.ChangingScene;
+            _globalStateManager.UpdateState().ConfigureAwait(false);
+            
             _obs.SetCurrentScene(scene);
         }
 
         public void SetPreviewSceneByName(string scene)
         {
+            _globalStateManager.GlobalState.ObsState.State = ObsStateType.ChangingScenePreview;
+            _globalStateManager.UpdateState().ConfigureAwait(false);
+            
             _obs.SetPreviewScene(scene);
         }
 
         private bool IsRunning()
         {
-            return Process.GetProcessesByName("obs64").Any();
+            return Process.GetProcessesByName(ProcessName).Any();
         }
 
         private void OnConnected(object sender, EventArgs e)
@@ -274,18 +293,18 @@ namespace Tac.Stream.Tv.Server.Manager
 
         private void OnSceneChange(OBSWebsocket sender, string newSceneName)
         {
-            var oldState = _globalStateManager.GlobalState;
-            oldState.ObsState.CurrenteScene = newSceneName;
+            _globalStateManager.GlobalState.ObsState.CurrenteScene = newSceneName;
+            _globalStateManager.GlobalState.ObsState.State = ObsStateType.ChangedScene;
 
-            _globalStateManager.UpdateState(oldState).GetAwaiter().GetResult();
+            _globalStateManager.UpdateState().ConfigureAwait(false);
         }
 
         private void OnPreviewSceneChanged(OBSWebsocket sender, string newSceneName)
         {
-            var oldState = _globalStateManager.GlobalState;
-            oldState.ObsState.PreviewScene = newSceneName;
-
-            _globalStateManager.UpdateState(oldState).GetAwaiter().GetResult();
+            _globalStateManager.GlobalState.ObsState.PreviewScene = newSceneName;
+            _globalStateManager.GlobalState.ObsState.State = ObsStateType.ChangedScenePreview;
+            
+            _globalStateManager.UpdateState().ConfigureAwait(false);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Threading;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace Tac.Stream.Tv.Server.WebApi
 {
@@ -75,6 +76,7 @@ namespace Tac.Stream.Tv.Server.WebApi
 
         public static IHostBuilder CreateHostBuilder(IConfigurationRoot config, string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>().UseUrls(

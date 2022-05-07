@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using Serilog;
 using Tac.Stream.Tv.Server.Manager;
 using Tac.Stream.Tv.Shared.Notifications;
 
@@ -15,6 +16,9 @@ namespace Tac.Stream.Tv.Server.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }

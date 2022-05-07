@@ -20,11 +20,14 @@ export enum ObsStateType {
   StopingStream = 6,
   ChangingScene = 7,
   ChangedScene = 8,
-  Aborted = 9
+  Aborted = 9,
+  ChangingScenePreview = 10,
+  ChangedScenePreview = 11
 }
 
 export interface IClientState {
   RemoteServerState: MachineState;
+  LastSyncDate: string;
 }
 
 export interface IObsState {

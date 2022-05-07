@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
   public currentSceneImage: string = "";
   public previewSceneImage: string = "";
   public machineState: MachineState = MachineState.Off;
+  public ping?: number | null;
 
   private _remoteIp?: string | null;
   private previewSocket$: WebSocketSubject<INotificationPreview> | undefined;
@@ -54,10 +55,11 @@ export class AppComponent implements OnInit {
     this.clientSocket$
       .pipe(
         tap((msg: IClientState) => {
-          console.log("@CLIENT_STATE", msg);
 
           switch (msg.RemoteServerState) {
             case MachineState.Off:
+
+              this.ping = 0;
 
               this._dialog.closeAll();
 
@@ -85,6 +87,10 @@ export class AppComponent implements OnInit {
 
               break;
             case MachineState.On:
+
+              if (msg.LastSyncDate) {
+                this.ping = (new Date().getTime() - new Date(msg.LastSyncDate).getTime()) / 1000;
+              }
 
               if (this.machineState !== MachineState.On &&
                 msg.RemoteServerState == MachineState.On) {
@@ -268,6 +274,7 @@ export class AppComponent implements OnInit {
 
     switch (state.State) {
       case ObsStateType.ChangingScene:
+      case ObsStateType.ChangingScenePreview:
       case ObsStateType.Closing:
       case ObsStateType.Opening:
       case ObsStateType.StartingStream:
@@ -290,6 +297,7 @@ export class AppComponent implements OnInit {
 
       case ObsStateType.Aborted:
       case ObsStateType.ChangedScene:
+      case ObsStateType.ChangedScenePreview:
       case ObsStateType.Closed:
         this.stopProccessLoadingObs(state, true);
         break;

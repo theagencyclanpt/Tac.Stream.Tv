@@ -45,6 +45,8 @@ namespace Tac.Stream.Tv.Client.WebApp.Huds
             if (machineSync != null)
             {
                 _globalStateManager.GlobalState.LastSyncDate = machineSync.Date;
+                _globalStateManager.GlobalState.RemoteServerState = RemoteServerStateTypeModel.On;
+                
                 await _globalStateManager.UpdateStateAsync();
 
                 _logger.LogInformation($"Machine Id: {machineSync.MachineId} | Last Sync Date: {machineSync.Date}");
